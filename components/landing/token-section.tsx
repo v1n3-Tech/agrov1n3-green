@@ -2,141 +2,139 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Wallet, ArrowUpRight, Shield, Zap, Globe } from "lucide-react"
-
-const tokenStats = [
-  { label: "Network", value: "Solana", icon: Globe },
-  { label: "Transaction Speed", value: "< 1 sec", icon: Zap },
-  { label: "Security", value: "Audited", icon: Shield },
-]
+import { ExternalLink, ArrowUpRight, Zap, Globe, Shield } from "lucide-react"
 
 const useCases = [
   "Buy and sell agricultural products",
   "Invest in agribusiness projects",
-  "Pay for training and certifications",
+  "Pay for training programs",
   "Receive payments and dividends",
-  "Trade across African markets",
-  "Access premium platform features",
 ]
 
 export function TokenSection() {
   return (
-    <section id="v1n3" className="relative py-20 lg:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-      </div>
+    <section id="token" className="py-16 lg:py-24 relative overflow-hidden">
+      {/* Subtle Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Content */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             <div>
-              <span className="inline-flex items-center gap-2 px-3 py-1 text-sm font-medium text-accent bg-accent/10 rounded-full mb-4">
-                <Wallet className="w-4 h-4" /> V1n3 Token
+              <span className="inline-block px-2.5 py-1 text-[10px] font-medium text-accent bg-accent/10 border border-accent/20 rounded-[3px] uppercase tracking-widest mb-4">
+                V1n3 Token
               </span>
-              <h2 className="text-3xl lg:text-5xl font-bold tracking-tight mb-4 text-balance">
+              <h2 className="font-[family-name:var(--font-aldrich)] text-3xl lg:text-4xl tracking-tight mb-3">
                 Powered by <span className="text-accent">V1n3</span> on Solana
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                V1n3 is the native cryptocurrency of the GreenV1n3 ecosystem. Built on Solana for lightning-fast transactions and minimal fees, it powers every aspect of agricultural commerce on our platform.
+              <p className="text-sm lg:text-base text-muted-foreground leading-relaxed">
+                V1n3 is the native cryptocurrency of GreenV1n3. Built on Solana for fast transactions and minimal fees.
               </p>
             </div>
 
-            {/* Token Stats */}
-            <div className="flex flex-wrap gap-4">
-              {tokenStats.map((stat) => (
-                <div key={stat.label} className="flex items-center gap-3 px-4 py-2 bg-card border border-border rounded">
-                  <stat.icon className="w-5 h-5 text-accent" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">{stat.label}</p>
-                    <p className="text-sm font-semibold text-foreground">{stat.value}</p>
-                  </div>
+            {/* Stats Row */}
+            <div className="flex flex-wrap gap-3">
+              <div className="flex items-center gap-2 px-3 py-2 bg-card border border-border/40 rounded-[3px]">
+                <Globe className="w-4 h-4 text-accent" />
+                <div>
+                  <p className="text-[9px] text-muted-foreground uppercase">Network</p>
+                  <p className="text-xs font-medium text-foreground">Solana</p>
                 </div>
-              ))}
+              </div>
+              <div className="flex items-center gap-2 px-3 py-2 bg-card border border-border/40 rounded-[3px]">
+                <Zap className="w-4 h-4 text-accent" />
+                <div>
+                  <p className="text-[9px] text-muted-foreground uppercase">Speed</p>
+                  <p className="text-xs font-medium text-foreground">{"<"} 1 sec</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-2 bg-card border border-border/40 rounded-[3px]">
+                <Shield className="w-4 h-4 text-accent" />
+                <div>
+                  <p className="text-[9px] text-muted-foreground uppercase">Security</p>
+                  <p className="text-xs font-medium text-foreground">Audited</p>
+                </div>
+              </div>
             </div>
 
             {/* Use Cases */}
-            <div className="space-y-3">
-              <h3 className="text-lg font-semibold text-foreground">What You Can Do with V1n3</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {useCases.map((useCase) => (
-                  <div key={useCase} className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                    <span className="text-sm text-muted-foreground">{useCase}</span>
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-foreground uppercase tracking-wide">Use Cases</p>
+              <div className="grid grid-cols-2 gap-1.5">
+                {useCases.map((item) => (
+                  <div key={item} className="flex items-center gap-2">
+                    <span className="w-1 h-1 bg-primary rounded-full" />
+                    <span className="text-xs text-muted-foreground">{item}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground rounded gap-2">
-                Get V1n3 Token <ArrowUpRight className="w-4 h-4" />
+            <div className="flex flex-wrap gap-3 pt-2">
+              <Button className="h-9 px-4 rounded-[3px] bg-accent hover:bg-accent/90 text-accent-foreground text-sm gap-2">
+                Get V1n3 <ArrowUpRight className="w-3.5 h-3.5" />
               </Button>
-              <Button size="lg" variant="outline" className="rounded gap-2 border-border">
-                View on Solscan <ExternalLink className="w-4 h-4" />
+              <Button variant="outline" className="h-9 px-4 rounded-[3px] border-border/60 text-sm gap-2">
+                View on Solscan <ExternalLink className="w-3.5 h-3.5" />
               </Button>
             </div>
           </div>
 
-          {/* Token Visual */}
-          <div className="relative flex items-center justify-center">
+          {/* Token Card */}
+          <div className="flex justify-center lg:justify-end">
             <div className="relative">
               {/* Glow */}
-              <div className="absolute inset-0 bg-accent/20 rounded-full blur-3xl scale-150" />
+              <div className="absolute -inset-8 bg-accent/10 rounded-full blur-3xl" />
               
-              {/* Token Card */}
-              <div className="relative bg-card border border-border rounded p-8 space-y-6">
+              <div className="relative bg-card/90 backdrop-blur-sm border border-border/60 rounded-[5px] p-6 w-full max-w-[300px]">
                 {/* Logo */}
-                <div className="flex justify-center">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-accent/30 blur-2xl rounded-full" />
+                <div className="flex justify-center mb-5">
+                  <div className="w-24 h-24 relative">
                     <Image
                       src="/images/greenvine-logo.png"
                       alt="V1n3 Token"
-                      width={160}
-                      height={160}
-                      className="relative w-36 h-36 lg:w-40 lg:h-40"
+                      fill
+                      className="object-contain drop-shadow-lg"
                     />
                   </div>
                 </div>
 
-                {/* Token Info */}
-                <div className="text-center space-y-2">
-                  <h3 className="text-2xl font-bold text-foreground">V1n3</h3>
-                  <p className="text-sm text-muted-foreground">The Currency of Agricultural Innovation</p>
+                {/* Token Name */}
+                <div className="text-center mb-5">
+                  <h3 className="font-[family-name:var(--font-aldrich)] text-xl text-foreground">V1n3</h3>
+                  <p className="text-[10px] text-muted-foreground">Agricultural Innovation Token</p>
                 </div>
 
-                {/* Price Display (Mock) */}
-                <div className="p-4 bg-secondary/50 rounded space-y-3">
+                {/* Price Info */}
+                <div className="space-y-2 p-3 bg-secondary/50 rounded-[3px]">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Current Price</span>
-                    <span className="text-xl font-bold text-accent">$0.0234</span>
+                    <span className="text-[10px] text-muted-foreground">Price</span>
+                    <span className="font-[family-name:var(--font-aldrich)] text-lg text-accent">$0.0842</span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">24h Change</span>
-                    <span className="text-primary font-medium">+12.4%</span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-muted-foreground">24h Change</span>
+                    <span className="text-xs font-medium text-primary">+12.4%</span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Market Cap</span>
-                    <span className="text-foreground font-medium">$2.34M</span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-muted-foreground">Market Cap</span>
+                    <span className="text-xs font-medium text-foreground">$8.4M</span>
                   </div>
                 </div>
 
-                {/* Network Badge */}
-                <div className="flex items-center justify-center gap-2 p-2 bg-primary/10 border border-primary/20 rounded">
-                  <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center">
-                    <span className="text-xs font-bold text-primary">S</span>
+                {/* Solana Badge */}
+                <div className="flex items-center justify-center gap-2 mt-4 px-3 py-1.5 bg-primary/10 border border-primary/20 rounded-[3px]">
+                  <div className="w-4 h-4 bg-primary/30 rounded-full flex items-center justify-center">
+                    <span className="text-[8px] font-bold text-primary">S</span>
                   </div>
-                  <span className="text-sm font-medium text-primary">Built on Solana</span>
+                  <span className="text-[10px] font-medium text-primary">Built on Solana</span>
                 </div>
               </div>
 
-              {/* Floating Badge */}
-              <div className="absolute -top-4 -right-4 px-3 py-2 bg-accent text-accent-foreground rounded shadow-lg">
-                <span className="text-sm font-bold">Live</span>
+              {/* Live Badge */}
+              <div className="absolute -top-2 -right-2 px-2 py-1 bg-accent text-accent-foreground rounded-[3px] text-[10px] font-bold shadow-lg">
+                LIVE
               </div>
             </div>
           </div>

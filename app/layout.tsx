@@ -1,15 +1,17 @@
 import type { Metadata } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import { Aldrich, Abel } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const inter = Inter({ 
+const aldrich = Aldrich({ 
+  weight: '400',
   subsets: ["latin"],
-  variable: '--font-inter'
+  variable: '--font-aldrich'
 });
-const spaceGrotesk = Space_Grotesk({ 
+const abel = Abel({ 
+  weight: '400',
   subsets: ["latin"],
-  variable: '--font-space-grotesk'
+  variable: '--font-abel'
 });
 
 export const metadata: Metadata = {
@@ -28,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${aldrich.variable} ${abel.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

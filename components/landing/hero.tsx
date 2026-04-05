@@ -3,164 +3,169 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Play, Users, TrendingUp, Leaf, Sparkles } from "lucide-react"
+import { ArrowRight, Play, TrendingUp } from "lucide-react"
 
-const stats = [
-  { value: "10K+", label: "Target Youth", icon: Users },
-  { value: "14", label: "Communities", icon: Leaf },
-  { value: "17", label: "Local Governments", icon: TrendingUp },
-]
-
-const floatingWords = ["Innovate", "Grow", "Prosper", "Connect", "Transform"]
+const rotatingWords = ["Innovation", "Technology", "Community", "Prosperity", "Revolution"]
 
 export function Hero() {
-  const [currentWord, setCurrentWord] = useState(0)
+  const [wordIndex, setWordIndex] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentWord((prev) => (prev + 1) % floatingWords.length)
-    }, 2500)
+      setIsAnimating(true)
+      setTimeout(() => {
+        setWordIndex((prev) => (prev + 1) % rotatingWords.length)
+        setIsAnimating(false)
+      }, 300)
+    }, 3000)
     return () => clearInterval(interval)
   }, [])
 
   return (
-    <section className="relative min-h-screen pt-20 lg:pt-24 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
-        
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(34,197,94,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(34,197,94,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
+    <section className="relative min-h-[100svh] pt-14 lg:pt-16 flex items-center overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/hero-farm.jpg"
+          alt="Agricultural landscape"
+          fill
+          className="object-cover opacity-15"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/98 to-background" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Content */}
-          <div className="space-y-8">
+      {/* Subtle Grid */}
+      <div className="absolute inset-0 z-0 opacity-[0.02]" style={{
+        backgroundImage: `linear-gradient(var(--primary) 1px, transparent 1px), linear-gradient(90deg, var(--primary) 1px, transparent 1px)`,
+        backgroundSize: '80px 80px'
+      }} />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 lg:py-0">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+          {/* Left Content */}
+          <div className="space-y-6 lg:space-y-7">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/20 rounded-full">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Powered by V1n3 on Solana</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-[3px]">
+              <div className="w-3.5 h-3.5 relative">
+                <Image src="/images/greenvine-logo.png" alt="V1n3" fill className="object-contain" />
+              </div>
+              <span className="text-[11px] text-primary font-medium tracking-wider uppercase">Powered by V1n3 on Solana</span>
             </div>
 
             {/* Headline */}
-            <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-balance">
-                Agriculture Meets{" "}
-                <span className="relative">
-                  <span className="text-primary">Innovation</span>
-                  <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
-                    <path d="M2 10C50 4 150 4 198 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-primary/30" />
-                  </svg>
-                </span>
-              </h1>
-              <p className="text-lg lg:text-xl text-muted-foreground max-w-xl leading-relaxed">
-                Join thousands of young Nigerians transforming agriculture. Trade, invest, and grow your agribusiness with GreenV1n3 — the platform connecting farmers, investors, and consumers.
-              </p>
-            </div>
-
-            {/* Rotating Words */}
-            <div className="flex items-center gap-3 text-2xl font-mono">
-              <span className="text-muted-foreground">{">"}</span>
-              <span className="text-primary font-semibold transition-all duration-500">
-                {floatingWords[currentWord]}
+            <h1 className="font-[family-name:var(--font-aldrich)] text-[2.5rem] sm:text-5xl lg:text-[3.5rem] xl:text-6xl tracking-tight leading-[1.05]">
+              Agriculture
+              <br />
+              <span className="text-muted-foreground">Meets </span>
+              <span className={`text-primary inline-block min-w-[200px] transition-all duration-300 ease-out ${isAnimating ? 'opacity-0 -translate-y-1' : 'opacity-100 translate-y-0'}`}>
+                {rotatingWords[wordIndex]}
               </span>
-              <span className="w-0.5 h-6 bg-primary animate-pulse" />
+            </h1>
+
+            {/* Description */}
+            <p className="text-[15px] lg:text-base text-muted-foreground max-w-md leading-relaxed">
+              Join thousands of young Nigerians transforming agriculture. Trade, invest, and grow your agribusiness with GreenV1n3 — connecting farmers, investors, and consumers.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-1">
+              <Button size="lg" className="h-11 px-5 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium group">
+                Get Started Free
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-0.5 transition-transform" />
+              </Button>
+              <Button variant="outline" size="lg" className="h-11 px-5 rounded-[3px] border-border/60 text-sm hover:bg-secondary/60">
+                <Play className="w-3.5 h-3.5 mr-2" />
+                Watch Demo
+              </Button>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground rounded gap-2 px-6">
-                Start Your Journey <ArrowRight className="w-4 h-4" />
-              </Button>
-              <Button size="lg" variant="outline" className="rounded gap-2 border-border hover:bg-secondary">
-                <Play className="w-4 h-4" /> Watch Demo
-              </Button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border/50">
-              {stats.map((stat) => (
-                <div key={stat.label} className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <stat.icon className="w-4 h-4 text-primary" />
-                    <span className="text-2xl lg:text-3xl font-bold text-foreground">{stat.value}</span>
-                  </div>
-                  <p className="text-xs lg:text-sm text-muted-foreground">{stat.label}</p>
-                </div>
-              ))}
+            {/* Quick Stats Row */}
+            <div className="flex items-center gap-8 pt-6 border-t border-border/30">
+              <div>
+                <p className="font-[family-name:var(--font-aldrich)] text-2xl text-foreground">10K+</p>
+                <p className="text-[11px] text-muted-foreground uppercase tracking-wide">Agro Executives</p>
+              </div>
+              <div className="w-px h-8 bg-border/50" />
+              <div>
+                <p className="font-[family-name:var(--font-aldrich)] text-2xl text-foreground">17</p>
+                <p className="text-[11px] text-muted-foreground uppercase tracking-wide">Local Govts</p>
+              </div>
+              <div className="w-px h-8 bg-border/50" />
+              <div>
+                <p className="font-[family-name:var(--font-aldrich)] text-2xl text-foreground">14</p>
+                <p className="text-[11px] text-muted-foreground uppercase tracking-wide">Communities</p>
+              </div>
             </div>
           </div>
 
-          {/* Visual */}
-          <div className="relative flex items-center justify-center">
-            {/* Main Card */}
-            <div className="relative w-full max-w-md">
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 rounded blur-2xl" />
+          {/* Right Content - Dashboard Card */}
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-[340px]">
+              {/* Glow */}
+              <div className="absolute -inset-4 bg-primary/5 rounded-[5px] blur-2xl" />
               
-              {/* Card */}
-              <div className="relative bg-card border border-border/50 rounded p-6 space-y-6">
+              {/* Main Card */}
+              <div className="relative bg-card/90 backdrop-blur-sm border border-border/60 rounded-[5px] p-5 shadow-2xl">
                 {/* Logo */}
-                <div className="flex justify-center">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full scale-150" />
+                <div className="flex justify-center mb-5">
+                  <div className="w-24 h-24 lg:w-28 lg:h-28 relative">
                     <Image
                       src="/images/greenvine-logo.png"
                       alt="GreenV1n3"
-                      width={120}
-                      height={120}
-                      className="relative w-28 h-28 lg:w-32 lg:h-32"
+                      fill
+                      className="object-contain drop-shadow-lg"
                     />
                   </div>
                 </div>
 
-                {/* Mini Dashboard */}
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-3 bg-secondary/50 rounded">
-                    <span className="text-sm text-muted-foreground">V1n3 Balance</span>
-                    <span className="text-lg font-bold text-accent">12,450 V1n3</span>
+                {/* Balance */}
+                <div className="text-center mb-5">
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">V1n3 Balance</p>
+                  <p className="font-[family-name:var(--font-aldrich)] text-3xl text-primary">12,450</p>
+                  <p className="text-xs text-muted-foreground">V1n3 Tokens</p>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div className="bg-secondary/60 rounded-[3px] p-3 text-center">
+                    <p className="text-[9px] text-muted-foreground uppercase tracking-wider">Local Govts</p>
+                    <p className="font-[family-name:var(--font-aldrich)] text-lg text-foreground mt-0.5">17</p>
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="p-3 bg-secondary/50 rounded text-center">
-                      <p className="text-xs text-muted-foreground">Weekly Rating</p>
-                      <p className="text-lg font-bold text-primary">A+</p>
-                    </div>
-                    <div className="p-3 bg-secondary/50 rounded text-center">
-                      <p className="text-xs text-muted-foreground">Community</p>
-                      <p className="text-lg font-bold text-foreground">Crop</p>
-                    </div>
+                  <div className="bg-secondary/60 rounded-[3px] p-3 text-center">
+                    <p className="text-[9px] text-muted-foreground uppercase tracking-wider">Communities</p>
+                    <p className="font-[family-name:var(--font-aldrich)] text-lg text-foreground mt-0.5">14</p>
                   </div>
-                  <div className="flex items-center gap-2 p-3 bg-primary/10 border border-primary/20 rounded">
-                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                    <span className="text-sm text-primary">Live marketplace activity</span>
+                </div>
+
+                {/* Live indicator */}
+                <div className="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border/40">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                  <span className="text-[10px] text-muted-foreground">Live marketplace activity</span>
+                </div>
+              </div>
+
+              {/* Floating Badge - Growth */}
+              <div className="absolute -top-3 -right-3 bg-card border border-border/60 rounded-[3px] px-2.5 py-1.5 shadow-xl">
+                <div className="flex items-center gap-1.5">
+                  <TrendingUp className="w-3.5 h-3.5 text-primary" />
+                  <div>
+                    <p className="text-[8px] text-muted-foreground leading-none">Growth</p>
+                    <p className="text-xs font-semibold text-primary leading-tight">+24.5%</p>
                   </div>
                 </div>
               </div>
 
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 p-3 bg-card border border-border rounded shadow-lg">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-primary/20 rounded flex items-center justify-center">
-                    <TrendingUp className="w-4 h-4 text-primary" />
+              {/* Floating Badge - Token */}
+              <div className="absolute -bottom-2 -left-2 bg-card border border-border/60 rounded-[3px] px-2.5 py-1.5 shadow-xl">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-4 h-4 relative">
+                    <Image src="/images/greenvine-logo.png" alt="V1n3" fill className="object-contain" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground">Growth</p>
-                    <p className="text-sm font-bold text-primary">+24.5%</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="absolute -bottom-4 -left-4 p-3 bg-card border border-border rounded shadow-lg">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-accent/20 rounded flex items-center justify-center">
-                    <Users className="w-4 h-4 text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">Active Users</p>
-                    <p className="text-sm font-bold text-accent">8,234</p>
+                    <p className="text-[8px] text-muted-foreground leading-none">V1n3</p>
+                    <p className="text-xs font-semibold text-accent leading-tight">$0.0842</p>
                   </div>
                 </div>
               </div>
@@ -168,9 +173,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Bottom Wave */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-secondary/30 to-transparent" />
     </section>
   )
 }
