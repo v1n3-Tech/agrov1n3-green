@@ -76,7 +76,7 @@ export function Header() {
             <Link href="#marketplace" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">
               Marketplace
             </Link>
-            <Link href="#token" className="flex items-center gap-1.5 text-sm text-primary font-medium hover:text-primary/80 transition-colors duration-200">
+            <Link href="#token" className="flex items-center gap-1.5 text-sm text-orange-400 font-medium hover:text-orange-300 transition-colors duration-200">
               <div className="w-4 h-4 relative">
                 <Image src="/images/greenvine-logo.png" alt="V1n3" fill className="object-contain" />
               </div>
@@ -116,12 +116,12 @@ export function Header() {
               <Link href="#marketplace" className="text-sm text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
                 Marketplace
               </Link>
-              <Link href="#token" className="text-sm text-primary px-3 py-2 rounded-[3px] hover:bg-primary/10 transition-colors">
+              <Link href="#token" className="text-sm text-orange-400 px-3 py-2 rounded-[3px] hover:bg-orange/10 transition-colors">
                 V1n3 Token
               </Link>
-              <div className="flex gap-2 mt-3 px-3">
-                <Button variant="outline" size="sm" className="flex-1 h-9 rounded-[4px] text-sm">Sign In</Button>
-                <Button size="sm" className="flex-1 h-9 rounded-[4px] text-sm">Get Started</Button>
+              <div className="flex gap-2 mt-2 px-3 pb-1">
+                <Button variant="outline" size="sm" className="flex-1 h-9 rounded-[3px] text-sm min-w-0">Sign In</Button>
+                <Button size="sm" className="flex-1 h-9 rounded-[3px] text-sm bg-primary min-w-0">Get Started</Button>
               </div>
             </nav>
           </div>

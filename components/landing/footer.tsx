@@ -27,18 +27,18 @@ export function Footer() {
                 Green<span className="text-primary">V1n3</span>
               </span>
             </Link>
-            <p className="text-xs text-muted-foreground max-w-[240px] leading-relaxed">
+            <p className="text-[13px] text-muted-foreground max-w-[240px] leading-relaxed">
               Transforming Nigerian agriculture through youth participation, technology, and V1n3 cryptocurrency.
             </p>
             
             {/* Contact */}
             <div className="space-y-1.5">
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <MapPin className="w-3 h-3 text-primary" />
+              <div className="flex items-center gap-2 text-[13px] text-muted-foreground">
+                <MapPin className="w-3 h-3 text-primary flex-shrink-0" />
                 <span>Plateau State, Nigeria</span>
               </div>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <Mail className="w-3 h-3 text-primary" />
+              <div className="flex items-center gap-2 text-[13px] text-muted-foreground">
+                <Mail className="w-3 h-3 text-primary flex-shrink-0" />
                 <span>hello@greenv1n3.ng</span>
               </div>
             </div>
@@ -46,7 +46,7 @@ export function Footer() {
             {/* Social */}
             <div className="flex items-center gap-2">
               {["X", "FB", "IG", "LI"].map((s) => (
-                <a key={s} href="#" className="w-7 h-7 bg-secondary rounded-[3px] flex items-center justify-center text-[10px] font-medium text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors">
+                <a key={s} href="#" className="w-7 h-7 bg-grey rounded-[3px] flex items-center justify-center text-[11px] font-medium text-muted-foreground hover:text-orange-400 hover:bg-orange/10 transition-colors">
                   {s}
                 </a>
               ))}
@@ -56,11 +56,11 @@ export function Footer() {
           {/* Links */}
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title} className="space-y-3">
-              <h4 className="text-xs font-medium text-foreground uppercase tracking-wide">{title}</h4>
+              <h4 className="text-[11px] font-medium text-foreground uppercase tracking-wider">{title}</h4>
               <ul className="space-y-1.5">
                 {links.map((link) => (
                   <li key={link}>
-                    <Link href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                    <Link href="#" className="text-[13px] text-muted-foreground hover:text-orange-400 transition-colors">
                       {link}
                     </Link>
                   </li>

@@ -65,37 +65,37 @@ export function Hero() {
             </h1>
 
             {/* Description */}
-            <p className="text-[15px] lg:text-base text-muted-foreground max-w-md leading-relaxed">
+            <p className="text-sm lg:text-[15px] text-muted-foreground max-w-md leading-relaxed">
               Join thousands of young Nigerians transforming agriculture. Trade, invest, and grow your agribusiness with GreenV1n3 — connecting farmers, investors, and consumers.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-1">
-              <Button size="lg" className="h-11 px-5 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium group">
-                Get Started Free
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-0.5 transition-transform" />
+            <div className="flex flex-row gap-2.5 pt-1">
+              <Button size="lg" className="h-10 px-4 sm:px-5 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium group flex-shrink-0">
+                Get Started
+                <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
               </Button>
-              <Button variant="outline" size="lg" className="h-11 px-5 rounded-[3px] border-border/60 text-sm hover:bg-secondary/60">
-                <Play className="w-3.5 h-3.5 mr-2" />
+              <Button variant="outline" size="lg" className="h-10 px-4 sm:px-5 rounded-[3px] border-border/50 text-sm hover:border-orange/50 hover:text-orange flex-shrink-0 transition-colors">
+                <Play className="w-3 h-3 mr-1.5" />
                 Watch Demo
               </Button>
             </div>
 
             {/* Quick Stats Row */}
-            <div className="flex items-center gap-8 pt-6 border-t border-border/30">
+            <div className="flex items-center gap-5 sm:gap-8 pt-5 border-t border-border/30">
               <div>
-                <p className="font-[family-name:var(--font-aldrich)] text-2xl text-foreground">10K+</p>
-                <p className="text-[11px] text-muted-foreground uppercase tracking-wide">Agro Executives</p>
+                <p className="font-[family-name:var(--font-aldrich)] text-xl sm:text-2xl text-foreground">10K+</p>
+                <p className="text-[10px] sm:text-[11px] text-muted-foreground uppercase tracking-wide">Executives</p>
               </div>
-              <div className="w-px h-8 bg-border/50" />
+              <div className="w-px h-7 bg-border/50" />
               <div>
-                <p className="font-[family-name:var(--font-aldrich)] text-2xl text-foreground">17</p>
-                <p className="text-[11px] text-muted-foreground uppercase tracking-wide">Local Govts</p>
+                <p className="font-[family-name:var(--font-aldrich)] text-xl sm:text-2xl text-foreground">17</p>
+                <p className="text-[10px] sm:text-[11px] text-muted-foreground uppercase tracking-wide">LGAs</p>
               </div>
-              <div className="w-px h-8 bg-border/50" />
+              <div className="w-px h-7 bg-border/50" />
               <div>
-                <p className="font-[family-name:var(--font-aldrich)] text-2xl text-foreground">14</p>
-                <p className="text-[11px] text-muted-foreground uppercase tracking-wide">Communities</p>
+                <p className="font-[family-name:var(--font-aldrich)] text-xl sm:text-2xl text-foreground">14</p>
+                <p className="text-[10px] sm:text-[11px] text-muted-foreground uppercase tracking-wide">Communities</p>
               </div>
             </div>
           </div>
@@ -147,12 +147,12 @@ export function Hero() {
               </div>
 
               {/* Floating Badge - Growth */}
-              <div className="absolute -top-3 -right-3 bg-card border border-border/60 rounded-[3px] px-2.5 py-1.5 shadow-xl">
+              <div className="absolute -top-3 -right-3 bg-card border border-orange/40 rounded-[3px] px-2.5 py-1.5 shadow-xl">
                 <div className="flex items-center gap-1.5">
-                  <TrendingUp className="w-3.5 h-3.5 text-primary" />
+                  <TrendingUp className="w-3.5 h-3.5 text-orange-400" />
                   <div>
                     <p className="text-[8px] text-muted-foreground leading-none">Growth</p>
-                    <p className="text-xs font-semibold text-primary leading-tight">+24.5%</p>
+                    <p className="text-xs font-semibold text-orange-400 leading-tight">+24.5%</p>
                   </div>
                 </div>
               </div>

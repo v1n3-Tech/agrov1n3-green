@@ -133,11 +133,11 @@ export function Marketplace() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="group bg-card border border-border/40 rounded-[4px] overflow-hidden hover:border-primary/40 transition-all duration-200"
+              className="group bg-grey/60 border border-border/30 rounded-[4px] overflow-hidden hover:border-primary/40 transition-all duration-200 hover:-translate-y-0.5"
             >
               {/* Image */}
               <div className="relative h-40 lg:h-44 overflow-hidden">
@@ -166,24 +166,24 @@ export function Marketplace() {
               {/* Content */}
               <div className="p-3 space-y-2">
                 <div>
-                  <h3 className="text-sm font-medium text-foreground line-clamp-1">{product.name}</h3>
-                  <p className="text-[10px] text-muted-foreground">{product.seller} · {product.location}</p>
+                  <h3 className="text-sm font-medium text-foreground leading-snug line-clamp-1">{product.name}</h3>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">{product.seller} · {product.location}</p>
                 </div>
 
                 {/* Rating */}
                 <div className="flex items-center gap-1.5">
-                  <Star className="w-3 h-3 fill-accent text-accent" />
+                  <Star className="w-3 h-3 fill-orange-400 text-orange-400" />
                   <span className="text-xs font-medium text-foreground">{product.rating}</span>
-                  <span className="text-[10px] text-muted-foreground">({product.reviews})</span>
+                  <span className="text-[11px] text-muted-foreground">({product.reviews})</span>
                 </div>
 
                 {/* Price */}
                 <div className="flex items-center justify-between pt-2 border-t border-border/30">
                   <div>
-                    <p className="text-base font-semibold text-foreground">₦{product.price}</p>
+                    <p className="text-[15px] font-semibold text-foreground">₦{product.price}</p>
                     <p className="text-[10px] text-primary">{product.v1n3Price} V1N3</p>
                   </div>
-                  <Button size="sm" className="h-7 px-3 rounded-[3px] text-xs bg-primary text-primary-foreground">
+                  <Button size="sm" className="h-7 px-3 rounded-[3px] text-xs bg-orange/90 hover:bg-orange text-white transition-colors">
                     Add to Cart
                   </Button>
                 </div>

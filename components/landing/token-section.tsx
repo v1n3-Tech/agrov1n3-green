@@ -73,10 +73,10 @@ export function TokenSection() {
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-3 pt-2">
-              <Button className="h-9 px-4 rounded-[3px] bg-accent hover:bg-accent/90 text-accent-foreground text-sm gap-2">
+              <Button className="h-9 px-4 rounded-[3px] bg-orange/90 hover:bg-orange text-white text-sm gap-2 transition-colors">
                 Get V1n3 <ArrowUpRight className="w-3.5 h-3.5" />
               </Button>
-              <Button variant="outline" className="h-9 px-4 rounded-[3px] border-border/60 text-sm gap-2">
+              <Button variant="outline" className="h-9 px-4 rounded-[3px] border-border/50 hover:border-orange/40 hover:text-orange-400 text-sm gap-2 transition-colors">
                 View on Solscan <ExternalLink className="w-3.5 h-3.5" />
               </Button>
             </div>
@@ -108,17 +108,17 @@ export function TokenSection() {
                 </div>
 
                 {/* Price Info */}
-                <div className="space-y-2 p-3 bg-secondary/50 rounded-[3px]">
+                <div className="space-y-2 p-3 bg-grey/60 rounded-[3px]">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-muted-foreground">Price</span>
-                    <span className="font-[family-name:var(--font-aldrich)] text-lg text-accent">$0.0842</span>
+                    <span className="text-[11px] text-muted-foreground">Price</span>
+                    <span className="font-[family-name:var(--font-aldrich)] text-lg text-orange-400">$0.0842</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-muted-foreground">24h Change</span>
+                    <span className="text-[11px] text-muted-foreground">24h Change</span>
                     <span className="text-xs font-medium text-primary">+12.4%</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-muted-foreground">Market Cap</span>
+                    <span className="text-[11px] text-muted-foreground">Market Cap</span>
                     <span className="text-xs font-medium text-foreground">$8.4M</span>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export function TokenSection() {
               </div>
 
               {/* Live Badge */}
-              <div className="absolute -top-2 -right-2 px-2 py-1 bg-accent text-accent-foreground rounded-[3px] text-[10px] font-bold shadow-lg">
+              <div className="absolute -top-2 -right-2 px-2 py-1 bg-orange/90 text-white rounded-[3px] text-[10px] font-bold shadow-lg">
                 LIVE
               </div>
             </div>

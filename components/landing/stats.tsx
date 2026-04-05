@@ -37,21 +37,21 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
 
 export function Stats() {
   return (
-    <section className="py-12 lg:py-16 bg-secondary/30 border-y border-border/30">
+    <section className="py-10 lg:py-14 bg-grey/60 border-y border-border/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {stats.map((stat) => (
+          {stats.map((stat, i) => (
             <div key={stat.label} className="text-center lg:text-left">
-              <div className="inline-flex items-center justify-center lg:justify-start gap-3 mb-2">
-                <div className="w-9 h-9 bg-primary/10 rounded-[3px] flex items-center justify-center">
-                  <stat.icon className="w-4 h-4 text-primary" />
+              <div className="inline-flex items-center justify-center lg:justify-start gap-2.5 mb-2">
+                <div className={`w-9 h-9 rounded-[3px] flex items-center justify-center ${i % 2 === 0 ? 'bg-primary/10' : 'bg-orange/10'}`}>
+                  <stat.icon className={`w-4 h-4 ${i % 2 === 0 ? 'text-primary' : 'text-orange-400'}`} />
                 </div>
                 <p className="font-[family-name:var(--font-aldrich)] text-2xl lg:text-3xl text-foreground">
                   <AnimatedNumber value={stat.value} suffix={stat.suffix} />
                 </p>
               </div>
               <p className="text-sm text-foreground font-medium">{stat.label}</p>
-              <p className="text-xs text-muted-foreground">{stat.description}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{stat.description}</p>
             </div>
           ))}
         </div>

@@ -50,10 +50,10 @@ export function CTASection() {
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-3 pt-2">
-              <Button className="h-10 px-5 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm gap-2">
+              <Button className="h-10 px-5 rounded-[3px] bg-orange/90 hover:bg-orange text-white text-sm gap-2 transition-colors">
                 Register Now <ArrowRight className="w-4 h-4" />
               </Button>
-              <Button variant="outline" className="h-10 px-5 rounded-[3px] border-border/60 text-sm">
+              <Button variant="outline" className="h-10 px-5 rounded-[3px] border-border/50 hover:border-primary/40 text-sm">
                 Contact Us
               </Button>
             </div>
@@ -80,7 +80,7 @@ export function CTASection() {
               {/* Glow */}
               <div className="absolute -inset-4 bg-primary/5 rounded-[5px] blur-2xl" />
               
-              <div className="relative bg-card/90 backdrop-blur-sm border border-border/60 rounded-[5px] p-5">
+              <div className="relative bg-grey/80 backdrop-blur-sm border border-border/50 rounded-[4px] p-5">
                 {/* Header */}
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-10 h-10 relative">
@@ -95,7 +95,7 @@ export function CTASection() {
                 {/* Form */}
                 <div className="space-y-3">
                   <div>
-                    <label className="text-[10px] text-muted-foreground uppercase tracking-wide">Full Name</label>
+                    <label className="text-[11px] text-muted-foreground uppercase tracking-wide">Full Name</label>
                     <input
                       type="text"
                       placeholder="Enter your name"
@@ -103,7 +103,7 @@ export function CTASection() {
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] text-muted-foreground uppercase tracking-wide">Email</label>
+                    <label className="text-[11px] text-muted-foreground uppercase tracking-wide">Email</label>
                     <input
                       type="email"
                       placeholder="Enter your email"
@@ -111,7 +111,7 @@ export function CTASection() {
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] text-muted-foreground uppercase tracking-wide">Community</label>
+                    <label className="text-[11px] text-muted-foreground uppercase tracking-wide">Community</label>
                     <select className="w-full mt-1 px-3 py-2 bg-secondary border border-border/50 rounded-[3px] text-sm focus:outline-none focus:ring-1 focus:ring-primary/50 text-muted-foreground">
                       <option>Choose a community</option>
                       <option>Crop Farming</option>
@@ -120,18 +120,18 @@ export function CTASection() {
                       <option>Agro Technology</option>
                     </select>
                   </div>
-                  <Button className="w-full h-9 rounded-[3px] bg-primary text-primary-foreground text-sm mt-2">
+                  <Button className="w-full h-9 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm mt-2">
                     Create Account
                   </Button>
                 </div>
 
-                <p className="text-[9px] text-center text-muted-foreground mt-4">
-                  By signing up, you agree to our Terms & Privacy Policy
+                <p className="text-[11px] text-center text-muted-foreground mt-4">
+                  By signing up, you agree to our Terms &amp; Privacy Policy
                 </p>
               </div>
 
               {/* Badge */}
-              <div className="absolute -bottom-2 -right-2 px-2.5 py-1 bg-accent text-accent-foreground rounded-[3px] text-[10px] font-bold shadow-lg">
+              <div className="absolute -bottom-2 -right-2 px-2.5 py-1 bg-orange/90 text-white rounded-[3px] text-[10px] font-bold shadow-lg">
                 FREE
               </div>
             </div>
