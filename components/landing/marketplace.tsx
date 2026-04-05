@@ -140,12 +140,13 @@ export function Marketplace() {
               className="group bg-grey/60 border border-border/30 rounded-[4px] overflow-hidden hover:border-primary/40 transition-all duration-200 hover:-translate-y-0.5"
             >
               {/* Image */}
-              <div className="relative h-40 lg:h-44 overflow-hidden">
+              <div className="relative aspect-[4/3] overflow-hidden bg-secondary/40">
                 <Image
                   src={product.image}
                   alt={product.name}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                 
