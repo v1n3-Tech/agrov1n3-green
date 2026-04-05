@@ -129,7 +129,7 @@ export function Header() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="flex-1 h-9 rounded-[4px] border-orange-400/70 text-white hover:bg-orange/10 text-[14px] gap-2 min-w-0"
+                  className="flex-1 h-9 rounded-[4px] border-orange-400/70 text-white hover:bg-orange/10 text-[14px] gap-1.5 min-w-0"
                 >
                   <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
                   Sign In
