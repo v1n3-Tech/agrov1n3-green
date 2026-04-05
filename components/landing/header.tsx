@@ -136,7 +136,7 @@ export function Header() {
                 </Button>
                 <Button
                   size="sm"
-                  className="flex-1 h-9 rounded-[3px] bg-primary text-primary-foreground text-[14px] gap-1.5 min-w-0"
+                  className="flex-1 h-9 rounded-[3px] bg-primary text-primary-foreground text-[15px] gap-1.5 min-w-0"
                 >
                   <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
                   Register
