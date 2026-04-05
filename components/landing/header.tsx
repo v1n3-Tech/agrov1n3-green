@@ -32,7 +32,7 @@ export function Header() {
                 priority
               />
             </div>
-            <span className="font-[family-name:var(--font-aldrich)] text-md lg:text-xl tracking-wide">
+            <span className="font-[family-name:var(--font-aldrich)] text-md lg:text-xl">
               Green<span className="text-primary">V1n3</span>
             </span>
           </Link>
