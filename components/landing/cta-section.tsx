@@ -32,7 +32,7 @@ export function CTASection() {
                 Ready to Transform <span className="text-primary">Agriculture</span>?
               </h2>
               <p className="text-sm lg:text-base text-muted-foreground leading-relaxed">
-                Whether you&apos;re a farmer, investor, marketer, or tech enthusiast — there&apos;s a place for you in GreenV1n3.
+                Whether you&apos;re a farmer, investor, marketer, or tech enthusiast — there&apos;s a place for you in GreenV1n3. A platform built and powered by <span className="text-foreground/80 font-medium">V1n3Tech</span>.
               </p>
             </div>
 

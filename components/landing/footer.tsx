@@ -28,7 +28,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-[13px] text-muted-foreground max-w-[240px] leading-relaxed">
-              Transforming Nigerian agriculture through youth participation, technology, and V1n3 cryptocurrency.
+              Transforming Nigerian agriculture through youth participation, technology, and V1n3 cryptocurrency. A <span className="text-foreground/80 font-medium">V1n3Tech</span> initiative.
             </p>
             
             {/* Contact */}
@@ -82,9 +82,15 @@ export function Footer() {
 
         {/* Bottom */}
         <div className="py-4 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[13px] text-muted-foreground">
-            &copy; {new Date().getFullYear()} GreenV1n3. All rights reserved.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3">
+            <p className="text-[13px] text-muted-foreground">
+              &copy; {new Date().getFullYear()} GreenV1n3. All rights reserved.
+            </p>
+            <span className="hidden sm:inline text-border">|</span>
+            <p className="text-[13px] text-muted-foreground">
+              Founded by <span className="text-foreground/70 font-medium">Danzaki Mantim</span> &middot; <span className="text-primary/80">V1n3Tech</span>
+            </p>
+          </div>
           <div className="flex items-center gap-4">
             <Link href="#" className="text-[13px] text-muted-foreground hover:text-foreground transition-colors">Privacy</Link>
             <Link href="#" className="text-[13px] text-muted-foreground hover:text-foreground transition-colors">Terms</Link>
