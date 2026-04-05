@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Menu, X, ChevronDown } from "lucide-react"
+import { Menu, X, ChevronDown, LogIn, UserPlus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const communities = [
@@ -39,7 +39,7 @@ export function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-6">
-            <Link href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">
+            <Link href="#features" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
               Features
             </Link>
             
@@ -49,7 +49,7 @@ export function Header() {
               onMouseEnter={() => setShowCommunities(true)}
               onMouseLeave={() => setShowCommunities(false)}
             >
-              <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">
+              <button className="flex items-center gap-1 text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
                 Communities
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${showCommunities ? 'rotate-180' : ''}`} />
               </button>
@@ -62,7 +62,7 @@ export function Header() {
                         <Link
                           key={community}
                           href={`#${community.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
-                          className="px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-primary/10 rounded-[3px] transition-colors duration-150"
+                          className="px-3 py-1.5 text-[13px] text-muted-foreground hover:text-foreground hover:bg-primary/10 rounded-[3px] transition-colors duration-150"
                         >
                           {community}
                         </Link>
@@ -73,23 +73,29 @@ export function Header() {
               )}
             </div>
 
-            <Link href="#marketplace" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">
+            <Link href="#marketplace" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
               Marketplace
             </Link>
-            <Link href="#token" className="flex items-center gap-1.5 text-sm text-orange-400 font-medium hover:text-orange-300 transition-colors duration-200">
-              <div className="w-4 h-4 relative">
-                <Image src="/images/greenvine-logo.png" alt="V1n3" fill className="object-contain" />
-              </div>
+            <Link href="#token" className="flex items-center gap-1.5 text-[15px] text-orange-400 font-medium hover:text-orange-300 transition-colors duration-200">
               V1n3 Token
             </Link>
           </nav>
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="text-sm h-8 px-3">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-9 px-4 rounded-[5px] border-orange-400/70 text-orange-400 hover:bg-orange/10 hover:border-orange-400 text-[14px] gap-2 transition-colors"
+            >
+              <LogIn className="w-3.5 h-3.5" />
               Sign In
             </Button>
-            <Button size="sm" className="h-8 px-4 rounded-[4px] bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-sm">
+            <Button
+              size="sm"
+              className="h-9 px-4 rounded-[5px] bg-primary hover:bg-primary/90 text-primary-foreground text-[14px] gap-2 font-medium"
+            >
+              <UserPlus className="w-3.5 h-3.5" />
               Get Started
             </Button>
           </div>
@@ -107,21 +113,34 @@ export function Header() {
         {isOpen && (
           <div className="lg:hidden py-3 border-t border-border/40">
             <nav className="flex flex-col gap-1">
-              <Link href="#features" className="text-sm text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
+              <Link href="#features" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
                 Features
               </Link>
-              <Link href="#communities" className="text-sm text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
+              <Link href="#communities" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
                 14 Communities
               </Link>
-              <Link href="#marketplace" className="text-sm text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
+              <Link href="#marketplace" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
                 Marketplace
               </Link>
-              <Link href="#token" className="text-sm text-orange-400 px-3 py-2 rounded-[3px] hover:bg-orange/10 transition-colors">
+              <Link href="#token" className="text-[15px] text-orange-400 px-3 py-2 rounded-[3px] hover:bg-orange/10 transition-colors">
                 V1n3 Token
               </Link>
               <div className="flex gap-2 mt-2 px-3 pb-1">
-                <Button variant="outline" size="sm" className="flex-1 h-9 rounded-[3px] text-sm min-w-0">Sign In</Button>
-                <Button size="sm" className="flex-1 h-9 rounded-[3px] text-sm bg-primary min-w-0">Get Started</Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 h-9 rounded-[5px] border-orange-400/70 text-orange-400 hover:bg-orange/10 text-[14px] gap-2 min-w-0"
+                >
+                  <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
+                  Sign In
+                </Button>
+                <Button
+                  size="sm"
+                  className="flex-1 h-9 rounded-[5px] bg-primary text-primary-foreground text-[14px] gap-2 min-w-0"
+                >
+                  <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
+                  Register
+                </Button>
               </div>
             </nav>
           </div>

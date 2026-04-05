@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Mail, MapPin } from "lucide-react"
+import { Mail, MapPin, Twitter, Facebook, Instagram, Linkedin } from "lucide-react"
 
 const footerLinks = {
   Platform: ["Features", "Communities", "Marketplace", "Investors"],
@@ -45,9 +45,19 @@ export function Footer() {
 
             {/* Social */}
             <div className="flex items-center gap-2">
-              {["X", "FB", "IG", "LI"].map((s) => (
-                <a key={s} href="#" className="w-7 h-7 bg-grey rounded-[3px] flex items-center justify-center text-[11px] font-medium text-muted-foreground hover:text-orange-400 hover:bg-orange/10 transition-colors">
-                  {s}
+              {[
+                { icon: Twitter, label: "X / Twitter" },
+                { icon: Facebook, label: "Facebook" },
+                { icon: Instagram, label: "Instagram" },
+                { icon: Linkedin, label: "LinkedIn" },
+              ].map(({ icon: Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  aria-label={label}
+                  className="w-8 h-8 bg-grey rounded-[3px] flex items-center justify-center text-muted-foreground hover:text-orange-400 hover:bg-orange/10 transition-colors"
+                >
+                  <Icon className="w-4 h-4" />
                 </a>
               ))}
             </div>
@@ -72,13 +82,13 @@ export function Footer() {
 
         {/* Bottom */}
         <div className="py-4 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[13px] text-muted-foreground">
             &copy; {new Date().getFullYear()} GreenV1n3. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <Link href="#" className="text-[10px] text-muted-foreground hover:text-foreground">Privacy</Link>
-            <Link href="#" className="text-[10px] text-muted-foreground hover:text-foreground">Terms</Link>
-            <span className="px-2 py-0.5 bg-primary/10 rounded-[2px] text-[9px] font-medium text-primary">Solana</span>
+            <Link href="#" className="text-[13px] text-muted-foreground hover:text-foreground transition-colors">Privacy</Link>
+            <Link href="#" className="text-[13px] text-muted-foreground hover:text-foreground transition-colors">Terms</Link>
+            <span className="px-2 py-0.5 bg-primary/10 rounded-[2px] text-[11px] font-medium text-primary">Solana</span>
           </div>
         </div>
       </div>

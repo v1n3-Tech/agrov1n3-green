@@ -48,10 +48,7 @@ export function Hero() {
           <div className="space-y-6 lg:space-y-7">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-[3px]">
-              <div className="w-3.5 h-3.5 relative">
-                <Image src="/images/greenvine-logo.png" alt="V1n3" fill className="object-contain" />
-              </div>
-              <span className="text-[11px] text-primary font-medium tracking-wider uppercase">Powered by V1n3 on Solana</span>
+              <span className="text-[11px] text-muted-foreground font-medium tracking-wider uppercase">Powered by V1n3 on Solana</span>
             </div>
 
             {/* Headline */}
@@ -63,7 +60,6 @@ export function Hero() {
                 {rotatingWords[wordIndex]}
               </span>
             </h1>
-
             {/* Description */}
             <p className="text-sm lg:text-[15px] text-muted-foreground max-w-md leading-relaxed">
               Join thousands of young Nigerians transforming agriculture. Trade, invest, and grow your agribusiness with GreenV1n3 — connecting farmers, investors, and consumers.
