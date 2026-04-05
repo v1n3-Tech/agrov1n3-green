@@ -76,7 +76,7 @@ export function Header() {
             <Link href="#marketplace" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
               Marketplace
             </Link>
-            <Link href="#token" className="flex items-center gap-1.5 text-[15px] text-orange-400 font-medium hover:text-orange-300 transition-colors duration-200">
+            <Link href="#token" className="flex items-center gap-1.5 text-[15px] text-orange-400 font-medium hover:text-orange-700 transition-colors duration-200">
               V1N3 TOKEN
             </Link>
           </nav>
@@ -122,7 +122,7 @@ export function Header() {
               <Link href="#marketplace" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
                 Marketplace
               </Link>
-              <Link href="#token" className="text-[15px] text-orange-400 px-3 py-2 rounded-[3px] hover:bg-orange/10 transition-colors">
+              <Link href="#token" className="text-[15px] text-orange-700 px-3 py-2 rounded-[3px] hover:bg-orange/10 transition-colors">
                 V1n3 Token
               </Link>
               <div className="flex gap-2 mt-2 px-3 pb-1">
