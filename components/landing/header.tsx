@@ -129,14 +129,14 @@ export function Header() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="flex-1 h-9 rounded-[4px] border-orange-400/70 text-white hover:bg-orange/10 text-[14px] gap-1.5 min-w-0"
+                  className="flex-1 h-9 rounded-[3px] border-orange-400/60 text-white hover:bg-orange/5 text-[15px] gap-1.5 min-w-0"
                 >
                   <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
                   Sign In
                 </Button>
                 <Button
                   size="sm"
-                  className="flex-1 h-9 rounded-[4px] bg-primary text-primary-foreground text-[14px] gap-2 min-w-0"
+                  className="flex-1 h-9 rounded-[3px] bg-primary text-primary-foreground text-[14px] gap-1.5 min-w-0"
                 >
                   <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
                   Register
