@@ -86,14 +86,14 @@ export function Header() {
             <Button
               variant="outline"
               size="sm"
-              className="h-9 px-4 rounded-[5px] border-orange-400/70 text-orange-400 hover:bg-orange/10 hover:border-orange-400 text-[14px] gap-2 transition-colors"
+              className="h-9 px-4 rounded-[4px] border-orange-400/70 text-white hover:bg-orange/10 hover:border-orange-400 text-[14px] gap-2 transition-colors"
             >
               <LogIn className="w-3.5 h-3.5" />
               Sign In
             </Button>
             <Button
               size="sm"
-              className="h-9 px-4 rounded-[5px] bg-primary hover:bg-primary/90 text-primary-foreground text-[14px] gap-2 font-medium"
+              className="h-9 px-4 rounded-[4px] bg-primary hover:bg-primary/90 text-primary-foreground text-[14px] gap-2 font-medium"
             >
               <UserPlus className="w-3.5 h-3.5" />
               Get Started
@@ -129,14 +129,14 @@ export function Header() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="flex-1 h-9 rounded-[5px] border-orange-400/70 text-orange-400 hover:bg-orange/10 text-[14px] gap-2 min-w-0"
+                  className="flex-1 h-9 rounded-[4px] border-orange-400/70 text-white hover:bg-orange/10 text-[14px] gap-2 min-w-0"
                 >
                   <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
                   Sign In
                 </Button>
                 <Button
                   size="sm"
-                  className="flex-1 h-9 rounded-[5px] bg-primary text-primary-foreground text-[14px] gap-2 min-w-0"
+                  className="flex-1 h-9 rounded-[4px] bg-primary text-primary-foreground text-[14px] gap-2 min-w-0"
                 >
                   <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
                   Register
