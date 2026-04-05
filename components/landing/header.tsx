@@ -32,7 +32,7 @@ export function Header() {
                 priority
               />
             </div>
-            <span className="font-[family-name:var(--font-aldrich)] text-lg lg:text-xl tracking-wide">
+            <span className="font-[family-name:var(--font-aldrich)] text-md lg:text-xl tracking-wide">
               Green<span className="text-primary">V1n3</span>
             </span>
           </Link>
@@ -42,9 +42,9 @@ export function Header() {
             <Link href="#features" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
               Features
             </Link>
-            
+
             {/* Communities Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => setShowCommunities(true)}
               onMouseLeave={() => setShowCommunities(false)}
@@ -53,7 +53,7 @@ export function Header() {
                 Communities
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${showCommunities ? 'rotate-180' : ''}`} />
               </button>
-              
+
               {showCommunities && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
                   <div className="w-56 bg-card/95 backdrop-blur-lg border border-border/60 rounded-[4px] shadow-2xl p-1.5">
@@ -77,7 +77,7 @@ export function Header() {
               Marketplace
             </Link>
             <Link href="#token" className="flex items-center gap-1.5 text-[15px] text-orange-400 font-medium hover:text-orange-300 transition-colors duration-200">
-              V1n3 Token
+              V1N3 TOKEN
             </Link>
           </nav>
 
