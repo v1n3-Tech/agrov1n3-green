@@ -1,28 +1,28 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Eye, EyeOff, UserPlus, ArrowLeft, ChevronDown } from "lucide-react"
+import { Eye, EyeOff, UserPlus, ArrowLeft, ChevronDown, Check, Sprout, Tractor, ShoppingCart, Factory, Scale, Palmtree, Cpu, Heart, Megaphone, Shield, BookOpen, GraduationCap, Building2, Truck, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 
 const communities = [
-  "Crop Farming",
-  "Animal Farming", 
-  "Agro Marketing",
-  "Agro Processing",
-  "Management & Legislation",
-  "Agro Tourism",
-  "Agro Technology",
-  "Agro Health Care",
-  "Agro Media & Branding",
-  "Agro Security",
-  "Agro Literature",
-  "Motivation & Training",
-  "Agro Real Estate",
-  "Agro Logistics"
+  { name: "Crop Farming", icon: Sprout },
+  { name: "Animal Farming", icon: Tractor },
+  { name: "Agro Marketing", icon: ShoppingCart },
+  { name: "Agro Processing", icon: Factory },
+  { name: "Management & Legislation", icon: Scale },
+  { name: "Agro Tourism", icon: Palmtree },
+  { name: "Agro Technology", icon: Cpu },
+  { name: "Agro Health Care", icon: Heart },
+  { name: "Agro Media & Branding", icon: Megaphone },
+  { name: "Agro Security", icon: Shield },
+  { name: "Agro Literature", icon: BookOpen },
+  { name: "Motivation & Training", icon: GraduationCap },
+  { name: "Agro Real Estate", icon: Building2 },
+  { name: "Agro Logistics", icon: Truck }
 ]
 
 const localGovernments = [
@@ -30,6 +30,116 @@ const localGovernments = [
   "Kanam", "Kanke", "Langtang North", "Langtang South", "Mangu", "Mikang",
   "Pankshin", "Qua'an Pan", "Riyom", "Shendam", "Wase"
 ]
+
+// Custom Dropdown Component
+function CustomDropdown({ 
+  label, 
+  value, 
+  onChange, 
+  options, 
+  placeholder,
+  type = "lga"
+}: { 
+  label: string
+  value: string
+  onChange: (value: string) => void
+  options: typeof communities | string[]
+  placeholder: string
+  type?: "lga" | "community"
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  const isCommunity = type === "community"
+  const displayValue = isCommunity 
+    ? (options as typeof communities).find(c => c.name === value)?.name 
+    : value
+
+  return (
+    <div className="space-y-2" ref={dropdownRef}>
+      <label className="text-sm text-foreground">{label}</label>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className={`w-full h-11 bg-secondary/50 border rounded-[4px] px-3 text-left flex items-center justify-between transition-all duration-200 ${
+            isOpen ? 'border-primary ring-1 ring-primary/20' : 'border-border/60 hover:border-border'
+          }`}
+        >
+          <span className={value ? 'text-foreground' : 'text-muted-foreground/60'}>
+            {displayValue || placeholder}
+          </span>
+          <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        </button>
+        
+        {isOpen && (
+          <div className="absolute z-50 w-full mt-1 bg-card border border-border/60 rounded-[4px] shadow-xl shadow-black/20 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-150">
+            <div className="max-h-[280px] overflow-y-auto scrollbar-thin">
+              {isCommunity ? (
+                (options as typeof communities).map((community) => {
+                  const Icon = community.icon
+                  const isSelected = value === community.name
+                  return (
+                    <button
+                      key={community.name}
+                      type="button"
+                      onClick={() => {
+                        onChange(community.name)
+                        setIsOpen(false)
+                      }}
+                      className={`w-full px-3 py-2.5 flex items-center gap-3 text-left transition-all duration-150 ${
+                        isSelected 
+                          ? 'bg-primary text-primary-foreground' 
+                          : 'hover:bg-primary/10 text-muted-foreground hover:text-foreground'
+                      }`}
+                    >
+                      <Icon className={`w-4 h-4 flex-shrink-0 ${isSelected ? 'text-primary-foreground' : 'text-primary'}`} />
+                      <span className="flex-1 text-sm">{community.name}</span>
+                      {isSelected && <Check className="w-4 h-4 flex-shrink-0" />}
+                    </button>
+                  )
+                })
+              ) : (
+                (options as string[]).map((lga) => {
+                  const isSelected = value === lga
+                  return (
+                    <button
+                      key={lga}
+                      type="button"
+                      onClick={() => {
+                        onChange(lga)
+                        setIsOpen(false)
+                      }}
+                      className={`w-full px-3 py-2.5 flex items-center gap-3 text-left transition-all duration-150 ${
+                        isSelected 
+                          ? 'bg-primary text-primary-foreground' 
+                          : 'hover:bg-primary/10 text-muted-foreground hover:text-foreground'
+                      }`}
+                    >
+                      <MapPin className={`w-4 h-4 flex-shrink-0 ${isSelected ? 'text-primary-foreground' : 'text-orange-400'}`} />
+                      <span className="flex-1 text-sm">{lga}</span>
+                      {isSelected && <Check className="w-4 h-4 flex-shrink-0" />}
+                    </button>
+                  )
+                })
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -208,26 +318,14 @@ export default function RegisterPage() {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="localGovernment" className="text-sm text-foreground">
-                      Local Government Area
-                    </label>
-                    <div className="relative">
-                      <select
-                        id="localGovernment"
-                        name="localGovernment"
-                        value={formData.localGovernment}
-                        onChange={handleChange}
-                        className="w-full h-11 bg-secondary/50 border border-border/60 rounded-[4px] px-3 text-foreground focus:border-primary focus:outline-none appearance-none cursor-pointer"
-                      >
-                        <option value="" className="bg-card">Select your LGA</option>
-                        {localGovernments.map((lga) => (
-                          <option key={lga} value={lga} className="bg-card">{lga}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-                    </div>
-                  </div>
+                  <CustomDropdown
+                    label="Local Government Area"
+                    value={formData.localGovernment}
+                    onChange={(value) => setFormData({ ...formData, localGovernment: value })}
+                    options={localGovernments}
+                    placeholder="Select your LGA"
+                    type="lga"
+                  />
 
                   <Button
                     type="button"
@@ -241,26 +339,14 @@ export default function RegisterPage() {
 
               {step === 2 && (
                 <>
-                  <div className="space-y-2">
-                    <label htmlFor="community" className="text-sm text-foreground">
-                      Choose Your Community
-                    </label>
-                    <div className="relative">
-                      <select
-                        id="community"
-                        name="community"
-                        value={formData.community}
-                        onChange={handleChange}
-                        className="w-full h-11 bg-secondary/50 border border-border/60 rounded-[4px] px-3 text-foreground focus:border-primary focus:outline-none appearance-none cursor-pointer"
-                      >
-                        <option value="" className="bg-card">Select a community</option>
-                        {communities.map((community) => (
-                          <option key={community} value={community} className="bg-card">{community}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-                    </div>
-                  </div>
+                  <CustomDropdown
+                    label="Choose Your Community"
+                    value={formData.community}
+                    onChange={(value) => setFormData({ ...formData, community: value })}
+                    options={communities}
+                    placeholder="Select a community"
+                    type="community"
+                  />
 
                   <div className="space-y-2">
                     <label htmlFor="password" className="text-sm text-foreground">
