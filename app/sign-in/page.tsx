@@ -8,7 +8,7 @@ import { Eye, EyeOff, LogIn, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
-import { signIn } from "@/lib/auth/actions"
+import { createClient } from "@/lib/supabase/client"
 import { V1n3ButtonLoader } from "@/components/ui/v1n3-loader"
 
 export default function SignInPage() {
@@ -25,16 +25,20 @@ export default function SignInPage() {
     setIsLoading(true)
     setError(null)
 
-    const formData = new FormData()
-    formData.append("email", email)
-    formData.append("password", password)
-
-    const result = await signIn(formData)
+    const supabase = createClient()
     
-    if (result?.error) {
-      setError(result.error)
+    const { data, error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (signInError) {
+      setError(signInError.message)
       setIsLoading(false)
-    } else if (result?.success) {
+      return
+    }
+
+    if (data.user) {
       // Redirect to home page after successful login
       router.push("/")
       router.refresh()
