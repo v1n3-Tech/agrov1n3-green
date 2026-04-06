@@ -87,7 +87,7 @@ export function Header() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 px-4 rounded-[4px] border-orange-400/70 text-white hover:bg-orange/10 hover:border-orange-400 hover:text-white text-[14px] gap-2 transition-colors"
+                className="h-9 px-4 rounded-[4px] border-orange-400/70 text-white/70 hover:bg-orange/10 hover:border-orange-400 hover:text-white/100 text-[14px] gap-2 transition-colors"
               >
                 <LogIn className="w-3.5 h-3.5" />
                 Sign In
@@ -96,7 +96,7 @@ export function Header() {
             <Link href="/register">
               <Button
                 size="sm"
-                className="h-9 px-4 rounded-[4px] bg-primary hover:bg-primary/10 hover:border-primary-400 text-primary-foreground hover:text-white text-[14px] gap-2 font-medium"
+                className="h-9 px-4 rounded-[4px] bg-primary/70 hover:bg-primary/100 hover:border-primary-400 text-white/70 hover:text-white/100 text-[14px] gap-2 font-medium"
               >
                 <UserPlus className="w-3.5 h-3.5" />
                 Get Started
@@ -134,7 +134,7 @@ export function Header() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="w-full h-9 rounded-[3px] border-orange-400/60 text-white hover:bg-orange/5 hover:text-white text-[15px] gap-1.5"
+                    className="w-full h-9 rounded-[3px] border-orange-400/60 text-white/70 hover:bg-orange/5 hover:text-white/100 text-[15px] gap-1.5"
                   >
                     <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
                     Sign In
@@ -143,7 +143,7 @@ export function Header() {
                 <Link href="/register" className="flex-1 min-w-0">
                   <Button
                     size="sm"
-                    className="w-full h-9 rounded-[3px] bg-primary text-primary-foreground hover:bg-primary/10 hover:border-primary-400 hover:text-white text-[15px] gap-1.5"
+                    className="w-full h-9 rounded-[3px] bg-primary/70 text-white/70 hover:bg-primary/100 hover:text-white/100 text-[14px] gap-1.5"
                   >
                     <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
                     Register
