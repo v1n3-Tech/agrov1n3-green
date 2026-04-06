@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${aldrich.variable} ${abel.variable}`}>
+    <html lang="en" className={`${aldrich.variable} ${abel.variable}`} data-scroll-behavior="smooth">
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
