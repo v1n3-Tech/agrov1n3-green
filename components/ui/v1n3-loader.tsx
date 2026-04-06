@@ -1,45 +1,86 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import Image from "next/image"
+
+type LoaderColor = "green" | "orange" | "mint"
 
 interface V1n3LoaderProps {
   /** Size variant - 'sm' for buttons, 'md' for cards, 'lg' for full page */
   size?: "sm" | "md" | "lg"
+  /** Color of the loader */
+  color?: LoaderColor
   /** Show only the text/logo without background overlay */
   inline?: boolean
+  /** Use logo instead of text (for full page loaders) */
+  useLogo?: boolean
   /** Additional class names */
   className?: string
 }
 
-export function V1n3Loader({ size = "lg", inline = false, className }: V1n3LoaderProps) {
+const colorStyles: Record<LoaderColor, string> = {
+  green: "text-primary",
+  orange: "text-orange-400", 
+  mint: "text-teal-400",
+}
+
+export function V1n3Loader({ 
+  size = "lg", 
+  color = "green",
+  inline = false, 
+  useLogo = false,
+  className 
+}: V1n3LoaderProps) {
   const sizeStyles = {
-    sm: "text-sm",
-    md: "text-xl",
-    lg: "text-4xl md:text-5xl",
+    sm: "text-xs",
+    md: "text-base",
+    lg: "text-2xl",
   }
 
-  const Logo = (
+  const logoSizes = {
+    sm: { width: 20, height: 20 },
+    md: { width: 32, height: 32 },
+    lg: { width: 48, height: 48 },
+  }
+
+  // Logo version for full-page loaders
+  if (useLogo) {
+    return (
+      <div className={cn("flex items-center justify-center", className)}>
+        <div className="animate-pulse">
+          <Image
+            src="/images/greenvine-logo.png"
+            alt="Loading"
+            width={logoSizes[size].width}
+            height={logoSizes[size].height}
+            className="object-contain"
+          />
+        </div>
+      </div>
+    )
+  }
+
+  // Text version
+  const TextLogo = (
     <span
       className={cn(
-        "font-[family-name:var(--font-aldrich)] tracking-wider select-none",
+        "font-[family-name:var(--font-aldrich)] tracking-wider select-none animate-pulse",
         sizeStyles[size],
+        colorStyles[color],
         className
       )}
     >
-      <span className="text-primary animate-pulse">V</span>
-      <span className="text-orange-400 animate-pulse [animation-delay:100ms]">1</span>
-      <span className="text-primary animate-pulse [animation-delay:200ms]">n</span>
-      <span className="text-orange-400 animate-pulse [animation-delay:300ms]">3</span>
+      V1n3
     </span>
   )
 
   if (inline) {
-    return Logo
+    return TextLogo
   }
 
   return (
     <div className="flex items-center justify-center">
-      {Logo}
+      {TextLogo}
     </div>
   )
 }
@@ -49,13 +90,16 @@ interface V1n3LoadingOverlayProps {
   isLoading?: boolean
   /** Children to show behind the overlay */
   children?: React.ReactNode
+  /** Color of the loader */
+  color?: LoaderColor
   /** Additional class names for the overlay */
   className?: string
 }
 
 export function V1n3LoadingOverlay({ 
   isLoading = true, 
-  children, 
+  children,
+  color = "green",
   className 
 }: V1n3LoadingOverlayProps) {
   return (
@@ -63,7 +107,7 @@ export function V1n3LoadingOverlay({
       {/* Content rendered behind (preloaded page) */}
       <div className={cn(
         "transition-opacity duration-500",
-        isLoading ? "opacity-30 pointer-events-none" : "opacity-100"
+        isLoading ? "opacity-50 pointer-events-none" : "opacity-100"
       )}>
         {children}
       </div>
@@ -73,18 +117,19 @@ export function V1n3LoadingOverlay({
         <div 
           className={cn(
             "fixed inset-0 z-50 flex items-center justify-center",
-            "bg-background/60 backdrop-blur-[2px]",
+            "bg-background/50",
             "animate-in fade-in duration-200",
             className
           )}
         >
-          <div className="flex flex-col items-center gap-4">
-            <V1n3Loader size="lg" inline />
-            <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce [animation-delay:0ms]" />
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-bounce [animation-delay:150ms]" />
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce [animation-delay:300ms]" />
-            </div>
+          <div className="animate-pulse">
+            <Image
+              src="/images/greenvine-logo.png"
+              alt="Loading"
+              width={56}
+              height={56}
+              className="object-contain"
+            />
           </div>
         </div>
       )}
@@ -94,43 +139,75 @@ export function V1n3LoadingOverlay({
 
 /** 
  * Full page loading component for Next.js loading.tsx files
- * Shows centered V1n3 text on a semi-transparent overlay
+ * Shows centered logo on a semi-transparent overlay (50% opacity)
  */
-export function V1n3PageLoader() {
+export function V1n3PageLoader({ color = "green" }: { color?: LoaderColor }) {
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-background/50"
     >
-      <div className="flex flex-col items-center gap-4">
-        <V1n3Loader size="lg" inline />
-        <div className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce [animation-delay:0ms]" />
-          <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-bounce [animation-delay:150ms]" />
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce [animation-delay:300ms]" />
-        </div>
+      <div className="animate-pulse">
+        <Image
+          src="/images/greenvine-logo.png"
+          alt="Loading"
+          width={56}
+          height={56}
+          className="object-contain"
+        />
       </div>
     </div>
   )
 }
 
 /**
- * Button loading state - use inside buttons
+ * Button/small component loading state - uses text only, single color
  * Example: <Button disabled>{isLoading ? <V1n3ButtonLoader /> : "Submit"}</Button>
  */
-export function V1n3ButtonLoader({ className }: { className?: string }) {
+export function V1n3ButtonLoader({ 
+  className,
+  color = "green" 
+}: { 
+  className?: string
+  color?: LoaderColor
+}) {
   return (
-    <span className={cn("inline-flex items-center gap-0.5", className)}>
-      <span className="font-[family-name:var(--font-aldrich)] text-sm tracking-wide">
-        <span className="text-primary-foreground animate-pulse">V</span>
-        <span className="text-orange-400 animate-pulse [animation-delay:100ms]">1</span>
-        <span className="text-primary-foreground animate-pulse [animation-delay:200ms]">n</span>
-        <span className="text-orange-400 animate-pulse [animation-delay:300ms]">3</span>
-      </span>
-      <span className="flex items-center gap-0.5 ml-1">
-        <span className="w-1 h-1 rounded-full bg-current animate-bounce [animation-delay:0ms]" />
-        <span className="w-1 h-1 rounded-full bg-current animate-bounce [animation-delay:150ms]" />
-        <span className="w-1 h-1 rounded-full bg-current animate-bounce [animation-delay:300ms]" />
-      </span>
+    <span 
+      className={cn(
+        "font-[family-name:var(--font-aldrich)] text-xs tracking-wide animate-pulse",
+        colorStyles[color],
+        className
+      )}
+    >
+      V1n3
     </span>
+  )
+}
+
+/**
+ * Small component loader using logo only (alternative to text)
+ * For buttons, cards, or other small UI elements
+ */
+export function V1n3LogoLoader({ 
+  size = "sm",
+  className 
+}: { 
+  size?: "sm" | "md"
+  className?: string
+}) {
+  const sizes = {
+    sm: { width: 16, height: 16 },
+    md: { width: 24, height: 24 },
+  }
+
+  return (
+    <div className={cn("animate-pulse", className)}>
+      <Image
+        src="/images/greenvine-logo.png"
+        alt="Loading"
+        width={sizes[size].width}
+        height={sizes[size].height}
+        className="object-contain"
+      />
+    </div>
   )
 }
