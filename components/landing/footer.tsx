@@ -20,10 +20,10 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 relative">
+              <div className="w-10 h-10 relative">
                 <Image src="/images/greenvine-logo.png" alt="GreenV1n3" fill className="object-contain" />
               </div>
-              <span className="font-[family-name:var(--font-aldrich)] text-lg">
+              <span className="font-[family-name:var(--font-aldrich)] text-xl">
                 Green<span className="text-primary">V1n3</span>
               </span>
             </Link>

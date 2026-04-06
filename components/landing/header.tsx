@@ -23,7 +23,7 @@ export function Header() {
         <div className="flex items-center justify-between h-14 lg:h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 lg:w-9 lg:h-9 relative flex-shrink-0">
+            <div className="w-10 h-10 lg:w-11 lg:h-11 relative flex-shrink-0">
               <Image
                 src="/images/greenvine-logo.png"
                 alt="GreenV1n3"
@@ -32,7 +32,7 @@ export function Header() {
                 priority
               />
             </div>
-            <span className="font-[family-name:var(--font-aldrich)] text-md lg:text-xl">
+            <span className="font-[family-name:var(--font-aldrich)] text-lg lg:text-2xl">
               Agro<span className="text-primary">V1n3</span>
             </span>
           </Link>
@@ -83,21 +83,25 @@ export function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-9 px-4 rounded-[4px] border-orange-400/70 text-white hover:bg-orange/10 hover:border-orange-400 hover:text-white text-[14px] gap-2 transition-colors"
-            >
-              <LogIn className="w-3.5 h-3.5" />
-              Sign In
-            </Button>
-            <Button
-              size="sm"
-              className="h-9 px-4 rounded-[4px] bg-primary hover:bg-primary/10 hover:border-primary-400 text-primary-foreground hover:text-white text-[14px] gap-2 font-medium"
-            >
-              <UserPlus className="w-3.5 h-3.5" />
-              Get Started
-            </Button>
+            <Link href="/sign-in">
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 px-4 rounded-[4px] border-orange-400/70 text-white hover:bg-orange/10 hover:border-orange-400 hover:text-white text-[14px] gap-2 transition-colors"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                Sign In
+              </Button>
+            </Link>
+            <Link href="/register">
+              <Button
+                size="sm"
+                className="h-9 px-4 rounded-[4px] bg-primary hover:bg-primary/10 hover:border-primary-400 text-primary-foreground hover:text-white text-[14px] gap-2 font-medium"
+              >
+                <UserPlus className="w-3.5 h-3.5" />
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -126,21 +130,25 @@ export function Header() {
                 V1n3 Token
               </Link>
               <div className="flex gap-2 mt-2 px-3 pb-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 h-9 rounded-[3px] border-orange-400/60 text-white hover:bg-orange/5 hover:text-white text-[15px] gap-1.5 min-w-0"
-                >
-                  <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
-                  Sign In
-                </Button>
-                <Button
-                  size="sm"
-                  className="flex-1 h-9 rounded-[3px] bg-primary text-primary-foreground hover:bg-primary/10 hover:border-primary-400 hover:text-white text-[15px] gap-1.5 min-w-0"
-                >
-                  <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
-                  Register
-                </Button>
+                <Link href="/sign-in" className="flex-1 min-w-0">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full h-9 rounded-[3px] border-orange-400/60 text-white hover:bg-orange/5 hover:text-white text-[15px] gap-1.5"
+                  >
+                    <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/register" className="flex-1 min-w-0">
+                  <Button
+                    size="sm"
+                    className="w-full h-9 rounded-[3px] bg-primary text-primary-foreground hover:bg-primary/10 hover:border-primary-400 hover:text-white text-[15px] gap-1.5"
+                  >
+                    <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
+                    Register
+                  </Button>
+                </Link>
               </div>
             </nav>
           </div>
