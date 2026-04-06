@@ -111,16 +111,25 @@ export async function getUser() {
 }
 
 export async function getUserProfile() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  
-  if (!user) return null
-  
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .single()
-  
-  return profile
+  try {
+    const supabase = await createClient()
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    
+    console.log("[v0] getUserProfile - user:", user?.id, "error:", userError?.message)
+    
+    if (!user) return null
+    
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single()
+    
+    console.log("[v0] getUserProfile - profile:", profile?.username, "error:", profileError?.message)
+    
+    return profile
+  } catch (error) {
+    console.log("[v0] getUserProfile - catch error:", error)
+    return null
+  }
 }
