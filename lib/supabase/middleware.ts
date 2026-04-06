@@ -41,14 +41,16 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  console.log("[v0] Middleware - path:", request.nextUrl.pathname, "user:", user?.id || "none")
+
+  // Protect dashboard route
   if (
-    // if the user is not logged in and the app path, in this case, /protected, is accessed, redirect to the login page
-    request.nextUrl.pathname.startsWith('/protected') &&
+    request.nextUrl.pathname.startsWith('/dashboard') &&
     !user
   ) {
-    // no user, potentially respond by redirecting the user to the login page
+    console.log("[v0] Middleware - redirecting to sign-in (no user)")
     const url = request.nextUrl.clone()
-    url.pathname = '/auth/login'
+    url.pathname = '/sign-in'
     return NextResponse.redirect(url)
   }
 

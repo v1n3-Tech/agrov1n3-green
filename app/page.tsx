@@ -11,6 +11,8 @@ import { getUserProfile } from "@/lib/auth/actions"
 
 export default async function Home() {
   const profile = await getUserProfile()
+  
+  console.log("[v0] Home page - profile:", profile ? `${profile.username} (${profile.role})` : "none")
 
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
