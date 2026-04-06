@@ -76,7 +76,7 @@ export function Header() {
             <Link href="#marketplace" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
               Marketplace
             </Link>
-            <Link href="#token" className="flex items-center gap-1.5 text-[15px] text-orange-400 font-medium hover:text-orange-700 transition-colors duration-200">
+            <Link href="#token" className="flex items-center gap-1.5 text-[15px] text-orange-400 font-medium hover:text-orange-700 transition-colors duration-200 font-[family-name:var(--font-aldrich)]">
               V1N3 TOKEN
             </Link>
           </nav>
@@ -86,14 +86,14 @@ export function Header() {
             <Button
               variant="outline"
               size="sm"
-              className="h-9 px-4 rounded-[4px] border-orange-400/70 text-white hover:bg-orange/10 hover:border-orange-400 text-[14px] gap-2 transition-colors"
+              className="h-9 px-4 rounded-[4px] border-orange-400/70 text-white hover:bg-orange/10 hover:border-orange-400 hover:text-white text-[14px] gap-2 transition-colors"
             >
               <LogIn className="w-3.5 h-3.5" />
               Sign In
             </Button>
             <Button
               size="sm"
-              className="h-9 px-4 rounded-[4px] bg-primary hover:bg-primary/90 text-primary-foreground text-[14px] gap-2 font-medium"
+              className="h-9 px-4 rounded-[4px] bg-primary hover:bg-primary/90 text-primary-foreground hover:text-white text-[14px] gap-2 font-medium"
             >
               <UserPlus className="w-3.5 h-3.5" />
               Get Started
@@ -122,21 +122,21 @@ export function Header() {
               <Link href="#marketplace" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
                 Marketplace
               </Link>
-              <Link href="#token" className="text-[15px] text-orange-700 px-3 py-2 rounded-[3px] hover:bg-orange/10 transition-colors">
+              <Link href="#token" className="text-[15px] text-orange-700 px-3 py-2 rounded-[3px] hover:bg-orange/10 transition-colors font-[family-name:var(--font-aldrich)]">
                 V1n3 Token
               </Link>
               <div className="flex gap-2 mt-2 px-3 pb-1">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="flex-1 h-9 rounded-[3px] border-orange-400/60 text-white hover:bg-orange/5 text-[15px] gap-1.5 min-w-0"
+                  className="flex-1 h-9 rounded-[3px] border-orange-400/60 text-white hover:bg-orange/5 hover:text-white text-[15px] gap-1.5 min-w-0"
                 >
                   <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
                   Sign In
                 </Button>
                 <Button
                   size="sm"
-                  className="flex-1 h-9 rounded-[3px] bg-primary text-primary-foreground text-[15px] gap-1.5 min-w-0"
+                  className="flex-1 h-9 rounded-[3px] bg-primary text-primary-foreground hover:text-white text-[15px] gap-1.5 min-w-0"
                 >
                   <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
                   Register
