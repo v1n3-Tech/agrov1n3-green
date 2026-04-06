@@ -34,8 +34,11 @@ export default function SignInPage() {
     if (result?.error) {
       setError(result.error)
       setIsLoading(false)
+    } else if (result?.success) {
+      // Redirect to home page after successful login
+      router.push("/")
+      router.refresh()
     }
-    // If successful, the server action redirects to /
   }
 
   return (
