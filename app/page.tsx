@@ -7,11 +7,14 @@ import { Marketplace } from "@/components/landing/marketplace"
 import { TokenSection } from "@/components/landing/token-section"
 import { CTASection } from "@/components/landing/cta-section"
 import { Footer } from "@/components/landing/footer"
+import { getUserProfile } from "@/lib/auth/actions"
 
-export default function Home() {
+export default async function Home() {
+  const profile = await getUserProfile()
+
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
-      <Header />
+      <Header profile={profile} />
       <Hero />
       <Stats />
       <Communities />

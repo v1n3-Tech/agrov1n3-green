@@ -3,16 +3,40 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Eye, EyeOff, LogIn, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
+import { signIn } from "@/lib/auth/actions"
+import { V1n3ButtonLoader } from "@/components/ui/v1n3-loader"
 
 export default function SignInPage() {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
+
+    const formData = new FormData()
+    formData.append("email", email)
+    formData.append("password", password)
+
+    const result = await signIn(formData)
+    
+    if (result?.error) {
+      setError(result.error)
+      setIsLoading(false)
+    }
+    // If successful, the server action redirects to /
+  }
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -116,8 +140,15 @@ export default function SignInPage() {
               </Link>
             </p>
 
+            {/* Error Message */}
+            {error && (
+              <div className="mb-4 p-3 bg-destructive/10 border border-destructive/20 rounded-[4px] text-destructive text-sm">
+                {error}
+              </div>
+            )}
+
             {/* Form */}
-            <form className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <label htmlFor="email" className="text-sm text-foreground">
                   Email Address
@@ -128,6 +159,8 @@ export default function SignInPage() {
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isLoading}
                   className="h-11 bg-secondary/50 border-border/60 rounded-[4px] placeholder:text-muted-foreground/60 focus:border-primary"
                 />
               </div>
@@ -151,6 +184,8 @@ export default function SignInPage() {
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
+                    disabled={isLoading}
                     className="h-11 bg-secondary/50 border-border/60 rounded-[4px] placeholder:text-muted-foreground/60 focus:border-primary pr-10"
                   />
                   <button
@@ -181,10 +216,17 @@ export default function SignInPage() {
 
               <Button
                 type="submit"
+                disabled={isLoading}
                 className="w-full h-11 rounded-[4px] bg-primary hover:bg-primary/90 text-primary-foreground font-medium gap-2"
               >
-                <LogIn className="w-4 h-4" />
-                Sign In
+                {isLoading ? (
+                  <V1n3ButtonLoader />
+                ) : (
+                  <>
+                    <LogIn className="w-4 h-4" />
+                    Sign In
+                  </>
+                )}
               </Button>
             </form>
 
@@ -205,6 +247,7 @@ export default function SignInPage() {
               <Button
                 type="button"
                 variant="outline"
+                disabled={isLoading}
                 className="h-11 rounded-[4px] border-border/60 bg-secondary/30 hover:bg-secondary/50 hover:text-white text-foreground gap-2"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -230,6 +273,7 @@ export default function SignInPage() {
               <Button
                 type="button"
                 variant="outline"
+                disabled={isLoading}
                 className="h-11 rounded-[4px] border-border/60 bg-secondary/30 hover:bg-secondary/50 hover:text-white text-foreground gap-2"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

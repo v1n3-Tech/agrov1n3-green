@@ -5,6 +5,20 @@ import Image from "next/image"
 import Link from "next/link"
 import { Menu, X, ChevronDown, LogIn, UserPlus } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { UserMenu, UserMenuMobile } from "./user-menu"
+
+interface UserProfile {
+  id: string
+  username: string | null
+  avatar_url: string | null
+  first_name: string | null
+  last_name: string | null
+  role: string
+}
+
+interface HeaderProps {
+  profile?: UserProfile | null
+}
 
 const communities = [
   "Crop Farming", "Animal Farming", "Agro Marketing", "Agro Processing",
@@ -13,9 +27,10 @@ const communities = [
   "Agro Real Estate", "Agro Logistics"
 ]
 
-export function Header() {
+export function Header({ profile }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [showCommunities, setShowCommunities] = useState(false)
+  const isAuthenticated = !!profile
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-lg border-b border-border/40">
@@ -83,25 +98,31 @@ export function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-2">
-            <Link href="/sign-in">
-              <Button
-                variant="outline"
-                size="sm"
-                className="font-[family-name:var(--font-aldrich)] h-9 px-4 rounded-[4px] border-orange-400/70 text-white/70 hover:bg-orange/10 hover:border-orange-400 hover:text-white/100 text-[12px] gap-2 transition-colors"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                Sign In
-              </Button>
-            </Link>
-            <Link href="/register">
-              <Button
-                size="sm"
-                className="font-[family-name:var(--font-aldrich)] h-9 px-4 rounded-[4px] bg-primary/70 hover:bg-primary/100 hover:border-primary-400 text-white/70 hover:text-white/100 text-[12px] gap-2 font-medium"
-              >
-                <UserPlus className="w-3.5 h-3.5" />
-                Get Started
-              </Button>
-            </Link>
+            {isAuthenticated ? (
+              <UserMenu profile={profile} />
+            ) : (
+              <>
+                <Link href="/sign-in">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="font-[family-name:var(--font-aldrich)] h-9 px-4 rounded-[4px] border-orange-400/70 text-white/70 hover:bg-orange/10 hover:border-orange-400 hover:text-white/100 text-[12px] gap-2 transition-colors"
+                  >
+                    <LogIn className="w-3.5 h-3.5" />
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button
+                    size="sm"
+                    className="font-[family-name:var(--font-aldrich)] h-9 px-4 rounded-[4px] bg-primary/70 hover:bg-primary/100 hover:border-primary-400 text-white/70 hover:text-white/100 text-[12px] gap-2 font-medium"
+                  >
+                    <UserPlus className="w-3.5 h-3.5" />
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -129,27 +150,35 @@ export function Header() {
               <Link href="#token" className="text-[14px] text-orange-500 px-3 py-2 rounded-[3px] hover:bg-orange/30 transition-colors font-[family-name:var(--font-aldrich)]">
                 V1n3 Token
               </Link>
-              <div className="flex gap-2 mt-2 px-3 pb-1">
-                <Link href="/sign-in" className="flex-1 min-w-0">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="font-[family-name:var(--font-aldrich)] w-full h-9 rounded-[3px] border-orange-400/60 text-white/70 hover:bg-orange/5 hover:text-white/100 text-[11px] gap-1.5"
-                  >
-                    <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
-                    Sign In
-                  </Button>
-                </Link>
-                <Link href="/register" className="flex-1 min-w-0">
-                  <Button
-                    size="sm"
-                    className="font-[family-name:var(--font-aldrich)] w-full h-9 rounded-[3px] bg-primary/70 text-white/70 hover:bg-primary/100 hover:text-white/100 text-[11px] gap-1.5"
-                  >
-                    <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
-                    Register
-                  </Button>
-                </Link>
-              </div>
+              
+              {/* Mobile Auth Section */}
+              {isAuthenticated ? (
+                <div className="mt-2 pt-2 border-t border-border/40">
+                  <UserMenuMobile profile={profile} />
+                </div>
+              ) : (
+                <div className="flex gap-2 mt-2 px-3 pb-1">
+                  <Link href="/sign-in" className="flex-1 min-w-0">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="font-[family-name:var(--font-aldrich)] w-full h-9 rounded-[3px] border-orange-400/60 text-white/70 hover:bg-orange/5 hover:text-white/100 text-[11px] gap-1.5"
+                    >
+                      <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link href="/register" className="flex-1 min-w-0">
+                    <Button
+                      size="sm"
+                      className="font-[family-name:var(--font-aldrich)] w-full h-9 rounded-[3px] bg-primary/70 text-white/70 hover:bg-primary/100 hover:text-white/100 text-[11px] gap-1.5"
+                    >
+                      <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
+                      Register
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </nav>
           </div>
         )}

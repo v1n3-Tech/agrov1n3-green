@@ -3,10 +3,13 @@
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Eye, EyeOff, UserPlus, ArrowLeft, ChevronDown, Check, Sprout, Tractor, ShoppingCart, Factory, Scale, Palmtree, Cpu, Heart, Megaphone, Shield, BookOpen, GraduationCap, Building2, Truck, MapPin } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { Eye, EyeOff, UserPlus, ArrowLeft, ChevronDown, Check, Sprout, Tractor, ShoppingCart, Factory, Scale, Palmtree, Cpu, Heart, Megaphone, Shield, BookOpen, GraduationCap, Building2, Truck, MapPin, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
+import { signUp } from "@/lib/auth/actions"
+import { V1n3ButtonLoader } from "@/components/ui/v1n3-loader"
 
 const communities = [
   { name: "Crop Farming", icon: Sprout },
@@ -142,10 +145,12 @@ function CustomDropdown({
 }
 
 export default function RegisterPage() {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     localGovernment: "",
@@ -155,9 +160,48 @@ export default function RegisterPage() {
   })
   const [agreeTerms, setAgreeTerms] = useState(false)
   const [step, setStep] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match")
+      return
+    }
+
+    if (!agreeTerms) {
+      setError("Please agree to the terms and conditions")
+      return
+    }
+
+    setIsLoading(true)
+    setError(null)
+
+    const data = new FormData()
+    data.append("firstName", formData.firstName)
+    data.append("lastName", formData.lastName)
+    data.append("email", formData.email)
+    data.append("phone", formData.phone)
+    data.append("localGovernment", formData.localGovernment)
+    data.append("community", formData.community)
+    data.append("password", formData.password)
+
+    const result = await signUp(data)
+    
+    if (result.error) {
+      setError(result.error)
+      setIsLoading(false)
+    } else if (result.success) {
+      setSuccess(true)
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -244,49 +288,100 @@ export default function RegisterPage() {
         {/* Form Container */}
         <div className="flex-1 flex items-center justify-center p-6 sm:p-8 lg:p-12 overflow-y-auto">
           <div className="w-full max-w-md">
-            {/* Back Link */}
-            <Link 
-              href="/" 
-              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
-            </Link>
+            {/* Success Screen */}
+            {success ? (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-full flex items-center justify-center">
+                  <CheckCircle className="w-8 h-8 text-primary" />
+                </div>
+                <h2 className="font-[family-name:var(--font-aldrich)] text-2xl text-foreground mb-3">
+                  Check Your Email
+                </h2>
+                <p className="text-muted-foreground mb-6">
+                  {"We've sent a confirmation link to"}<br />
+                  <span className="text-foreground font-medium">{formData.email}</span>
+                </p>
+                <p className="text-sm text-muted-foreground mb-6">
+                  Click the link in the email to verify your account and start your journey as an Agro Executive.
+                </p>
+                <Link href="/sign-in">
+                  <Button className="w-full h-11 rounded-[4px]">
+                    Go to Sign In
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <>
+                {/* Back Link */}
+                <Link 
+                  href="/" 
+                  className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back to Home
+                </Link>
 
-            <h2 className="font-[family-name:var(--font-aldrich)] text-2xl text-foreground mb-2">
-              Create Account
-            </h2>
-            <p className="text-muted-foreground mb-6">
-              Already have an account?{" "}
-              <Link href="/sign-in" className="text-primary hover:text-primary/80 transition-colors">
-                Sign in
-              </Link>
-            </p>
+                <h2 className="font-[family-name:var(--font-aldrich)] text-2xl text-foreground mb-2">
+                  Create Account
+                </h2>
+                <p className="text-muted-foreground mb-6">
+                  Already have an account?{" "}
+                  <Link href="/sign-in" className="text-primary hover:text-primary/80 transition-colors">
+                    Sign in
+                  </Link>
+                </p>
 
-            {/* Step Indicator */}
-            <div className="flex items-center gap-2 mb-6">
-              <div className={`flex-1 h-1 rounded-full ${step >= 1 ? 'bg-primary' : 'bg-secondary'}`} />
-              <div className={`flex-1 h-1 rounded-full ${step >= 2 ? 'bg-primary' : 'bg-secondary'}`} />
-            </div>
-
-            {/* Form */}
-            <form className="space-y-4">
-              {step === 1 && (
-                <>
-                  <div className="space-y-2">
-                    <label htmlFor="fullName" className="text-sm text-foreground">
-                      Full Name
-                    </label>
-                    <Input
-                      id="fullName"
-                      name="fullName"
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={formData.fullName}
-                      onChange={handleChange}
-                      className="h-11 bg-secondary/50 border-border/60 rounded-[4px] placeholder:text-muted-foreground/60 focus:border-primary"
-                    />
+                {/* Error Message */}
+                {error && (
+                  <div className="mb-4 p-3 bg-destructive/10 border border-destructive/20 rounded-[4px] text-destructive text-sm">
+                    {error}
                   </div>
+                )}
+
+                {/* Step Indicator */}
+                <div className="flex items-center gap-2 mb-6">
+                  <div className={`flex-1 h-1 rounded-full ${step >= 1 ? 'bg-primary' : 'bg-secondary'}`} />
+                  <div className={`flex-1 h-1 rounded-full ${step >= 2 ? 'bg-primary' : 'bg-secondary'}`} />
+                </div>
+
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {step === 1 && (
+                    <>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                          <label htmlFor="firstName" className="text-sm text-foreground">
+                            First Name
+                          </label>
+                          <Input
+                            id="firstName"
+                            name="firstName"
+                            type="text"
+                            placeholder="First name"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            required
+                            disabled={isLoading}
+                            className="h-11 bg-secondary/50 border-border/60 rounded-[4px] placeholder:text-muted-foreground/60 focus:border-primary"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label htmlFor="lastName" className="text-sm text-foreground">
+                            Last Name
+                          </label>
+                          <Input
+                            id="lastName"
+                            name="lastName"
+                            type="text"
+                            placeholder="Last name"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            required
+                            disabled={isLoading}
+                            className="h-11 bg-secondary/50 border-border/60 rounded-[4px] placeholder:text-muted-foreground/60 focus:border-primary"
+                          />
+                        </div>
+                      </div>
 
                   <div className="space-y-2">
                     <label htmlFor="email" className="text-sm text-foreground">
@@ -299,6 +394,8 @@ export default function RegisterPage() {
                       placeholder="you@example.com"
                       value={formData.email}
                       onChange={handleChange}
+                      required
+                      disabled={isLoading}
                       className="h-11 bg-secondary/50 border-border/60 rounded-[4px] placeholder:text-muted-foreground/60 focus:border-primary"
                     />
                   </div>
@@ -314,6 +411,7 @@ export default function RegisterPage() {
                       placeholder="+234 800 000 0000"
                       value={formData.phone}
                       onChange={handleChange}
+                      disabled={isLoading}
                       className="h-11 bg-secondary/50 border-border/60 rounded-[4px] placeholder:text-muted-foreground/60 focus:border-primary"
                     />
                   </div>
@@ -428,16 +526,24 @@ export default function RegisterPage() {
                       type="button"
                       variant="outline"
                       onClick={() => setStep(1)}
+                      disabled={isLoading}
                       className="flex-1 h-11 rounded-[4px] border-border/60 hover:bg-secondary/50 hover:text-white"
                     >
                       Back
                     </Button>
                     <Button
                       type="submit"
+                      disabled={isLoading}
                       className="flex-1 h-11 rounded-[4px] bg-primary hover:bg-primary/90 text-primary-foreground font-medium gap-2"
                     >
-                      <UserPlus className="w-4 h-4" />
-                      Register
+                      {isLoading ? (
+                        <V1n3ButtonLoader />
+                      ) : (
+                        <>
+                          <UserPlus className="w-4 h-4" />
+                          Register
+                        </>
+                      )}
                     </Button>
                   </div>
                 </>
@@ -461,6 +567,7 @@ export default function RegisterPage() {
               <Button
                 type="button"
                 variant="outline"
+                disabled={isLoading}
                 className="h-11 rounded-[4px] border-border/60 bg-secondary/30 hover:bg-secondary/50 hover:text-white text-foreground gap-2"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -486,6 +593,7 @@ export default function RegisterPage() {
               <Button
                 type="button"
                 variant="outline"
+                disabled={isLoading}
                 className="h-11 rounded-[4px] border-border/60 bg-secondary/30 hover:bg-secondary/50 hover:text-white text-foreground gap-2"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -494,6 +602,8 @@ export default function RegisterPage() {
                 GitHub
               </Button>
             </div>
+              </>
+            )}
           </div>
         </div>
       </div>
