@@ -69,15 +69,15 @@ export function Hero() {
             <div className="flex flex-row gap-2.5 pt-1">
               <Button
                 size="lg"
-                className="h-10 px-4 sm:px-5 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium group flex-shrink-0 transition-colors duration-300"
+                className="h-10 px-4 sm:px-5 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium group flex-shrink-0 transition-colors duration-300 font-[family-name:var(--font-aldrich)]"
               >
                 Get Started
-                <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300 ease-out" />
+                <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300 ease-out font-[family-name:var(--font-aldrich)]" />
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="h-10 px-4 sm:px-5 rounded-[3px] border-border/50 text-white/60 bg-transparent hover:bg-orange/30 hover:text-white flex-shrink-0 transition-all duration-[2000ms] ease-out hover:translate-x-1"
+                className="h-10 px-4 sm:px-5 rounded-[3px] border-border/50  border-primary-600 text-white/70 hover:bg-primary/10 hover:text-white flex-shrink-0 transition-all duration-[500ms] ease-out hover:translate-x-1.5 font-[family-name:var(--font-aldrich)]"
               >
                 <Play className="w-3 h-3 mr-1.5" />
                 Watch Demo
