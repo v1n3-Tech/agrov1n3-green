@@ -22,7 +22,24 @@ import {
   Linkedin,
   MapPin,
   Sprout,
-  AtSign
+  AtSign,
+  Lock,
+  ChevronDown,
+  Check,
+  Tractor,
+  ShoppingCart,
+  Factory,
+  Scale,
+  Palmtree,
+  Cpu,
+  Heart,
+  Megaphone,
+  Shield,
+  BookOpen,
+  GraduationCap,
+  Building2,
+  Truck,
+  Info
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -31,20 +48,218 @@ import { createClient } from "@/lib/supabase/client"
 import { V1n3PageLoader } from "@/components/ui/v1n3-loader"
 import { 
   type Profile, 
-  type CommunityType,
-  type LocalGovernment,
   communityDisplayNames, 
   lgaDisplayNames
 } from "@/types/database"
 
-const communities = Object.entries(communityDisplayNames).map(([value, label]) => ({ value, label }))
-const localGovernments = Object.entries(lgaDisplayNames).map(([value, label]) => ({ value, label }))
+// Community options with icons
+const communityOptions = [
+  { value: "crop_farming", name: "Crop Farming", icon: Sprout },
+  { value: "animal_farming", name: "Animal Farming", icon: Tractor },
+  { value: "agro_marketing", name: "Agro Marketing", icon: ShoppingCart },
+  { value: "agro_processing", name: "Agro Processing", icon: Factory },
+  { value: "management_legislation", name: "Management & Legislation", icon: Scale },
+  { value: "agro_tourism", name: "Agro Tourism", icon: Palmtree },
+  { value: "agro_technology", name: "Agro Technology", icon: Cpu },
+  { value: "agro_health_care", name: "Agro Health Care", icon: Heart },
+  { value: "agro_media_branding", name: "Agro Media & Branding", icon: Megaphone },
+  { value: "agro_security", name: "Agro Security", icon: Shield },
+  { value: "agro_literature", name: "Agro Literature", icon: BookOpen },
+  { value: "motivation_training", name: "Motivation & Training", icon: GraduationCap },
+  { value: "agro_real_estate", name: "Agro Real Estate", icon: Building2 },
+  { value: "agro_logistics", name: "Agro Logistics", icon: Truck }
+]
+
 const genderOptions = [
   { value: 'male', label: 'Male' },
   { value: 'female', label: 'Female' },
   { value: 'other', label: 'Other' },
   { value: 'prefer_not_to_say', label: 'Prefer not to say' },
 ]
+
+// Read-only Field Component with lock icon and admin contact info
+function ReadOnlyField({ 
+  label, 
+  value, 
+  icon: Icon,
+  helperText 
+}: { 
+  label: string
+  value: string
+  icon?: React.ComponentType<{ className?: string }>
+  helperText?: string
+}) {
+  return (
+    <div className="space-y-2">
+      <label className="text-xs text-muted-foreground flex items-center gap-1.5">
+        {label}
+        <Lock className="w-3 h-3 text-muted-foreground/60" />
+      </label>
+      <div className="relative">
+        {Icon && <Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/60" />}
+        <div className={`w-full h-10 bg-secondary/30 border border-border/40 rounded-[4px] flex items-center text-sm text-muted-foreground ${Icon ? 'pl-10 pr-3' : 'px-3'}`}>
+          {value || <span className="text-muted-foreground/40">Not set</span>}
+        </div>
+      </div>
+      {helperText && (
+        <p className="text-[10px] text-muted-foreground/60 flex items-center gap-1">
+          <Info className="w-3 h-3" />
+          {helperText}
+        </p>
+      )}
+    </div>
+  )
+}
+
+// Beautiful Custom Dropdown for Gender (only when not set)
+function CustomGenderDropdown({ 
+  value, 
+  onChange,
+  disabled
+}: { 
+  value: string
+  onChange: (value: string) => void
+  disabled: boolean
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  const selectedOption = genderOptions.find(g => g.value === value)
+
+  if (disabled) {
+    return (
+      <div className="space-y-2">
+        <label className="text-xs text-muted-foreground flex items-center gap-1.5">
+          Gender
+          <Lock className="w-3 h-3 text-muted-foreground/60" />
+        </label>
+        <div className="w-full h-10 bg-secondary/30 border border-border/40 rounded-[4px] flex items-center px-3 text-sm text-muted-foreground">
+          {selectedOption?.label || <span className="text-muted-foreground/40">Not set</span>}
+        </div>
+        <p className="text-[10px] text-muted-foreground/60 flex items-center gap-1">
+          <Info className="w-3 h-3" />
+          Contact admin to change
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-2" ref={dropdownRef}>
+      <label className="text-xs text-muted-foreground">Gender</label>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className={`w-full h-10 bg-secondary/50 border rounded-[4px] px-3 text-left flex items-center justify-between transition-all duration-200 ${
+            isOpen ? 'border-primary ring-1 ring-primary/20' : 'border-border/60 hover:border-border'
+          }`}
+        >
+          <span className={value ? 'text-foreground text-sm' : 'text-muted-foreground/60 text-sm'}>
+            {selectedOption?.label || "Select gender"}
+          </span>
+          <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        </button>
+        
+        {isOpen && (
+          <div className="absolute z-50 w-full mt-1 bg-card border border-border/60 rounded-[4px] shadow-xl shadow-black/20 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-150">
+            <div className="max-h-[200px] overflow-y-auto">
+              {genderOptions.map((option) => {
+                const isSelected = value === option.value
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => {
+                      onChange(option.value)
+                      setIsOpen(false)
+                    }}
+                    className={`w-full px-3 py-2.5 flex items-center gap-3 text-left transition-all duration-150 ${
+                      isSelected 
+                        ? 'bg-primary text-primary-foreground' 
+                        : 'hover:bg-primary/10 text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    <User className={`w-4 h-4 flex-shrink-0 ${isSelected ? 'text-primary-foreground' : 'text-primary'}`} />
+                    <span className="flex-1 text-sm">{option.label}</span>
+                    {isSelected && <Check className="w-4 h-4 flex-shrink-0" />}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+      <p className="text-[10px] text-orange flex items-center gap-1">
+        <AlertCircle className="w-3 h-3" />
+        Once set, gender cannot be changed
+      </p>
+    </div>
+  )
+}
+
+// Display-only Community Card
+function CommunityDisplay({ communityValue }: { communityValue: string }) {
+  const community = communityOptions.find(c => c.value === communityValue)
+  const Icon = community?.icon || Sprout
+
+  return (
+    <div className="space-y-2">
+      <label className="text-xs text-muted-foreground flex items-center gap-1.5">
+        Community
+        <Lock className="w-3 h-3 text-muted-foreground/60" />
+      </label>
+      <div className="w-full bg-secondary/30 border border-border/40 rounded-[4px] p-3 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-[4px] bg-primary/10 border border-primary/20 flex items-center justify-center">
+          <Icon className="w-5 h-5 text-primary" />
+        </div>
+        <div className="flex-1">
+          <p className="text-sm text-foreground font-medium">{community?.name || communityDisplayNames[communityValue as keyof typeof communityDisplayNames] || "Not set"}</p>
+          <p className="text-[10px] text-muted-foreground">Agro Community</p>
+        </div>
+      </div>
+      <p className="text-[10px] text-muted-foreground/60 flex items-center gap-1">
+        <Info className="w-3 h-3" />
+        Contact admin to request community change
+      </p>
+    </div>
+  )
+}
+
+// Display-only LGA Card
+function LGADisplay({ lgaValue }: { lgaValue: string }) {
+  return (
+    <div className="space-y-2">
+      <label className="text-xs text-muted-foreground flex items-center gap-1.5">
+        Local Government
+        <Lock className="w-3 h-3 text-muted-foreground/60" />
+      </label>
+      <div className="w-full bg-secondary/30 border border-border/40 rounded-[4px] p-3 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-[4px] bg-orange/10 border border-orange/20 flex items-center justify-center">
+          <MapPin className="w-5 h-5 text-orange" />
+        </div>
+        <div className="flex-1">
+          <p className="text-sm text-foreground font-medium">{lgaDisplayNames[lgaValue as keyof typeof lgaDisplayNames] || lgaValue || "Not set"}</p>
+          <p className="text-[10px] text-muted-foreground">Plateau State, Nigeria</p>
+        </div>
+      </div>
+      <p className="text-[10px] text-muted-foreground/60 flex items-center gap-1">
+        <Lock className="w-3 h-3" />
+        Local government cannot be changed
+      </p>
+    </div>
+  )
+}
 
 export default function EditProfilePage() {
   const router = useRouter()
@@ -56,16 +271,11 @@ export default function EditProfilePage() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
   
-  // Form state
+  // Form state - only editable fields
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    phone: "",
     bio: "",
     date_of_birth: "",
     gender: "",
-    community: "",
-    local_government: "",
     username: "",
     twitter_url: "",
     facebook_url: "",
@@ -97,14 +307,9 @@ export default function EditProfilePage() {
       const p = profileData as Profile
       setProfile(p)
       setFormData({
-        first_name: p.first_name || "",
-        last_name: p.last_name || "",
-        phone: p.phone || "",
         bio: p.bio || "",
         date_of_birth: p.date_of_birth || "",
         gender: p.gender || "",
-        community: p.community || "",
-        local_government: p.local_government || "",
         username: p.username || "",
         twitter_url: p.twitter_url || "",
         facebook_url: p.facebook_url || "",
@@ -117,7 +322,7 @@ export default function EditProfilePage() {
     fetchProfile()
   }, [router])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
   }
@@ -134,12 +339,12 @@ export default function EditProfilePage() {
     setError(null)
 
     try {
-      const formData = new FormData()
-      formData.append('file', file)
+      const formDataUpload = new FormData()
+      formDataUpload.append('file', file)
 
       const response = await fetch('/api/upload/avatar', {
         method: 'POST',
-        body: formData,
+        body: formDataUpload,
       })
 
       const data = await response.json()
@@ -148,7 +353,6 @@ export default function EditProfilePage() {
         throw new Error(data.error || 'Failed to upload avatar')
       }
 
-      // Update local profile state with new avatar URL
       setProfile(prev => prev ? { ...prev, avatar_url: data.url } : null)
       setSuccess('Avatar updated successfully!')
       setTimeout(() => setSuccess(null), 3000)
@@ -165,22 +369,25 @@ export default function EditProfilePage() {
     setError(null)
 
     try {
-      // Prepare updates - only include changed fields
       const updates: Record<string, string | null> = {}
       
-      if (formData.first_name !== (profile?.first_name || "")) updates.first_name = formData.first_name || null
-      if (formData.last_name !== (profile?.last_name || "")) updates.last_name = formData.last_name || null
-      if (formData.phone !== (profile?.phone || "")) updates.phone = formData.phone || null
+      // Only allow updating specific fields
       if (formData.bio !== (profile?.bio || "")) updates.bio = formData.bio || null
-      if (formData.date_of_birth !== (profile?.date_of_birth || "")) updates.date_of_birth = formData.date_of_birth || null
-      if (formData.gender !== (profile?.gender || "")) updates.gender = formData.gender || null
-      if (formData.community !== (profile?.community || "")) updates.community = formData.community || null
-      if (formData.local_government !== (profile?.local_government || "")) updates.local_government = formData.local_government || null
       if (formData.username !== (profile?.username || "")) updates.username = formData.username
       if (formData.twitter_url !== (profile?.twitter_url || "")) updates.twitter_url = formData.twitter_url || null
       if (formData.facebook_url !== (profile?.facebook_url || "")) updates.facebook_url = formData.facebook_url || null
       if (formData.instagram_url !== (profile?.instagram_url || "")) updates.instagram_url = formData.instagram_url || null
       if (formData.linkedin_url !== (profile?.linkedin_url || "")) updates.linkedin_url = formData.linkedin_url || null
+      
+      // Date of birth - only if not already set
+      if (!profile?.date_of_birth && formData.date_of_birth) {
+        updates.date_of_birth = formData.date_of_birth
+      }
+      
+      // Gender - only if not already set
+      if (!profile?.gender && formData.gender) {
+        updates.gender = formData.gender
+      }
 
       if (Object.keys(updates).length === 0) {
         setSuccess('No changes to save')
@@ -221,6 +428,10 @@ export default function EditProfilePage() {
   const initials = profile.first_name && profile.last_name 
     ? `${profile.first_name[0]}${profile.last_name[0]}`.toUpperCase()
     : profile.username?.slice(0, 2).toUpperCase() || "U"
+
+  // Determine if DOB and Gender are locked (already set)
+  const isDobLocked = !!profile.date_of_birth
+  const isGenderLocked = !!profile.gender
 
   return (
     <div className="min-h-screen bg-background">
@@ -331,90 +542,108 @@ export default function EditProfilePage() {
             </div>
           </div>
 
-          {/* Personal Information */}
+          {/* Personal Information (Read-Only) */}
           <div className="bg-card border border-border/60 rounded-[4px] p-6">
-            <h2 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
+            <h2 className="text-sm font-medium text-foreground mb-1 flex items-center gap-2">
               <User className="w-4 h-4 text-primary" />
               Personal Information
             </h2>
+            <p className="text-[10px] text-muted-foreground mb-4">These fields require admin approval to change</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label htmlFor="first_name" className="text-xs text-muted-foreground">First Name</label>
-                <Input
-                  id="first_name"
-                  name="first_name"
-                  value={formData.first_name}
-                  onChange={handleChange}
-                  placeholder="Your first name"
-                  className="h-10 bg-secondary/50 border-border/60 rounded-[4px] text-sm"
+              <ReadOnlyField 
+                label="First Name" 
+                value={profile.first_name || ""} 
+                icon={User}
+                helperText="Contact admin to change"
+              />
+              <ReadOnlyField 
+                label="Last Name" 
+                value={profile.last_name || ""} 
+                icon={User}
+                helperText="Contact admin to change"
+              />
+              <ReadOnlyField 
+                label="Email" 
+                value={profile.email || ""} 
+                icon={Mail}
+                helperText="Email cannot be changed"
+              />
+              <ReadOnlyField 
+                label="Phone Number" 
+                value={profile.phone || ""} 
+                icon={Phone}
+                helperText="Contact admin to change"
+              />
+            </div>
+          </div>
+
+          {/* Date of Birth & Gender */}
+          <div className="bg-card border border-border/60 rounded-[4px] p-6">
+            <h2 className="text-sm font-medium text-foreground mb-1 flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-primary" />
+              Additional Details
+            </h2>
+            <p className="text-[10px] text-muted-foreground mb-4">These fields can only be set once</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Date of Birth */}
+              {isDobLocked ? (
+                <ReadOnlyField 
+                  label="Date of Birth" 
+                  value={profile.date_of_birth ? new Date(profile.date_of_birth).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ""} 
+                  icon={Calendar}
+                  helperText="Contact admin to change"
                 />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="last_name" className="text-xs text-muted-foreground">Last Name</label>
-                <Input
-                  id="last_name"
-                  name="last_name"
-                  value={formData.last_name}
-                  onChange={handleChange}
-                  placeholder="Your last name"
-                  className="h-10 bg-secondary/50 border-border/60 rounded-[4px] text-sm"
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="phone" className="text-xs text-muted-foreground">Phone Number</label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+234 800 000 0000"
-                    className="h-10 pl-10 bg-secondary/50 border-border/60 rounded-[4px] text-sm"
-                  />
+              ) : (
+                <div className="space-y-2">
+                  <label htmlFor="date_of_birth" className="text-xs text-muted-foreground">Date of Birth</label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      id="date_of_birth"
+                      name="date_of_birth"
+                      type="date"
+                      value={formData.date_of_birth}
+                      onChange={handleChange}
+                      className="h-10 pl-10 bg-secondary/50 border-border/60 rounded-[4px] text-sm"
+                    />
+                  </div>
+                  <p className="text-[10px] text-orange flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    Once set, date of birth cannot be changed
+                  </p>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="date_of_birth" className="text-xs text-muted-foreground">Date of Birth</label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="date_of_birth"
-                    name="date_of_birth"
-                    type="date"
-                    value={formData.date_of_birth}
-                    onChange={handleChange}
-                    className="h-10 pl-10 bg-secondary/50 border-border/60 rounded-[4px] text-sm"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2 sm:col-span-2">
-                <label htmlFor="gender" className="text-xs text-muted-foreground">Gender</label>
-                <select
-                  id="gender"
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  className="w-full h-10 bg-secondary/50 border border-border/60 rounded-[4px] px-3 text-sm text-foreground"
-                >
-                  <option value="">Select gender</option>
-                  {genderOptions.map(opt => (
-                    <option key={opt.value} value={opt.value}>{opt.label}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="space-y-2 sm:col-span-2">
-                <label htmlFor="bio" className="text-xs text-muted-foreground">Bio</label>
-                <Textarea
-                  id="bio"
-                  name="bio"
-                  value={formData.bio}
-                  onChange={handleChange}
-                  placeholder="Tell us about yourself..."
-                  rows={3}
-                  className="bg-secondary/50 border-border/60 rounded-[4px] text-sm resize-none"
-                />
-              </div>
+              )}
+              
+              {/* Gender */}
+              <CustomGenderDropdown
+                value={formData.gender}
+                onChange={(value) => setFormData(prev => ({ ...prev, gender: value }))}
+                disabled={isGenderLocked}
+              />
+            </div>
+          </div>
+
+          {/* Bio */}
+          <div className="bg-card border border-border/60 rounded-[4px] p-6">
+            <h2 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-primary" />
+              About You
+            </h2>
+            <div className="space-y-2">
+              <label htmlFor="bio" className="text-xs text-muted-foreground">Bio</label>
+              <Textarea
+                id="bio"
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+                placeholder="Tell us about yourself, your agricultural journey, and your goals..."
+                rows={4}
+                maxLength={500}
+                className="bg-secondary/50 border-border/60 rounded-[4px] text-sm resize-none"
+              />
+              <p className="text-[10px] text-muted-foreground text-right">
+                {formData.bio.length}/500 characters
+              </p>
             </div>
           </div>
 
@@ -434,61 +663,33 @@ export default function EditProfilePage() {
                   onChange={handleChange}
                   disabled={profile.username_changed}
                   placeholder="Your username"
-                  className="h-10 pl-10 bg-secondary/50 border-border/60 rounded-[4px] text-sm disabled:opacity-50"
+                  className="h-10 pl-10 bg-secondary/50 border-border/60 rounded-[4px] text-sm disabled:opacity-50 disabled:bg-secondary/30"
                 />
               </div>
               {profile.username_changed ? (
-                <p className="text-xs text-muted-foreground">
-                  You have already used your one-time username change.
+                <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+                  <Lock className="w-3 h-3" />
+                  Username already changed once.
                   {profile.original_username && ` Original: ${profile.original_username}`}
                 </p>
               ) : (
-                <p className="text-xs text-orange">
+                <p className="text-[10px] text-orange flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" />
                   You can only change your username once. Choose wisely!
                 </p>
               )}
             </div>
           </div>
 
-          {/* Community & Location */}
+          {/* Community & Location (Read-Only) */}
           <div className="bg-card border border-border/60 rounded-[4px] p-6">
             <h2 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
               <Sprout className="w-4 h-4 text-primary" />
               Community & Location
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label htmlFor="community" className="text-xs text-muted-foreground">Community</label>
-                <select
-                  id="community"
-                  name="community"
-                  value={formData.community}
-                  onChange={handleChange}
-                  className="w-full h-10 bg-secondary/50 border border-border/60 rounded-[4px] px-3 text-sm text-foreground"
-                >
-                  <option value="">Select community</option>
-                  {communities.map(c => (
-                    <option key={c.value} value={c.value}>{c.label}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="local_government" className="text-xs text-muted-foreground">Local Government</label>
-                <div className="relative">
-                  <select
-                    id="local_government"
-                    name="local_government"
-                    value={formData.local_government}
-                    onChange={handleChange}
-                    className="w-full h-10 bg-secondary/50 border border-border/60 rounded-[4px] px-3 text-sm text-foreground"
-                  >
-                    <option value="">Select LGA</option>
-                    {localGovernments.map(lg => (
-                      <option key={lg.value} value={lg.value}>{lg.label}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+              <CommunityDisplay communityValue={profile.community || ""} />
+              <LGADisplay lgaValue={profile.local_government || ""} />
             </div>
           </div>
 
@@ -497,7 +698,7 @@ export default function EditProfilePage() {
             <h2 className="text-sm font-medium text-foreground mb-4">Social Links</h2>
             <div className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="twitter_url" className="text-xs text-muted-foreground">Twitter</label>
+                <label htmlFor="twitter_url" className="text-xs text-muted-foreground">Twitter / X</label>
                 <div className="relative">
                   <Twitter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -555,36 +756,35 @@ export default function EditProfilePage() {
             </div>
           </div>
 
-          {/* Account Info (Read Only) */}
-          <div className="bg-card border border-border/60 rounded-[4px] p-6">
-            <h2 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
-              <Mail className="w-4 h-4 text-primary" />
-              Account Information
-            </h2>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-secondary/20 rounded-[4px]">
-                <div>
-                  <p className="text-xs text-muted-foreground">Email Address</p>
-                  <p className="text-sm text-foreground">{profile.email}</p>
-                </div>
-                <span className="text-xs text-muted-foreground bg-secondary px-2 py-1 rounded-full">Cannot be changed</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-secondary/20 rounded-[4px]">
-                <div>
-                  <p className="text-xs text-muted-foreground">Agro ID</p>
-                  <p className="text-sm text-primary font-mono font-bold">{profile.agro_id}</p>
-                </div>
-                <span className="text-xs text-muted-foreground bg-secondary px-2 py-1 rounded-full">Permanent</span>
+          {/* Admin Contact Notice */}
+          <div className="bg-orange/5 border border-orange/20 rounded-[4px] p-4">
+            <div className="flex gap-3">
+              <Info className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="text-sm font-medium text-orange">Need to change locked fields?</h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Personal information (name, phone), date of birth, gender, and community require admin approval to change. 
+                  Local government cannot be changed under any circumstances.
+                </p>
+                <Button 
+                  type="button"
+                  variant="outline" 
+                  size="sm" 
+                  className="mt-3 h-8 text-xs border-orange/30 text-orange hover:bg-orange/10 rounded-[4px]"
+                  onClick={() => {/* TODO: Open contact admin modal */}}
+                >
+                  Contact Admin
+                </Button>
               </div>
             </div>
           </div>
 
-          {/* Submit Button - Mobile */}
+          {/* Save Button (Mobile) */}
           <div className="sm:hidden">
             <Button 
               type="submit"
               disabled={saving}
-              className="w-full h-11 rounded-[4px] gap-2"
+              className="w-full h-11 gap-2 rounded-[4px]"
             >
               {saving ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
