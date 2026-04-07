@@ -106,7 +106,7 @@ export function Header({ profile }: HeaderProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="font-[family-name:var(--font-aldrich)] h-9 px-4 rounded-[4px] border-orange-400/70 text-white/70 hover:bg-orange/10 hover:border-orange-400 hover:text-white/100 text-[12px] gap-2 transition-colors transition-all duration-[500ms] ease-out"
+                    className="font-[family-name:var(--font-aldrich)] h-9 px-4 rounded-[4px] border-orange-400/70 text-white/70 hover:bg-orange/10 hover:border-orange-400 hover:text-white/100 text-[12px] gap-2 transition-colors transition-all duration-[1000ms] ease-out"
                   >
                     <LogIn className="w-3.5 h-3.5" />
                     Sign In
