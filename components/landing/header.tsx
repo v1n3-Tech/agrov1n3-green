@@ -106,7 +106,7 @@ export function Header({ profile }: HeaderProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="font-[family-name:var(--font-aldrich)] h-9 px-4 rounded-[4px] border-orange-400/70 text-white/70 hover:bg-orange/10 hover:border-orange-400 hover:text-white/100 text-[12px] gap-2 transition-colors"
+                    className="font-[family-name:var(--font-aldrich)] h-9 px-4 rounded-[4px] border-orange-400/70 text-white/70 hover:bg-orange/10 hover:border-orange-400 hover:text-white/100 text-[12px] gap-2 transition-colors transition-all duration-[500ms] ease-out"
                   >
                     <LogIn className="w-3.5 h-3.5" />
                     Sign In
@@ -115,7 +115,7 @@ export function Header({ profile }: HeaderProps) {
                 <Link href="/register">
                   <Button
                     size="sm"
-                    className="font-[family-name:var(--font-aldrich)] h-9 px-4 rounded-[4px] bg-primary/70 hover:bg-primary/100 hover:border-primary-400 text-white/70 hover:text-white/100 text-[12px] gap-2 font-medium"
+                    className="font-[family-name:var(--font-aldrich)] h-9 px-4 rounded-[4px] bg-primary/70 hover:bg-primary/100 hover:border-primary-400 text-white/70 hover:text-white/100 text-[12px] gap-2 font-medium transition-all duration-[500ms] ease-out"
                   >
                     <UserPlus className="w-3.5 h-3.5" />
                     Get Started
@@ -150,7 +150,7 @@ export function Header({ profile }: HeaderProps) {
               <Link href="#token" className="text-[14px] text-orange-500 px-3 py-2 rounded-[3px] hover:bg-orange/30 transition-colors font-[family-name:var(--font-aldrich)]">
                 V1n3 Token
               </Link>
-              
+
               {/* Mobile Auth Section */}
               {isAuthenticated ? (
                 <div className="mt-2 pt-2 border-t border-border/40">
@@ -162,7 +162,7 @@ export function Header({ profile }: HeaderProps) {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="font-[family-name:var(--font-aldrich)] w-full h-9 rounded-[3px] border-orange-400/60 text-white/70 hover:bg-orange/5 hover:text-white/100 text-[11px] gap-1.5"
+                      className="font-[family-name:var(--font-aldrich)] w-full h-9 rounded-[3px] border-orange-400/60 text-white/70 hover:bg-orange/5 hover:text-white/100 text-[11px] gap-1.5 transition-all duration-[500ms] ease-out"
                     >
                       <LogIn className="w-3.5 h-3.5 flex-shrink-0" />
                       Sign In
@@ -171,7 +171,7 @@ export function Header({ profile }: HeaderProps) {
                   <Link href="/register" className="flex-1 min-w-0">
                     <Button
                       size="sm"
-                      className="font-[family-name:var(--font-aldrich)] w-full h-9 rounded-[3px] bg-primary/70 text-white/70 hover:bg-primary/100 hover:text-white/100 text-[11px] gap-1.5"
+                      className="font-[family-name:var(--font-aldrich)] w-full h-9 rounded-[3px] bg-primary/70 text-white/70 hover:bg-primary/100 hover:text-white/100 text-[11px] gap-1.5 transition-all duration-[500ms] ease-out"
                     >
                       <UserPlus className="w-3.5 h-3.5 flex-shrink-0" />
                       Register
