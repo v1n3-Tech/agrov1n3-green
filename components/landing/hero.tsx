@@ -77,7 +77,7 @@ export function Hero() {
               <Button
                 variant="outline"
                 size="lg"
-                className="h-10 px-4 sm:px-5 rounded-[3px] border-border/50 text-sm hover:border-orange/50 hover:text-orange flex-shrink-0 transition-all duration-[2000ms] ease-out hover:translate-x-1"
+                className="h-10 px-4 sm:px-5 rounded-[3px] border-border/50 text-white/60 bg-transparent hover:bg-orange/30 hover:text-white flex-shrink-0 transition-all duration-[2000ms] ease-out hover:translate-x-1"
               >
                 <Play className="w-3 h-3 mr-1.5" />
                 Watch Demo
