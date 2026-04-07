@@ -101,7 +101,7 @@ export function Hero() {
             <div className="relative w-full max-w-[340px]">
               {/* Glow */}
               <div className="absolute -inset-4 bg-primary/5 rounded-[5px] blur-2xl" />
-              
+
               {/* Main Card */}
               <div className="relative bg-card/90 backdrop-blur-sm border border-border/60 rounded-[5px] p-5 shadow-2xl">
                 {/* Logo */}
@@ -161,7 +161,7 @@ export function Hero() {
                   </div>
                   <div>
                     <p className="text-[8px] text-muted-foreground leading-none">V1n3</p>
-                    <p className="text-xs font-semibold text-accent leading-tight">$0.0842</p>
+                    <p className="text-xs font-semibold text-orange-500 leading-tight">$0.0842</p>
                   </div>
                 </div>
               </div>
