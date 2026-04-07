@@ -67,11 +67,18 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-row gap-2.5 pt-1">
-              <Button size="lg" className="h-10 px-4 sm:px-5 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium group flex-shrink-0">
+              <Button
+                size="lg"
+                className="h-10 px-4 sm:px-5 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium group flex-shrink-0 transition-colors duration-300 font-[family-name:var(--font-aldrich)]"
+              >
                 Get Started
-                <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300 ease-out font-[family-name:var(--font-aldrich)]" />
               </Button>
-              <Button variant="outline" size="lg" className="h-10 px-4 sm:px-5 rounded-[3px] border-border/50 text-sm hover:border-orange/50 hover:text-orange flex-shrink-0 transition-colors">
+              <Button
+                variant="outline"
+                size="lg"
+                className="h-10 px-4 sm:px-5 rounded-[3px] border-border/50  border-primary-600 text-white/70 hover:bg-primary/10 hover:text-white flex-shrink-0 transition-all duration-[500ms] ease-out hover:translate-x-1.5 font-[family-name:var(--font-aldrich)]"
+              >
                 <Play className="w-3 h-3 mr-1.5" />
                 Watch Demo
               </Button>
@@ -101,7 +108,7 @@ export function Hero() {
             <div className="relative w-full max-w-[340px]">
               {/* Glow */}
               <div className="absolute -inset-4 bg-primary/5 rounded-[5px] blur-2xl" />
-              
+
               {/* Main Card */}
               <div className="relative bg-card/90 backdrop-blur-sm border border-border/60 rounded-[5px] p-5 shadow-2xl">
                 {/* Logo */}
@@ -161,7 +168,7 @@ export function Hero() {
                   </div>
                   <div>
                     <p className="text-[8px] text-muted-foreground leading-none">V1n3</p>
-                    <p className="text-xs font-semibold text-accent leading-tight">$0.0842</p>
+                    <p className="text-xs font-semibold text-orange-500 leading-tight">$0.0842</p>
                   </div>
                 </div>
               </div>

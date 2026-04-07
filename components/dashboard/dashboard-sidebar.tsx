@@ -250,7 +250,7 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
           </div>
           {!isCollapsed && (
             <span className="font-[family-name:var(--font-aldrich)] text-lg text-foreground">
-              Agro<span className="text-primary">V1n3</span>
+              Green<span className="text-primary">V1n3</span>
             </span>
           )}
         </Link>
