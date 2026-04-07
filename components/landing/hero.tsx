@@ -67,11 +67,18 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-row gap-2.5 pt-1">
-              <Button size="lg" className="h-10 px-4 sm:px-5 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium group flex-shrink-0">
+              <Button
+                size="lg"
+                className="h-10 px-4 sm:px-5 rounded-[3px] bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium group flex-shrink-0 transition-colors"
+              >
                 Get Started
-                <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300" />
               </Button>
-              <Button variant="outline" size="lg" className="h-10 px-4 sm:px-5 rounded-[3px] border-border/50 text-sm hover:border-orange/50 hover:text-orange flex-shrink-0 transition-colors">
+              <Button
+                variant="outline"
+                size="lg"
+                className="h-10 px-4 sm:px-5 rounded-[3px] border-border/50 text-sm hover:border-orange/50 hover:text-orange flex-shrink-0 transition-colors duration-300"
+              >
                 <Play className="w-3 h-3 mr-1.5" />
                 Watch Demo
               </Button>
