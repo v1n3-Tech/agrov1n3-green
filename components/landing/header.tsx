@@ -48,7 +48,7 @@ export function Header({ profile }: HeaderProps) {
               />
             </div>
             <span className="font-[family-name:var(--font-aldrich)] text-lg lg:text-2xl">
-              Agro<span className="text-primary">V1n3</span>
+              Green<span className="text-primary">V1n3</span>
             </span>
           </Link>
 
@@ -91,7 +91,10 @@ export function Header({ profile }: HeaderProps) {
             <Link href="/marketplace" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
               Marketplace
             </Link>
-            <Link href="#token" className="flex items-center gap-1.5 text-[13px] text-orange-400 font-medium hover:text-orange-500 transition-colors duration-200 font-[family-name:var(--font-aldrich)]">
+            <Link href="/gallery" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
+              Gallery
+            </Link>
+            <Link href="/token" className="flex items-center gap-1.5 text-[13px] text-orange-400 font-medium hover:text-orange-500 transition-colors duration-200 font-[family-name:var(--font-aldrich)]">
               V1N3 TOKEN
             </Link>
           </nav>
@@ -147,8 +150,11 @@ export function Header({ profile }: HeaderProps) {
               <Link href="/marketplace" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
                 Marketplace
               </Link>
+              <Link href="/gallery" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
+                Gallery
+              </Link>
               <Link href="/token" className="text-[14px] text-orange-500 px-3 py-2 rounded-[3px] hover:bg-orange/30 transition-colors font-[family-name:var(--font-aldrich)]">
-                V1n3 Token
+                V1N3 TOKEN
               </Link>
 
               {/* Mobile Auth Section */}
