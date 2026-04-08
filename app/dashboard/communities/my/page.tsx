@@ -15,5 +15,5 @@ export default async function MyCommunityPage() {
 
   // Convert community ID to slug
   const slug = profile.community.replace(/_/g, "-")
-  redirect(`/dashboard/communities/${slug}`)
+  redirect(`/communities/${slug}`)
 }

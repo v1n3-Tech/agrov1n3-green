@@ -48,13 +48,13 @@ export function Header({ profile }: HeaderProps) {
               />
             </div>
             <span className="font-[family-name:var(--font-aldrich)] text-lg lg:text-2xl">
-              Agro<span className="text-primary">V1n3</span>
+              Green<span className="text-primary">V1n3</span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-6">
-            <Link href="#features" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
+            <Link href="/features" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
               Features
             </Link>
 
@@ -64,10 +64,10 @@ export function Header({ profile }: HeaderProps) {
               onMouseEnter={() => setShowCommunities(true)}
               onMouseLeave={() => setShowCommunities(false)}
             >
-              <button className="flex items-center gap-1 text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
+              <Link href="/communities" className="flex items-center gap-1 text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
                 Communities
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${showCommunities ? 'rotate-180' : ''}`} />
-              </button>
+              </Link>
 
               {showCommunities && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
@@ -76,7 +76,7 @@ export function Header({ profile }: HeaderProps) {
                       {communities.map((community) => (
                         <Link
                           key={community}
-                          href={`#${community.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
+                          href={`/communities/${community.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
                           className="px-3 py-1.5 text-[13px] text-muted-foreground hover:text-foreground hover:bg-primary/10 rounded-[3px] transition-colors duration-150"
                         >
                           {community}
@@ -88,10 +88,13 @@ export function Header({ profile }: HeaderProps) {
               )}
             </div>
 
-            <Link href="#marketplace" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
+            <Link href="/marketplace" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
               Marketplace
             </Link>
-            <Link href="#token" className="flex items-center gap-1.5 text-[13px] text-orange-400 font-medium hover:text-orange-500 transition-colors duration-200 font-[family-name:var(--font-aldrich)]">
+            <Link href="/gallery" className="text-[15px] text-muted-foreground hover:text-foreground transition-colors duration-200">
+              Gallery
+            </Link>
+            <Link href="/token" className="flex items-center gap-1.5 text-[13px] text-orange-400 font-medium hover:text-orange-500 transition-colors duration-200 font-[family-name:var(--font-aldrich)]">
               V1N3 TOKEN
             </Link>
           </nav>
@@ -138,17 +141,20 @@ export function Header({ profile }: HeaderProps) {
         {isOpen && (
           <div className="lg:hidden py-3 border-t border-border/40">
             <nav className="flex flex-col gap-1">
-              <Link href="#features" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
+              <Link href="/features" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
                 Features
               </Link>
-              <Link href="#communities" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
+              <Link href="/communities" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
                 14 Communities
               </Link>
-              <Link href="#marketplace" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
+              <Link href="/marketplace" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
                 Marketplace
               </Link>
-              <Link href="#token" className="text-[14px] text-orange-500 px-3 py-2 rounded-[3px] hover:bg-orange/30 transition-colors font-[family-name:var(--font-aldrich)]">
-                V1n3 Token
+              <Link href="/gallery" className="text-[15px] text-muted-foreground hover:text-foreground px-3 py-2 rounded-[3px] hover:bg-secondary/50 transition-colors">
+                Gallery
+              </Link>
+              <Link href="/token" className="text-[14px] text-orange-500 px-3 py-2 rounded-[3px] hover:bg-orange/30 transition-colors font-[family-name:var(--font-aldrich)]">
+                V1N3 TOKEN
               </Link>
 
               {/* Mobile Auth Section */}
