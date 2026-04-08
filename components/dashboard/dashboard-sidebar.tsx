@@ -29,6 +29,8 @@ import {
   Calendar,
   Target,
   Award,
+  Home,
+  ExternalLink,
   type LucideIcon,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -84,10 +86,10 @@ const mainNavItems: NavItem[] = [
   },
   {
     title: "Communities",
-    href: "/dashboard/communities",
+    href: "/communities",
     icon: Sprout,
     children: [
-      { title: "Browse All", href: "/dashboard/communities" },
+      { title: "Browse All", href: "/communities" },
       { title: "My Community", href: "/dashboard/communities/my" },
       { title: "Activity Feed", href: "/dashboard/communities/feed" },
     ],
@@ -392,6 +394,13 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
                   <Link href="/dashboard/help" className="cursor-pointer">
                     <HelpCircle className="mr-2 h-4 w-4" />
                     Help & Support
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/" className="cursor-pointer">
+                    <Home className="mr-2 h-4 w-4" />
+                    Back to Home
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
