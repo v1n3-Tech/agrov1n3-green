@@ -1,366 +1,383 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
-import Link from "next/link"
-import { 
-  Camera, 
-  Filter, 
-  Grid3X3, 
-  LayoutGrid, 
-  Search, 
-  Heart, 
-  MessageCircle, 
-  Share2, 
-  Download, 
-  X, 
-  ChevronLeft, 
-  ChevronRight,
-  Calendar,
-  MapPin,
-  User,
-  Sparkles,
-  ImageIcon,
-  Play,
-  Maximize2
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { createClient } from "@/utils/supabase/client"
 import { Header } from "@/components/landing/header"
+import { V1n3Loader } from "@/components/ui/v1n3-loader"
+import type { GalleryImage, Profile, CommunityType } from "@/types/database"
+import { 
+  Search, 
+  Grid3X3, 
+  LayoutGrid,
+  Heart,
+  MessageCircle,
+  Share2,
+  Download,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  MapPin,
+  Calendar,
+  User,
+  Plus,
+  Upload,
+  ImageIcon,
+  Sparkles,
+  Eye,
+  Camera
+} from "lucide-react"
 
-// Mock gallery data
 const categories = [
-  { id: "all", name: "All Photos", count: 156 },
-  { id: "harvest", name: "Harvest Season", count: 42 },
-  { id: "events", name: "Community Events", count: 38 },
-  { id: "farms", name: "Farm Tours", count: 28 },
-  { id: "training", name: "Training Sessions", count: 24 },
-  { id: "market", name: "Market Days", count: 14 },
-  { id: "awards", name: "Awards & Recognition", count: 10 },
+  { id: "all", label: "All Photos", icon: ImageIcon },
+  { id: "harvest", label: "Harvest Season", icon: Sparkles },
+  { id: "events", label: "Community Events", icon: Calendar },
+  { id: "farm-tours", label: "Farm Tours", icon: MapPin },
+  { id: "training", label: "Training Sessions", icon: User },
+  { id: "market", label: "Market Days", icon: Grid3X3 },
+  { id: "awards", label: "Awards", icon: Sparkles },
 ]
 
-const galleryImages = [
-  {
-    id: 1,
-    src: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80",
-    title: "Golden Harvest Festival 2026",
-    category: "harvest",
-    likes: 234,
-    comments: 18,
-    author: "Admin Team",
-    authorAvatar: "AT",
-    date: "Apr 5, 2026",
-    location: "Langtang North",
-    featured: true,
-    aspectRatio: "landscape",
-  },
-  {
-    id: 2,
-    src: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800&q=80",
-    title: "Crop Farming Community Meetup",
-    category: "events",
-    likes: 189,
-    comments: 24,
-    author: "GCM Plateau",
-    authorAvatar: "GP",
-    date: "Apr 3, 2026",
-    location: "Jos South",
-    featured: false,
-    aspectRatio: "portrait",
-  },
-  {
-    id: 3,
-    src: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800&q=80",
-    title: "Sunrise Over the Rice Fields",
-    category: "farms",
-    likes: 456,
-    comments: 32,
-    author: "LGPA Barkin Ladi",
-    authorAvatar: "LB",
-    date: "Apr 1, 2026",
-    location: "Barkin Ladi",
-    featured: true,
-    aspectRatio: "landscape",
-  },
-  {
-    id: 4,
-    src: "https://images.unsplash.com/photo-1592982537447-6f2a6a0c7c18?w=800&q=80",
-    title: "Youth Agro Training Workshop",
-    category: "training",
-    likes: 167,
-    comments: 45,
-    author: "SCC Agro Tech",
-    authorAvatar: "SA",
-    date: "Mar 28, 2026",
-    location: "Pankshin",
-    featured: false,
-    aspectRatio: "square",
-  },
-  {
-    id: 5,
-    src: "https://images.unsplash.com/photo-1595855759920-86582396756a?w=800&q=80",
-    title: "Fresh Produce at Sunday Market",
-    category: "market",
-    likes: 298,
-    comments: 21,
-    author: "Admin Team",
-    authorAvatar: "AT",
-    date: "Mar 25, 2026",
-    location: "Mangu",
-    featured: false,
-    aspectRatio: "landscape",
-  },
-  {
-    id: 6,
-    src: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80",
-    title: "Award Ceremony - Best Young Farmer",
-    category: "awards",
-    likes: 512,
-    comments: 67,
-    author: "Agro Executive",
-    authorAvatar: "AE",
-    date: "Mar 20, 2026",
-    location: "Jos North",
-    featured: true,
-    aspectRatio: "portrait",
-  },
-  {
-    id: 7,
-    src: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&q=80",
-    title: "Poultry Farm Expansion Project",
-    category: "farms",
-    likes: 178,
-    comments: 14,
-    author: "SCC Animal Farming",
-    authorAvatar: "SA",
-    date: "Mar 18, 2026",
-    location: "Riyom",
-    featured: false,
-    aspectRatio: "landscape",
-  },
-  {
-    id: 8,
-    src: "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=800&q=80",
-    title: "Cassava Processing Workshop",
-    category: "training",
-    likes: 145,
-    comments: 19,
-    author: "GCM Processing",
-    authorAvatar: "GP",
-    date: "Mar 15, 2026",
-    location: "Shendam",
-    featured: false,
-    aspectRatio: "square",
-  },
-  {
-    id: 9,
-    src: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&q=80",
-    title: "Community Irrigation Project Launch",
-    category: "events",
-    likes: 289,
-    comments: 38,
-    author: "LGPA Kanke",
-    authorAvatar: "LK",
-    date: "Mar 12, 2026",
-    location: "Kanke",
-    featured: true,
-    aspectRatio: "landscape",
-  },
-  {
-    id: 10,
-    src: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=800&q=80",
-    title: "Tomato Harvest - Record Yield",
-    category: "harvest",
-    likes: 367,
-    comments: 28,
-    author: "Admin Team",
-    authorAvatar: "AT",
-    date: "Mar 10, 2026",
-    location: "Bassa",
-    featured: false,
-    aspectRatio: "portrait",
-  },
-  {
-    id: 11,
-    src: "https://images.unsplash.com/photo-1499529112087-3cb3b73cec95?w=800&q=80",
-    title: "Organic Vegetable Garden Tour",
-    category: "farms",
-    likes: 234,
-    comments: 16,
-    author: "SCC Crop Farming",
-    authorAvatar: "SC",
-    date: "Mar 8, 2026",
-    location: "Bokkos",
-    featured: false,
-    aspectRatio: "landscape",
-  },
-  {
-    id: 12,
-    src: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&q=80",
-    title: "Women in Agriculture Summit",
-    category: "events",
-    likes: 423,
-    comments: 52,
-    author: "Agro Executive",
-    authorAvatar: "AE",
-    date: "Mar 5, 2026",
-    location: "Jos South",
-    featured: true,
-    aspectRatio: "landscape",
-  },
+const communities: CommunityType[] = [
+  "Crop Farming", "Animal Farming", "Agro Marketing", "Agro Processing",
+  "Management & Legislation", "Agro Tourism", "Agro Technology", "Agro Health Care",
+  "Agro Media & Branding", "Agro Security", "Agro Literature", "Motivation & Training",
+  "Agro Real Estate", "Agro Logistics"
 ]
+
+interface GalleryImageWithUploader extends GalleryImage {
+  uploader?: Profile
+}
 
 export default function GalleryPage() {
+  const [images, setImages] = useState<GalleryImageWithUploader[]>([])
+  const [featuredImages, setFeaturedImages] = useState<GalleryImageWithUploader[]>([])
+  const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState("all")
-  const [viewMode, setViewMode] = useState<"grid" | "masonry">("masonry")
-  const [selectedImage, setSelectedImage] = useState<typeof galleryImages[0] | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
-  const [likedImages, setLikedImages] = useState<number[]>([])
-
-  const filteredImages = galleryImages.filter(img => {
-    const matchesCategory = selectedCategory === "all" || img.category === selectedCategory
-    const matchesSearch = img.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         img.location.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
+  const [viewMode, setViewMode] = useState<"masonry" | "grid">("masonry")
+  const [selectedImage, setSelectedImage] = useState<GalleryImageWithUploader | null>(null)
+  const [currentUser, setCurrentUser] = useState<Profile | null>(null)
+  const [userLikes, setUserLikes] = useState<Set<string>>(new Set())
+  
+  // Upload modal state
+  const [showUploadModal, setShowUploadModal] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [uploadFile, setUploadFile] = useState<File | null>(null)
+  const [uploadPreview, setUploadPreview] = useState<string | null>(null)
+  const [uploadForm, setUploadForm] = useState({
+    title: "",
+    description: "",
+    location: "",
+    category: "harvest",
+    community: "" as CommunityType | ""
   })
 
-  const featuredImages = galleryImages.filter(img => img.featured).slice(0, 3)
+  const supabase = createClient()
 
-  const handleLike = (imageId: number) => {
-    setLikedImages(prev => 
-      prev.includes(imageId) 
-        ? prev.filter(id => id !== imageId)
-        : [...prev, imageId]
-    )
+  // Fetch current user
+  useEffect(() => {
+    async function fetchUser() {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .single()
+        if (profile) {
+          setCurrentUser(profile)
+        }
+      }
+    }
+    fetchUser()
+  }, [supabase])
+
+  // Fetch gallery images
+  const fetchImages = useCallback(async () => {
+    setLoading(true)
+    try {
+      let query = supabase
+        .from("gallery_images")
+        .select(`
+          *,
+          uploader:profiles!uploaded_by(id, first_name, last_name, avatar_url, role, community)
+        `)
+        .eq("is_approved", true)
+        .order("created_at", { ascending: false })
+
+      if (selectedCategory !== "all") {
+        query = query.eq("category", selectedCategory)
+      }
+
+      if (searchQuery) {
+        query = query.or(`title.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%,location.ilike.%${searchQuery}%`)
+      }
+
+      const { data, error } = await query
+
+      if (error) throw error
+      
+      setImages(data || [])
+      setFeaturedImages((data || []).filter(img => img.is_featured).slice(0, 3))
+    } catch (error) {
+      console.error("Error fetching gallery:", error)
+    } finally {
+      setLoading(false)
+    }
+  }, [supabase, selectedCategory, searchQuery])
+
+  // Fetch user likes
+  const fetchUserLikes = useCallback(async () => {
+    if (!currentUser) return
+    
+    const { data } = await supabase
+      .from("gallery_likes")
+      .select("image_id")
+      .eq("user_id", currentUser.id)
+    
+    if (data) {
+      setUserLikes(new Set(data.map(like => like.image_id)))
+    }
+  }, [supabase, currentUser])
+
+  useEffect(() => {
+    fetchImages()
+  }, [fetchImages])
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchUserLikes()
+    }
+  }, [currentUser, fetchUserLikes])
+
+  // Handle like
+  const handleLike = async (imageId: string, e?: React.MouseEvent) => {
+    e?.stopPropagation()
+    if (!currentUser) return
+
+    const isLiked = userLikes.has(imageId)
+    
+    try {
+      const response = await fetch(`/api/gallery/${imageId}/like`, {
+        method: isLiked ? "DELETE" : "POST",
+      })
+      
+      if (response.ok) {
+        setUserLikes(prev => {
+          const newSet = new Set(prev)
+          if (isLiked) {
+            newSet.delete(imageId)
+          } else {
+            newSet.add(imageId)
+          }
+          return newSet
+        })
+        
+        setImages(prev => prev.map(img => 
+          img.id === imageId 
+            ? { ...img, likes_count: img.likes_count + (isLiked ? -1 : 1) }
+            : img
+        ))
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error)
+    }
   }
+
+  // Handle file selection
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setUploadFile(file)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setUploadPreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  // Handle upload
+  const handleUpload = async () => {
+    if (!uploadFile || !uploadForm.title) return
+    
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append("file", uploadFile)
+      formData.append("title", uploadForm.title)
+      formData.append("description", uploadForm.description)
+      formData.append("location", uploadForm.location)
+      formData.append("category", uploadForm.category)
+      if (uploadForm.community) {
+        formData.append("community", uploadForm.community)
+      }
+      
+      const response = await fetch("/api/gallery/upload", {
+        method: "POST",
+        body: formData,
+      })
+      
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || "Upload failed")
+      }
+      
+      setShowUploadModal(false)
+      setUploadFile(null)
+      setUploadPreview(null)
+      setUploadForm({ title: "", description: "", location: "", category: "harvest", community: "" })
+      fetchImages()
+    } catch (error) {
+      console.error("Upload error:", error)
+      alert(error instanceof Error ? error.message : "Upload failed")
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const canUpload = currentUser && ["admin", "agro_executive", "gcm", "lgpa", "scc"].includes(currentUser.role)
 
   const navigateImage = (direction: "prev" | "next") => {
     if (!selectedImage) return
-    const currentIndex = filteredImages.findIndex(img => img.id === selectedImage.id)
+    const currentIndex = images.findIndex(img => img.id === selectedImage.id)
     const newIndex = direction === "prev" 
-      ? (currentIndex - 1 + filteredImages.length) % filteredImages.length
-      : (currentIndex + 1) % filteredImages.length
-    setSelectedImage(filteredImages[newIndex])
+      ? (currentIndex - 1 + images.length) % images.length
+      : (currentIndex + 1) % images.length
+    setSelectedImage(images[newIndex])
   }
+
+  const totalLikes = images.reduce((sum, img) => sum + img.likes_count, 0)
+  const uniqueUploaders = new Set(images.map(img => img.uploaded_by)).size
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
       {/* Hero Section */}
-      <section className="relative pt-24 pb-12 overflow-hidden">
+      <section className="relative pt-24 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-10 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6">
-              <Camera className="w-4 h-4 text-primary" />
-              <span className="text-sm text-primary font-medium">Community Gallery</span>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-4">
+                <Camera className="w-4 h-4 text-primary" />
+                <span className="text-sm text-primary font-medium">Community Gallery</span>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-aldrich)] mb-4">
+                Capturing <span className="text-primary">Growth</span>
+              </h1>
+              <p className="text-muted-foreground text-lg max-w-2xl">
+                Explore moments from our vibrant agricultural communities across Nigeria. 
+                From harvest celebrations to training sessions, see the faces behind GreenV1n3.
+              </p>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-[family-name:var(--font-aldrich)] mb-4">
-              Capturing Our <span className="text-primary">Agricultural</span> Journey
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              A visual celebration of our farming communities, events, achievements, and the dedicated 
-              people transforming agriculture across Plateau State.
-            </p>
+            
+            {canUpload && (
+              <button
+                onClick={() => setShowUploadModal(true)}
+                className="hidden md:flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-[4px] hover:bg-primary/90 transition-colors font-medium"
+              >
+                <Plus className="w-5 h-5" />
+                Upload Photo
+              </button>
+            )}
           </div>
 
-          {/* Featured Images Carousel */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            {featuredImages.map((image, index) => (
-              <div 
-                key={image.id}
-                className={`relative group cursor-pointer overflow-hidden rounded-[4px] ${
-                  index === 0 ? "md:col-span-2 md:row-span-2" : ""
-                }`}
-                onClick={() => setSelectedImage(image)}
-              >
-                <div className={`relative ${index === 0 ? "h-[400px]" : "h-[195px]"}`}>
+          {/* Featured Images */}
+          {featuredImages.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+              {featuredImages.map((image, index) => (
+                <div 
+                  key={image.id}
+                  className={`relative rounded-[4px] overflow-hidden cursor-pointer group ${
+                    index === 0 ? "md:col-span-2 md:row-span-2 aspect-[16/10]" : "aspect-[4/3]"
+                  }`}
+                  onClick={() => setSelectedImage(image)}
+                >
                   <Image
-                    src={image.src}
+                    src={image.image_url}
                     alt={image.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
-                  
-                  {/* Featured Badge */}
-                  <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-orange-500/90 rounded-full">
-                    <Sparkles className="w-3 h-3 text-white" />
-                    <span className="text-xs font-medium text-white">Featured</span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2 py-1 bg-orange-500/90 text-white text-xs rounded-[3px] font-medium flex items-center gap-1">
+                      <Sparkles className="w-3 h-3" />
+                      Featured
+                    </span>
                   </div>
-
-                  {/* Expand Icon */}
-                  <div className="absolute top-3 right-3 p-2 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Maximize2 className="w-4 h-4 text-white" />
-                  </div>
-
-                  {/* Content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className={`font-semibold text-white mb-1 ${index === 0 ? "text-xl" : "text-sm"}`}>
-                      {image.title}
-                    </h3>
-                    <div className="flex items-center gap-3 text-white/70 text-xs">
-                      <span className="flex items-center gap-1">
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="text-white font-semibold text-lg mb-1">{image.title}</h3>
+                    {image.location && (
+                      <div className="flex items-center gap-1 text-white/80 text-sm">
                         <MapPin className="w-3 h-3" />
                         {image.location}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Heart className="w-3 h-3" />
-                        {image.likes}
-                      </span>
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
+              ))}
+            </div>
+          )}
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+            {[
+              { label: "Photos", value: images.length, icon: ImageIcon },
+              { label: "Communities", value: "14", icon: Grid3X3 },
+              { label: "Contributors", value: uniqueUploaders || "0", icon: User },
+              { label: "Total Likes", value: totalLikes.toLocaleString(), icon: Heart },
+            ].map((stat) => (
+              <div key={stat.label} className="bg-card/50 border border-border/50 rounded-[4px] p-4 text-center">
+                <stat.icon className="w-5 h-5 text-primary mx-auto mb-2" />
+                <div className="text-2xl font-bold text-foreground font-[family-name:var(--font-aldrich)]">{stat.value}</div>
+                <div className="text-sm text-muted-foreground">{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Filter & Search Section */}
-      <section className="sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-border/50 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Categories */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide">
-              {categories.map((cat) => (
+      {/* Filters & Search */}
+      <section className="sticky top-16 z-40 bg-background/95 backdrop-blur-md border-b border-border/50 py-4">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+              {categories.map((category) => (
                 <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
-                    selectedCategory === cat.id
+                    selectedCategory === category.id
                       ? "bg-primary text-primary-foreground"
                       : "bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
                   }`}
                 >
-                  {cat.name}
-                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                    selectedCategory === cat.id
-                      ? "bg-white/20"
-                      : "bg-muted"
-                  }`}>
-                    {cat.count}
-                  </span>
+                  <category.icon className="w-4 h-4" />
+                  {category.label}
                 </button>
               ))}
             </div>
 
-            {/* Search & View Toggle */}
-            <div className="flex items-center gap-3 w-full md:w-auto">
-              <div className="relative flex-1 md:w-64">
+            <div className="flex items-center gap-3">
+              <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search gallery..."
+                <input
+                  type="text"
+                  placeholder="Search photos..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-secondary/50 border-border/50"
+                  className="pl-10 pr-4 py-2 bg-secondary/50 border border-border/50 rounded-[4px] text-sm w-48 focus:outline-none focus:ring-2 focus:ring-primary/50"
                 />
               </div>
-              <div className="flex items-center gap-1 p-1 bg-secondary/50 rounded-[4px]">
+              
+              <div className="flex items-center bg-secondary/50 rounded-[4px] p-1">
                 <button
                   onClick={() => setViewMode("masonry")}
                   className={`p-2 rounded-[3px] transition-colors ${
@@ -378,95 +395,125 @@ export default function GalleryPage() {
                   <Grid3X3 className="w-4 h-4" />
                 </button>
               </div>
+              
+              {canUpload && (
+                <button
+                  onClick={() => setShowUploadModal(true)}
+                  className="md:hidden flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-[4px] text-sm font-medium"
+                >
+                  <Plus className="w-4 h-4" />
+                  Upload
+                </button>
+              )}
             </div>
           </div>
         </div>
       </section>
 
       {/* Gallery Grid */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredImages.length === 0 ? (
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          {loading ? (
+            <div className="flex justify-center py-20">
+              <V1n3Loader />
+            </div>
+          ) : images.length === 0 ? (
             <div className="text-center py-20">
-              <div className="w-20 h-20 mx-auto mb-4 bg-secondary/50 rounded-full flex items-center justify-center">
-                <ImageIcon className="w-10 h-10 text-muted-foreground" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">No images found</h3>
-              <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
+              <ImageIcon className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">No photos yet</h3>
+              <p className="text-muted-foreground mb-6">
+                {selectedCategory !== "all" 
+                  ? "No photos in this category. Try another filter."
+                  : "Be the first to share a moment from your community!"
+                }
+              </p>
+              {canUpload && (
+                <button
+                  onClick={() => setShowUploadModal(true)}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-[4px] font-medium"
+                >
+                  <Upload className="w-5 h-5" />
+                  Upload First Photo
+                </button>
+              )}
             </div>
           ) : (
-            <div className={viewMode === "masonry" 
-              ? "columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4"
-              : "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-            }>
-              {filteredImages.map((image) => (
+            <div className={`${
+              viewMode === "masonry" 
+                ? "columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4"
+                : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+            }`}>
+              {images.map((image) => (
                 <div
                   key={image.id}
-                  className={`group relative overflow-hidden rounded-[4px] bg-secondary/30 cursor-pointer ${
+                  className={`group relative bg-card rounded-[4px] overflow-hidden cursor-pointer border border-border/50 hover:border-primary/30 transition-all ${
                     viewMode === "masonry" ? "break-inside-avoid" : ""
                   }`}
                   onClick={() => setSelectedImage(image)}
                 >
-                  <div className={`relative ${
-                    viewMode === "grid" 
-                      ? "aspect-square" 
-                      : image.aspectRatio === "portrait" 
-                        ? "aspect-[3/4]" 
-                        : image.aspectRatio === "square" 
-                          ? "aspect-square" 
-                          : "aspect-[4/3]"
-                  }`}>
+                  <div className={viewMode === "grid" ? "aspect-square" : "relative"}>
                     <Image
-                      src={image.src}
+                      src={image.image_url}
                       alt={image.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      width={400}
+                      height={viewMode === "grid" ? 400 : 300}
+                      className={`w-full object-cover transition-transform duration-300 group-hover:scale-105 ${
+                        viewMode === "grid" ? "h-full" : "h-auto"
+                      }`}
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
-                    {/* Quick Actions */}
-                    <div className="absolute top-3 right-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          handleLike(image.id)
-                        }}
-                        className={`p-2 rounded-full transition-colors ${
-                          likedImages.includes(image.id)
-                            ? "bg-red-500 text-white"
-                            : "bg-black/50 text-white hover:bg-black/70"
+                    {/* Hover Actions */}
+                    <div className="absolute top-3 right-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={(e) => handleLike(image.id, e)}
+                        className={`p-2 rounded-full backdrop-blur-sm transition-colors ${
+                          userLikes.has(image.id) 
+                            ? "bg-red-500 text-white" 
+                            : "bg-black/40 text-white hover:bg-black/60"
                         }`}
                       >
-                        <Heart className={`w-4 h-4 ${likedImages.includes(image.id) ? "fill-current" : ""}`} />
-                      </button>
-                      <button 
-                        onClick={(e) => e.stopPropagation()}
-                        className="p-2 bg-black/50 rounded-full text-white hover:bg-black/70 transition-colors"
-                      >
-                        <Share2 className="w-4 h-4" />
+                        <Heart className={`w-4 h-4 ${userLikes.has(image.id) ? "fill-current" : ""}`} />
                       </button>
                     </div>
 
-                    {/* Content */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <h3 className="font-medium text-white text-sm mb-2 line-clamp-2">{image.title}</h3>
-                      <div className="flex items-center justify-between">
+                    {image.category && (
+                      <div className="absolute top-3 left-3">
+                        <span className="px-2 py-1 bg-black/50 backdrop-blur-sm text-white text-xs rounded-[3px] capitalize">
+                          {image.category}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <h3 className="text-white font-medium text-sm line-clamp-1">{image.title}</h3>
+                      <div className="flex items-center justify-between mt-2">
                         <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-full bg-primary/80 flex items-center justify-center">
-                            <span className="text-[10px] font-bold text-white">{image.authorAvatar}</span>
-                          </div>
-                          <span className="text-xs text-white/80">{image.author}</span>
+                          {image.uploader?.avatar_url ? (
+                            <Image
+                              src={image.uploader.avatar_url}
+                              alt=""
+                              width={20}
+                              height={20}
+                              className="rounded-full"
+                            />
+                          ) : (
+                            <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                              <User className="w-3 h-3 text-primary" />
+                            </div>
+                          )}
+                          <span className="text-white/80 text-xs">
+                            {image.uploader?.first_name || "Unknown"}
+                          </span>
                         </div>
-                        <div className="flex items-center gap-3 text-white/70 text-xs">
+                        <div className="flex items-center gap-3 text-white/80 text-xs">
                           <span className="flex items-center gap-1">
                             <Heart className="w-3 h-3" />
-                            {likedImages.includes(image.id) ? image.likes + 1 : image.likes}
+                            {image.likes_count}
                           </span>
                           <span className="flex items-center gap-1">
-                            <MessageCircle className="w-3 h-3" />
-                            {image.comments}
+                            <Eye className="w-3 h-3" />
+                            {image.views_count}
                           </span>
                         </div>
                       </div>
@@ -476,145 +523,197 @@ export default function GalleryPage() {
               ))}
             </div>
           )}
-
-          {/* Load More */}
-          {filteredImages.length > 0 && (
-            <div className="text-center mt-12">
-              <Button variant="outline" size="lg" className="gap-2">
-                <ImageIcon className="w-4 h-4" />
-                Load More Photos
-              </Button>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-12 bg-secondary/30 border-y border-border/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary font-[family-name:var(--font-aldrich)]">156+</div>
-              <p className="text-muted-foreground text-sm mt-1">Photos Shared</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary font-[family-name:var(--font-aldrich)]">14</div>
-              <p className="text-muted-foreground text-sm mt-1">Communities</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary font-[family-name:var(--font-aldrich)]">48</div>
-              <p className="text-muted-foreground text-sm mt-1">Contributors</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary font-[family-name:var(--font-aldrich)]">5.2K</div>
-              <p className="text-muted-foreground text-sm mt-1">Total Likes</p>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-[4px] bg-gradient-to-r from-primary/20 via-primary/10 to-orange-500/20 border border-primary/20 p-8 md:p-12">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
-              <div>
-                <h3 className="text-2xl md:text-3xl font-bold font-[family-name:var(--font-aldrich)] mb-2">
-                  Want to Share Your Story?
-                </h3>
-                <p className="text-muted-foreground max-w-xl">
-                  Team leaders and admins can upload photos to showcase community achievements, 
-                  events, and the amazing work happening across our agricultural network.
-                </p>
-              </div>
-              <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 whitespace-nowrap">
-                <Camera className="w-4 h-4" />
+      {canUpload && (
+        <section className="py-16 border-t border-border/50">
+          <div className="container mx-auto px-4">
+            <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-orange-500/10 rounded-[4px] p-8 md:p-12 text-center border border-primary/20">
+              <Camera className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h2 className="text-2xl md:text-3xl font-bold font-[family-name:var(--font-aldrich)] mb-4">
+                Share Your Community Moments
+              </h2>
+              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                As a team leader, you can upload photos showcasing your community&apos;s activities, 
+                achievements, and the amazing work being done across GreenV1n3.
+              </p>
+              <button
+                onClick={() => setShowUploadModal(true)}
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-[4px] font-medium hover:bg-primary/90 transition-colors"
+              >
+                <Upload className="w-5 h-5" />
                 Upload Photos
-              </Button>
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Upload Modal */}
+      {showUploadModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="bg-card rounded-[4px] w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-border">
+            <div className="flex items-center justify-between p-6 border-b border-border">
+              <h2 className="text-xl font-bold">Upload Photo</h2>
+              <button onClick={() => setShowUploadModal(false)} className="p-2 hover:bg-secondary rounded-[4px] transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Photo</label>
+                {uploadPreview ? (
+                  <div className="relative aspect-video rounded-[4px] overflow-hidden bg-secondary">
+                    <Image src={uploadPreview} alt="Preview" fill className="object-contain" />
+                    <button
+                      onClick={() => { setUploadFile(null); setUploadPreview(null) }}
+                      className="absolute top-2 right-2 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+                    >
+                      <X className="w-4 h-4 text-white" />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex flex-col items-center justify-center w-full aspect-video border-2 border-dashed border-border rounded-[4px] cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-colors">
+                    <Upload className="w-10 h-10 text-muted-foreground mb-2" />
+                    <span className="text-sm text-muted-foreground">Click to upload or drag and drop</span>
+                    <span className="text-xs text-muted-foreground mt-1">PNG, JPG, WEBP up to 10MB</span>
+                    <input type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
+                  </label>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Title *</label>
+                <input
+                  type="text"
+                  value={uploadForm.title}
+                  onChange={(e) => setUploadForm(prev => ({ ...prev, title: e.target.value }))}
+                  placeholder="Give your photo a title"
+                  className="w-full px-4 py-3 bg-secondary/50 border border-border rounded-[4px] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Description</label>
+                <textarea
+                  value={uploadForm.description}
+                  onChange={(e) => setUploadForm(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="Tell us about this photo..."
+                  rows={3}
+                  className="w-full px-4 py-3 bg-secondary/50 border border-border rounded-[4px] focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Location</label>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <input
+                    type="text"
+                    value={uploadForm.location}
+                    onChange={(e) => setUploadForm(prev => ({ ...prev, location: e.target.value }))}
+                    placeholder="Where was this taken?"
+                    className="w-full pl-10 pr-4 py-3 bg-secondary/50 border border-border rounded-[4px] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Category</label>
+                  <select
+                    value={uploadForm.category}
+                    onChange={(e) => setUploadForm(prev => ({ ...prev, category: e.target.value }))}
+                    className="w-full px-4 py-3 bg-secondary/50 border border-border rounded-[4px] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  >
+                    {categories.filter(c => c.id !== "all").map((cat) => (
+                      <option key={cat.id} value={cat.id}>{cat.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Community</label>
+                  <select
+                    value={uploadForm.community}
+                    onChange={(e) => setUploadForm(prev => ({ ...prev, community: e.target.value as CommunityType | "" }))}
+                    className="w-full px-4 py-3 bg-secondary/50 border border-border rounded-[4px] focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  >
+                    <option value="">General</option>
+                    {communities.map((c) => (<option key={c} value={c}>{c}</option>))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 p-6 border-t border-border">
+              <button onClick={() => setShowUploadModal(false)} className="px-6 py-3 text-muted-foreground hover:text-foreground transition-colors">Cancel</button>
+              <button
+                onClick={handleUpload}
+                disabled={!uploadFile || !uploadForm.title || uploading}
+                className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-[4px] font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {uploading ? (<><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Uploading...</>) : (<><Upload className="w-4 h-4" />Upload Photo</>)}
+              </button>
             </div>
           </div>
         </div>
-      </section>
+      )}
 
       {/* Lightbox Modal */}
       {selectedImage && (
         <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center">
-          {/* Close Button */}
-          <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute top-4 right-4 p-2 bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors z-10"
-          >
-            <X className="w-6 h-6" />
+          <button onClick={() => setSelectedImage(null)} className="absolute top-4 right-4 p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors z-10">
+            <X className="w-6 h-6 text-white" />
+          </button>
+          <button onClick={() => navigateImage("prev")} className="absolute left-4 p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors">
+            <ChevronLeft className="w-6 h-6 text-white" />
+          </button>
+          <button onClick={() => navigateImage("next")} className="absolute right-4 p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors">
+            <ChevronRight className="w-6 h-6 text-white" />
           </button>
 
-          {/* Navigation */}
-          <button
-            onClick={() => navigateImage("prev")}
-            className="absolute left-4 p-3 bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <button
-            onClick={() => navigateImage("next")}
-            className="absolute right-4 p-3 bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-
-          {/* Image */}
-          <div className="relative max-w-5xl max-h-[80vh] w-full mx-4">
-            <Image
-              src={selectedImage.src}
-              alt={selectedImage.title}
-              width={1200}
-              height={800}
-              className="object-contain w-full h-full rounded-[4px]"
-            />
+          <div className="relative max-w-5xl max-h-[80vh] mx-16">
+            <Image src={selectedImage.image_url} alt={selectedImage.title} width={1200} height={800} className="max-h-[80vh] w-auto object-contain rounded-[4px]" />
           </div>
 
-          {/* Image Info */}
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6">
-            <div className="max-w-5xl mx-auto">
-              <h3 className="text-xl font-semibold text-white mb-2">{selectedImage.title}</h3>
-              <div className="flex flex-wrap items-center gap-4 text-white/70 text-sm">
-                <span className="flex items-center gap-1.5">
-                  <User className="w-4 h-4" />
-                  {selectedImage.author}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4" />
-                  {selectedImage.date}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4" />
-                  {selectedImage.location}
-                </span>
+            <div className="container mx-auto flex items-end justify-between">
+              <div>
+                <h3 className="text-white text-2xl font-bold mb-2">{selectedImage.title}</h3>
+                {selectedImage.description && <p className="text-white/80 mb-3 max-w-2xl">{selectedImage.description}</p>}
+                <div className="flex items-center gap-4 text-white/70 text-sm">
+                  {selectedImage.uploader && (
+                    <div className="flex items-center gap-2">
+                      {selectedImage.uploader.avatar_url ? (
+                        <Image src={selectedImage.uploader.avatar_url} alt="" width={24} height={24} className="rounded-full" />
+                      ) : (
+                        <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center"><User className="w-4 h-4 text-primary" /></div>
+                      )}
+                      <span>{selectedImage.uploader.first_name} {selectedImage.uploader.last_name}</span>
+                    </div>
+                  )}
+                  {selectedImage.location && (<div className="flex items-center gap-1"><MapPin className="w-4 h-4" />{selectedImage.location}</div>)}
+                  <div className="flex items-center gap-1"><Calendar className="w-4 h-4" />{new Date(selectedImage.created_at).toLocaleDateString()}</div>
+                </div>
               </div>
-              <div className="flex items-center gap-4 mt-4">
-                <button 
-                  onClick={() => handleLike(selectedImage.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full transition-colors ${
-                    likedImages.includes(selectedImage.id)
-                      ? "bg-red-500 text-white"
-                      : "bg-white/10 text-white hover:bg-white/20"
-                  }`}
+              
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={(e) => handleLike(selectedImage.id, e)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-[4px] transition-colors ${userLikes.has(selectedImage.id) ? "bg-red-500 text-white" : "bg-white/10 text-white hover:bg-white/20"}`}
                 >
-                  <Heart className={`w-4 h-4 ${likedImages.includes(selectedImage.id) ? "fill-current" : ""}`} />
-                  {likedImages.includes(selectedImage.id) ? selectedImage.likes + 1 : selectedImage.likes}
+                  <Heart className={`w-5 h-5 ${userLikes.has(selectedImage.id) ? "fill-current" : ""}`} />
+                  {selectedImage.likes_count}
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors">
-                  <MessageCircle className="w-4 h-4" />
-                  {selectedImage.comments}
+                <button className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white rounded-[4px] hover:bg-white/20 transition-colors">
+                  <Share2 className="w-5 h-5" />Share
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors">
-                  <Share2 className="w-4 h-4" />
-                  Share
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors">
-                  <Download className="w-4 h-4" />
-                  Download
-                </button>
+                <a href={selectedImage.image_url} download className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white rounded-[4px] hover:bg-white/20 transition-colors">
+                  <Download className="w-5 h-5" />Download
+                </a>
               </div>
             </div>
           </div>
