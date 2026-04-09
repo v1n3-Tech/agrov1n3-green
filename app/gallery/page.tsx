@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
-import { createClient } from "@/utils/supabase/client"
+import { createClient } from "@/lib/supabase/client"
 import { Header } from "@/components/landing/header"
 import { V1n3Loader } from "@/components/ui/v1n3-loader"
 import type { GalleryImage, Profile, CommunityType } from "@/types/database"
