@@ -195,3 +195,304 @@ export const roleDescriptions: Record<UserRole, string> = {
   gcm: 'Manages participants within a specific community',
   agro_executive: 'Trained participant in the agriculture value chain',
 }
+
+// =============================================
+// COMMUNITY TABLES TYPES
+// =============================================
+
+export type PostType = 'text' | 'image' | 'video' | 'poll' | 'announcement' | 'event' | 'resource'
+export type EventStatus = 'upcoming' | 'ongoing' | 'completed' | 'cancelled'
+export type ResourceType = 'document' | 'video' | 'link' | 'guide' | 'template'
+
+// Community Post
+export interface CommunityPost {
+  id: string
+  author_id: string
+  community: CommunityType
+  post_type: PostType
+  title: string | null
+  content: string
+  media_urls: string[]
+  is_pinned: boolean
+  is_announcement: boolean
+  likes_count: number
+  comments_count: number
+  shares_count: number
+  views_count: number
+  is_approved: boolean
+  is_hidden: boolean
+  moderated_by: string | null
+  moderated_at: string | null
+  created_at: string
+  updated_at: string
+  // Joined fields
+  author?: Profile
+}
+
+export type CommunityPostInsert = Omit<CommunityPost, 
+  | 'id' 
+  | 'likes_count' 
+  | 'comments_count' 
+  | 'shares_count' 
+  | 'views_count'
+  | 'is_approved'
+  | 'is_hidden'
+  | 'moderated_by'
+  | 'moderated_at'
+  | 'created_at'
+  | 'updated_at'
+  | 'author'
+>
+
+// Post Like
+export interface PostLike {
+  id: string
+  post_id: string
+  user_id: string
+  created_at: string
+}
+
+// Post Comment
+export interface PostComment {
+  id: string
+  post_id: string
+  author_id: string
+  parent_comment_id: string | null
+  content: string
+  likes_count: number
+  is_hidden: boolean
+  created_at: string
+  updated_at: string
+  // Joined fields
+  author?: Profile
+  replies?: PostComment[]
+}
+
+export type PostCommentInsert = Omit<PostComment, 
+  | 'id' 
+  | 'likes_count' 
+  | 'is_hidden' 
+  | 'created_at' 
+  | 'updated_at'
+  | 'author'
+  | 'replies'
+>
+
+// Comment Like
+export interface CommentLike {
+  id: string
+  comment_id: string
+  user_id: string
+  created_at: string
+}
+
+// Community Event
+export interface CommunityEvent {
+  id: string
+  organizer_id: string
+  community: CommunityType
+  title: string
+  description: string
+  cover_image_url: string | null
+  location: string | null
+  is_virtual: boolean
+  meeting_link: string | null
+  start_date: string
+  end_date: string
+  max_attendees: number | null
+  registration_deadline: string | null
+  requires_registration: boolean
+  status: EventStatus
+  attendees_count: number
+  interested_count: number
+  tags: string[]
+  created_at: string
+  updated_at: string
+  // Joined fields
+  organizer?: Profile
+}
+
+export type CommunityEventInsert = Omit<CommunityEvent, 
+  | 'id' 
+  | 'attendees_count' 
+  | 'interested_count' 
+  | 'created_at' 
+  | 'updated_at'
+  | 'organizer'
+>
+
+// Event Registration
+export interface EventRegistration {
+  id: string
+  event_id: string
+  user_id: string
+  status: 'registered' | 'attended' | 'cancelled' | 'no_show'
+  notes: string | null
+  created_at: string
+  // Joined fields
+  user?: Profile
+  event?: CommunityEvent
+}
+
+// Community Resource
+export interface CommunityResource {
+  id: string
+  uploaded_by: string
+  community: CommunityType
+  title: string
+  description: string | null
+  resource_type: ResourceType
+  file_url: string | null
+  external_link: string | null
+  file_size: number | null
+  tags: string[]
+  downloads_count: number
+  views_count: number
+  is_approved: boolean
+  approved_by: string | null
+  approved_at: string | null
+  created_at: string
+  updated_at: string
+  // Joined fields
+  uploader?: Profile
+}
+
+export type CommunityResourceInsert = Omit<CommunityResource, 
+  | 'id' 
+  | 'downloads_count' 
+  | 'views_count' 
+  | 'is_approved'
+  | 'approved_by'
+  | 'approved_at'
+  | 'created_at' 
+  | 'updated_at'
+  | 'uploader'
+>
+
+// Community Discussion
+export interface CommunityDiscussion {
+  id: string
+  author_id: string
+  community: CommunityType
+  title: string
+  content: string
+  category: string | null
+  tags: string[]
+  is_pinned: boolean
+  is_locked: boolean
+  is_answered: boolean
+  best_answer_id: string | null
+  replies_count: number
+  views_count: number
+  likes_count: number
+  last_reply_at: string | null
+  last_reply_by: string | null
+  created_at: string
+  updated_at: string
+  // Joined fields
+  author?: Profile
+}
+
+export type CommunityDiscussionInsert = Omit<CommunityDiscussion, 
+  | 'id' 
+  | 'is_pinned'
+  | 'is_locked'
+  | 'is_answered'
+  | 'best_answer_id'
+  | 'replies_count' 
+  | 'views_count' 
+  | 'likes_count'
+  | 'last_reply_at'
+  | 'last_reply_by'
+  | 'created_at' 
+  | 'updated_at'
+  | 'author'
+>
+
+// Discussion Reply
+export interface DiscussionReply {
+  id: string
+  discussion_id: string
+  author_id: string
+  parent_reply_id: string | null
+  content: string
+  likes_count: number
+  is_best_answer: boolean
+  created_at: string
+  updated_at: string
+  // Joined fields
+  author?: Profile
+  replies?: DiscussionReply[]
+}
+
+export type DiscussionReplyInsert = Omit<DiscussionReply, 
+  | 'id' 
+  | 'likes_count' 
+  | 'is_best_answer' 
+  | 'created_at' 
+  | 'updated_at'
+  | 'author'
+  | 'replies'
+>
+
+// Gallery Image
+export interface GalleryImage {
+  id: string
+  uploaded_by: string
+  community: CommunityType | null
+  title: string
+  description: string | null
+  image_url: string
+  thumbnail_url: string | null
+  location: string | null
+  category: string | null
+  tags: string[]
+  is_featured: boolean
+  likes_count: number
+  comments_count: number
+  views_count: number
+  downloads_count: number
+  is_approved: boolean
+  created_at: string
+  updated_at: string
+  // Joined fields
+  uploader?: Profile
+}
+
+export type GalleryImageInsert = Omit<GalleryImage, 
+  | 'id' 
+  | 'is_featured'
+  | 'likes_count' 
+  | 'comments_count' 
+  | 'views_count'
+  | 'downloads_count'
+  | 'is_approved'
+  | 'created_at' 
+  | 'updated_at'
+  | 'uploader'
+>
+
+// Gallery Like
+export interface GalleryLike {
+  id: string
+  image_id: string
+  user_id: string
+  created_at: string
+}
+
+// Gallery Comment
+export interface GalleryComment {
+  id: string
+  image_id: string
+  author_id: string
+  content: string
+  created_at: string
+  // Joined fields
+  author?: Profile
+}
+
+export type GalleryCommentInsert = Omit<GalleryComment, 
+  | 'id' 
+  | 'created_at'
+  | 'author'
+>
