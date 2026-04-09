@@ -8,7 +8,6 @@ import { Header } from "@/components/landing/header"
 import type { Profile } from "@/types/database"
 import { 
   Search, 
-  Filter, 
   Grid3X3, 
   LayoutGrid,
   Heart,
@@ -16,39 +15,38 @@ import {
   Star,
   ShoppingCart,
   Plus,
-  ChevronDown,
-  ChevronRight,
+  Minus,
   X,
   SlidersHorizontal,
-  TrendingUp,
   Package,
   Truck,
   Shield,
   ArrowRight,
   Store,
   Leaf,
-  Clock,
   User,
-  MessageCircle,
-  Phone,
   Eye,
-  Tag,
   Wheat,
   Beef,
   Factory,
   Tractor,
-  TreePine
+  TreePine,
+  Trash2
 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
+// V1n3 Token conversion rate (mock - 1 V1n3 = ~18.5 NGN)
+const V1N3_RATE = 18.5
 
 // Product categories for agro marketplace
 const categories = [
-  { id: "all", label: "All Products", icon: Package, count: 2420 },
+  { id: "all", label: "All", icon: Package, count: 2420 },
   { id: "crops", label: "Crops & Grains", icon: Wheat, count: 856 },
   { id: "livestock", label: "Livestock", icon: Beef, count: 324 },
   { id: "processed", label: "Processed Foods", icon: Factory, count: 512 },
-  { id: "equipment", label: "Farm Equipment", icon: Tractor, count: 289 },
-  { id: "seedlings", label: "Seeds & Seedlings", icon: TreePine, count: 198 },
-  { id: "fertilizers", label: "Fertilizers & Inputs", icon: Leaf, count: 241 },
+  { id: "equipment", label: "Equipment", icon: Tractor, count: 289 },
+  { id: "seedlings", label: "Seeds", icon: TreePine, count: 198 },
+  { id: "fertilizers", label: "Fertilizers", icon: Leaf, count: 241 },
 ]
 
 // Filter options
@@ -58,14 +56,6 @@ const priceRanges = [
   { id: "5000-20000", label: "₦5,000 - ₦20,000" },
   { id: "20000-100000", label: "₦20,000 - ₦100,000" },
   { id: "100000+", label: "Above ₦100,000" },
-]
-
-const sortOptions = [
-  { id: "latest", label: "Latest" },
-  { id: "price-low", label: "Price: Low to High" },
-  { id: "price-high", label: "Price: High to Low" },
-  { id: "popular", label: "Most Popular" },
-  { id: "rating", label: "Highest Rated" },
 ]
 
 const locations = [
@@ -80,140 +70,121 @@ const mockProducts = [
   {
     id: "1",
     title: "Fresh Organic Tomatoes",
-    description: "Locally grown organic tomatoes, perfect for cooking and salads. Farm-fresh quality guaranteed.",
+    description: "Locally grown organic tomatoes, perfect for cooking and salads.",
     price: 15000,
     unit: "basket",
-    quantity: 50,
     category: "crops",
-    images: ["https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800&q=80"],
+    image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800&q=80",
     location: "Jos South",
-    seller: { name: "Mama Grace Farm", avatar: null, rating: 4.8, verified: true },
+    seller: { name: "Mama Grace Farm", rating: 4.8, verified: true, reviews: 124 },
     views: 234,
-    likes: 45,
     featured: true,
     isNew: true,
-    createdAt: "2026-04-08",
   },
   {
     id: "2",
     title: "Day-Old Broiler Chicks",
-    description: "Healthy day-old broiler chicks from certified hatchery. Vaccinated and ready for your farm.",
+    description: "Healthy day-old broiler chicks from certified hatchery.",
     price: 800,
     unit: "per chick",
-    quantity: 500,
     category: "livestock",
-    images: ["https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=800&q=80"],
+    image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=800&q=80",
     location: "Mangu",
-    seller: { name: "Plateau Poultry", avatar: null, rating: 4.9, verified: true },
+    seller: { name: "Plateau Poultry", rating: 4.9, verified: true, reviews: 89 },
     views: 567,
-    likes: 89,
     featured: true,
     isNew: false,
-    createdAt: "2026-04-05",
   },
   {
     id: "3",
     title: "Premium Cassava Flour (Garri)",
-    description: "High-quality processed garri made from fresh cassava. Perfect for households and retailers.",
+    description: "High-quality processed garri made from fresh cassava.",
     price: 8500,
     unit: "50kg bag",
-    quantity: 100,
     category: "processed",
-    images: ["https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&q=80"],
+    image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&q=80",
     location: "Shendam",
-    seller: { name: "Agro Processing Hub", avatar: null, rating: 4.7, verified: true },
+    seller: { name: "Agro Processing Hub", rating: 4.7, verified: true, reviews: 256 },
     views: 345,
-    likes: 67,
     featured: false,
     isNew: true,
-    createdAt: "2026-04-07",
   },
   {
     id: "4",
     title: "Irrigation Drip System Kit",
-    description: "Complete drip irrigation system for 1 acre. Includes pipes, emitters, and connectors.",
+    description: "Complete drip irrigation system for 1 acre farm.",
     price: 185000,
     unit: "complete kit",
-    quantity: 15,
     category: "equipment",
-    images: ["https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80"],
+    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80",
     location: "Jos North",
-    seller: { name: "AgroTech Solutions", avatar: null, rating: 4.6, verified: true },
+    seller: { name: "AgroTech Solutions", rating: 4.6, verified: true, reviews: 178 },
     views: 189,
-    likes: 34,
     featured: true,
     isNew: false,
-    createdAt: "2026-04-01",
   },
   {
     id: "5",
     title: "Hybrid Maize Seeds (SAMMAZ-15)",
-    description: "High-yield hybrid maize seeds, drought tolerant. Perfect for Plateau State climate.",
+    description: "High-yield hybrid maize seeds, drought tolerant.",
     price: 12000,
     unit: "10kg bag",
-    quantity: 200,
     category: "seedlings",
-    images: ["https://images.unsplash.com/photo-1601593768799-76e3c06e5e4b?w=800&q=80"],
+    image: "https://images.unsplash.com/photo-1601593768799-76e3c06e5e4b?w=800&q=80",
     location: "Barkin Ladi",
-    seller: { name: "Green Seeds Nigeria", avatar: null, rating: 4.8, verified: true },
+    seller: { name: "Green Seeds Nigeria", rating: 4.8, verified: true, reviews: 312 },
     views: 412,
-    likes: 78,
     featured: false,
     isNew: true,
-    createdAt: "2026-04-06",
   },
   {
     id: "6",
     title: "NPK Fertilizer 15-15-15",
-    description: "Premium quality NPK fertilizer for all crops. Government approved, tested for Plateau soil.",
+    description: "Premium quality NPK fertilizer for all crops.",
     price: 22000,
     unit: "50kg bag",
-    quantity: 500,
     category: "fertilizers",
-    images: ["https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80"],
+    image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80",
     location: "Pankshin",
-    seller: { name: "Plateau Agro Inputs", avatar: null, rating: 4.5, verified: false },
+    seller: { name: "Plateau Agro Inputs", rating: 4.5, verified: false, reviews: 95 },
     views: 623,
-    likes: 112,
     featured: false,
     isNew: false,
-    createdAt: "2026-03-28",
   },
   {
     id: "7",
     title: "Fresh Catfish (Live)",
-    description: "Farm-raised catfish, healthy and well-fed. Available in various sizes from 1kg-3kg.",
+    description: "Farm-raised catfish, healthy and well-fed. 1kg-3kg sizes.",
     price: 3500,
     unit: "per kg",
-    quantity: 200,
     category: "livestock",
-    images: ["https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=800&q=80"],
+    image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=800&q=80",
     location: "Langtang North",
-    seller: { name: "Aqua Farms Ltd", avatar: null, rating: 4.7, verified: true },
+    seller: { name: "Aqua Farms Ltd", rating: 4.7, verified: true, reviews: 145 },
     views: 298,
-    likes: 56,
     featured: true,
     isNew: false,
-    createdAt: "2026-04-03",
   },
   {
     id: "8",
     title: "Irish Potatoes (Grade A)",
-    description: "Premium grade Irish potatoes from Jos Plateau. Clean, sorted, and ready for market.",
+    description: "Premium grade Irish potatoes from Jos Plateau.",
     price: 45000,
     unit: "100kg bag",
-    quantity: 80,
     category: "crops",
-    images: ["https://images.unsplash.com/photo-1518977676601-b53f82abe636?w=800&q=80"],
+    image: "https://images.unsplash.com/photo-1518977676601-b53f82abe636?w=800&q=80",
     location: "Bokkos",
-    seller: { name: "Highland Farmers Coop", avatar: null, rating: 4.9, verified: true },
+    seller: { name: "Highland Farmers Coop", rating: 4.9, verified: true, reviews: 278 },
     views: 756,
-    likes: 145,
     featured: true,
     isNew: true,
-    createdAt: "2026-04-08",
   },
 ]
+
+interface CartItem {
+  product: typeof mockProducts[0]
+  quantity: number
+}
 
 export default function MarketplacePage() {
   const [currentUser, setCurrentUser] = useState<Profile | null>(null)
@@ -225,7 +196,7 @@ export default function MarketplacePage() {
   const [selectedLocation, setSelectedLocation] = useState("All Locations")
   const [showFilters, setShowFilters] = useState(false)
   const [likedProducts, setLikedProducts] = useState<Set<string>>(new Set())
-  const [cartItems, setCartItems] = useState<string[]>([])
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [showCart, setShowCart] = useState(false)
 
   const supabase = createClient()
@@ -261,7 +232,7 @@ export default function MarketplacePage() {
       case "price-high": return b.price - a.price
       case "popular": return b.views - a.views
       case "rating": return b.seller.rating - a.seller.rating
-      default: return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      default: return 0
     }
   })
 
@@ -277,22 +248,54 @@ export default function MarketplacePage() {
     })
   }
 
-  const handleAddToCart = (productId: string) => {
-    if (!cartItems.includes(productId)) {
-      setCartItems(prev => [...prev, productId])
-    }
+  const addToCart = (product: typeof mockProducts[0]) => {
+    setCartItems(prev => {
+      const existing = prev.find(item => item.product.id === product.id)
+      if (existing) {
+        return prev.map(item =>
+          item.product.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      }
+      return [...prev, { product, quantity: 1 }]
+    })
+    if (currentUser) setShowCart(true)
+  }
+
+  const updateCartQuantity = (productId: string, delta: number) => {
+    setCartItems(prev => 
+      prev.map(item => {
+        if (item.product.id === productId) {
+          const newQty = item.quantity + delta
+          return newQty > 0 ? { ...item, quantity: newQty } : item
+        }
+        return item
+      }).filter(item => item.quantity > 0)
+    )
+  }
+
+  const removeFromCart = (productId: string) => {
+    setCartItems(prev => prev.filter(item => item.product.id !== productId))
   }
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(price)
+    return new Intl.NumberFormat('en-NG', { minimumFractionDigits: 0 }).format(price)
   }
+
+  const toV1n3 = (naira: number) => {
+    return (naira / V1N3_RATE).toFixed(1)
+  }
+
+  const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header profile={currentUser} />
       
       {/* Hero Section */}
-      <section className="relative pt-24 pb-12 overflow-hidden">
+      <section className="relative pt-24 pb-8 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-10 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
@@ -300,46 +303,43 @@ export default function MarketplacePage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-4">
-                <Store className="w-4 h-4 text-primary" />
-                <span className="text-sm text-primary font-medium">AgroMarketplace</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-aldrich)] mb-4">
-                Farm to <span className="text-primary">Market</span>
+              <span className="inline-block px-2.5 py-1 text-[10px] font-medium text-primary bg-primary/10 border border-primary/20 rounded-[3px] uppercase tracking-widest mb-4">
+                Agro Marketplace
+              </span>
+              <h1 className="font-[family-name:var(--font-aldrich)] text-3xl lg:text-4xl tracking-tight mb-2">
+                Shop Local <span className="text-primary">Produce</span>
               </h1>
-              <p className="text-muted-foreground text-lg max-w-xl">
-                Buy and sell agricultural products directly from verified farmers and suppliers across Plateau State.
+              <p className="text-sm text-muted-foreground max-w-xl">
+                Fresh agricultural products from verified sellers. Pay in Naira or V1n3 tokens.
               </p>
             </div>
             
-            <div className="flex items-center gap-3">
-              {currentUser && (
-                <Link
-                  href="/dashboard/marketplace/sell"
-                  className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-[4px] hover:bg-primary/90 transition-colors font-medium"
-                >
-                  <Plus className="w-5 h-5" />
-                  Sell Product
-                </Link>
-              )}
-            </div>
+            {currentUser && (
+              <Link
+                href="/dashboard/marketplace/sell"
+                className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-[3px] hover:bg-primary/90 transition-colors text-sm font-medium"
+              >
+                <Store className="w-4 h-4" />
+                Sell Product
+              </Link>
+            )}
           </div>
 
           {/* Trust Indicators */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
             {[
               { icon: Shield, label: "Verified Sellers", value: "500+" },
-              { icon: Package, label: "Products Listed", value: "2,420" },
-              { icon: Truck, label: "Deliveries Made", value: "15K+" },
+              { icon: Package, label: "Products", value: "2,420" },
+              { icon: Truck, label: "Deliveries", value: "15K+" },
               { icon: Star, label: "Avg. Rating", value: "4.8" },
             ].map((stat) => (
-              <div key={stat.label} className="bg-card/50 border border-border/50 rounded-[4px] p-4 flex items-center gap-3">
+              <div key={stat.label} className="bg-card/50 border border-border/50 rounded-[4px] p-3 flex items-center gap-3">
                 <div className="p-2 bg-primary/10 rounded-[4px]">
-                  <stat.icon className="w-5 h-5 text-primary" />
+                  <stat.icon className="w-4 h-4 text-primary" />
                 </div>
                 <div>
-                  <div className="text-xl font-bold font-[family-name:var(--font-aldrich)]">{stat.value}</div>
-                  <div className="text-xs text-muted-foreground">{stat.label}</div>
+                  <div className="text-lg font-bold font-[family-name:var(--font-aldrich)]">{stat.value}</div>
+                  <div className="text-[10px] text-muted-foreground">{stat.label}</div>
                 </div>
               </div>
             ))}
@@ -348,24 +348,21 @@ export default function MarketplacePage() {
       </section>
 
       {/* Category Tabs */}
-      <section className="sticky top-16 z-40 bg-background/95 backdrop-blur-md border-b border-border/50 py-4">
+      <section className="sticky top-16 z-40 bg-background/95 backdrop-blur-md border-b border-border/50 py-3">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-4 overflow-x-auto pb-2 scrollbar-hide">
+          <div className="flex flex-wrap gap-1.5">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-[4px] text-sm font-medium whitespace-nowrap transition-all ${
+                className={`px-3 py-1.5 text-xs font-medium rounded-[3px] transition-colors ${
                   selectedCategory === cat.id
                     ? "bg-primary text-primary-foreground"
-                    : "bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                    : "bg-card border border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/40"
                 }`}
               >
-                <cat.icon className="w-4 h-4" />
                 {cat.label}
-                <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                  selectedCategory === cat.id ? "bg-white/20" : "bg-muted"
-                }`}>
+                <span className={`ml-1.5 text-[10px] ${selectedCategory === cat.id ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
                   {cat.count.toLocaleString()}
                 </span>
               </button>
@@ -375,34 +372,34 @@ export default function MarketplacePage() {
       </section>
 
       {/* Main Content */}
-      <section className="py-8">
+      <section className="py-6">
         <div className="container mx-auto px-4">
-          <div className="flex gap-8">
+          <div className="flex gap-6">
             {/* Sidebar Filters - Desktop */}
-            <aside className="hidden lg:block w-72 shrink-0">
-              <div className="sticky top-36 space-y-6">
+            <aside className="hidden lg:block w-64 shrink-0">
+              <div className="sticky top-32 space-y-5">
                 {/* Search */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Search Products</label>
+                  <label className="block text-xs font-medium mb-1.5 text-muted-foreground">Search</label>
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <input
                       type="text"
-                      placeholder="Search..."
+                      placeholder="Search products..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 bg-secondary/50 border border-border rounded-[4px] text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                      className="w-full pl-9 pr-3 py-2.5 bg-secondary/50 border border-border rounded-[4px] text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
                     />
                   </div>
                 </div>
 
                 {/* Location Filter */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Location</label>
+                  <label className="block text-xs font-medium mb-1.5 text-muted-foreground">Location</label>
                   <select
                     value={selectedLocation}
                     onChange={(e) => setSelectedLocation(e.target.value)}
-                    className="w-full px-4 py-3 bg-secondary/50 border border-border rounded-[4px] text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    className="w-full px-3 py-2.5 bg-secondary/50 border border-border rounded-[4px] text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
                   >
                     {locations.map((loc) => (
                       <option key={loc} value={loc}>{loc}</option>
@@ -412,32 +409,22 @@ export default function MarketplacePage() {
 
                 {/* Price Range */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Price Range</label>
-                  <div className="space-y-2">
+                  <label className="block text-xs font-medium mb-1.5 text-muted-foreground">Price Range</label>
+                  <div className="space-y-1.5">
                     {priceRanges.map((range) => (
-                      <label key={range.id} className="flex items-center gap-3 cursor-pointer group">
+                      <label key={range.id} className="flex items-center gap-2.5 cursor-pointer group">
                         <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
                           priceRange === range.id ? "border-primary bg-primary" : "border-border group-hover:border-primary/50"
                         }`}>
                           {priceRange === range.id && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                         </div>
-                        <span className="text-sm text-muted-foreground group-hover:text-foreground">{range.label}</span>
+                        <span className="text-xs text-muted-foreground group-hover:text-foreground">{range.label}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
-                {/* Verified Only */}
-                <div>
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <div className="w-5 h-5 rounded-[3px] border-2 border-border flex items-center justify-center group-hover:border-primary/50">
-                      <Shield className="w-3 h-3 text-primary opacity-0 group-hover:opacity-50" />
-                    </div>
-                    <span className="text-sm">Verified Sellers Only</span>
-                  </label>
-                </div>
-
-                {/* Reset Filters */}
+                {/* Reset */}
                 <button
                   onClick={() => {
                     setSelectedCategory("all")
@@ -445,7 +432,7 @@ export default function MarketplacePage() {
                     setPriceRange("any")
                     setSelectedLocation("All Locations")
                   }}
-                  className="w-full py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                  className="w-full py-2 text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   Reset All Filters
                 </button>
@@ -453,268 +440,227 @@ export default function MarketplacePage() {
             </aside>
 
             {/* Products Grid */}
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               {/* Toolbar */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setShowFilters(!showFilters)}
-                    className="lg:hidden flex items-center gap-2 px-4 py-2 bg-secondary/50 border border-border rounded-[4px] text-sm"
-                  >
-                    <SlidersHorizontal className="w-4 h-4" />
-                    Filters
-                  </button>
-                  <span className="text-sm text-muted-foreground">
-                    {sortedProducts.length} products found
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  {/* Sort */}
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs text-muted-foreground">
+                  {sortedProducts.length} products
+                </span>
+                <div className="flex items-center gap-2">
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="px-4 py-2 bg-secondary/50 border border-border rounded-[4px] text-sm focus:outline-none"
+                    className="px-3 py-1.5 bg-secondary/50 border border-border rounded-[3px] text-xs focus:outline-none"
                   >
-                    {sortOptions.map((opt) => (
-                      <option key={opt.id} value={opt.id}>{opt.label}</option>
-                    ))}
+                    <option value="latest">Latest</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="popular">Most Popular</option>
+                    <option value="rating">Highest Rated</option>
                   </select>
-
-                  {/* View Toggle */}
-                  <div className="flex items-center bg-secondary/50 rounded-[4px] p-1">
+                  <div className="flex items-center bg-secondary/50 rounded-[3px] p-0.5">
                     <button
                       onClick={() => setViewMode("grid")}
-                      className={`p-2 rounded-[3px] transition-colors ${
-                        viewMode === "grid" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                      className={`p-1.5 rounded-[2px] transition-colors ${
+                        viewMode === "grid" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
                       }`}
                     >
-                      <Grid3X3 className="w-4 h-4" />
+                      <Grid3X3 className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => setViewMode("list")}
-                      className={`p-2 rounded-[3px] transition-colors ${
-                        viewMode === "list" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                      className={`p-1.5 rounded-[2px] transition-colors ${
+                        viewMode === "list" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
                       }`}
                     >
-                      <LayoutGrid className="w-4 h-4" />
+                      <LayoutGrid className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Products */}
-              {sortedProducts.length === 0 ? (
-                <div className="text-center py-20">
-                  <Package className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">No products found</h3>
-                  <p className="text-muted-foreground">Try adjusting your filters or search terms</p>
-                </div>
-              ) : (
-                <div className={viewMode === "grid" 
-                  ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
-                  : "space-y-4"
-                }>
-                  {sortedProducts.map((product) => (
-                    <div
-                      key={product.id}
-                      className={`group bg-card border border-border/50 rounded-[4px] overflow-hidden hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all ${
-                        viewMode === "list" ? "flex" : ""
-                      }`}
-                    >
-                      {/* Image */}
-                      <div className={`relative ${viewMode === "list" ? "w-48 shrink-0" : "aspect-[4/3]"}`}>
-                        <Image
-                          src={product.images[0]}
-                          alt={product.title}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                        
-                        {/* Badges */}
-                        <div className="absolute top-3 left-3 flex flex-col gap-2">
-                          {product.featured && (
-                            <span className="px-2 py-1 bg-orange-500 text-white text-xs rounded-[3px] font-medium">
-                              Featured
-                            </span>
-                          )}
-                          {product.isNew && (
-                            <span className="px-2 py-1 bg-primary text-white text-xs rounded-[3px] font-medium">
-                              New
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Like Button */}
-                        <button
-                          onClick={() => handleLike(product.id)}
-                          className={`absolute top-3 right-3 p-2 rounded-full transition-all ${
-                            likedProducts.has(product.id)
-                              ? "bg-red-500 text-white"
-                              : "bg-black/40 text-white opacity-0 group-hover:opacity-100 hover:bg-black/60"
-                          }`}
-                        >
-                          <Heart className={`w-4 h-4 ${likedProducts.has(product.id) ? "fill-current" : ""}`} />
-                        </button>
+              {/* Products - Matching Landing Page Card Design */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
+                {sortedProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className="group bg-card/60 border border-border/30 rounded-[4px] overflow-hidden hover:border-primary/40 transition-all duration-200 hover:-translate-y-0.5"
+                  >
+                    {/* Image */}
+                    <div className="relative aspect-[4/3] overflow-hidden bg-secondary/40">
+                      <Image
+                        src={product.image}
+                        alt={product.title}
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+                      
+                      {/* Badges */}
+                      <div className="absolute top-2 left-2 flex flex-col gap-1">
+                        {product.featured && (
+                          <span className="px-2 py-0.5 text-[9px] font-medium bg-orange-500/90 text-white rounded-[2px]">
+                            Featured
+                          </span>
+                        )}
+                        {product.isNew && (
+                          <span className="px-2 py-0.5 text-[9px] font-medium bg-primary/90 text-white rounded-[2px]">
+                            New
+                          </span>
+                        )}
                       </div>
 
-                      {/* Content */}
-                      <div className={`p-4 flex flex-col ${viewMode === "list" ? "flex-1" : ""}`}>
-                        {/* Category Tag */}
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-xs text-primary bg-primary/10 px-2 py-0.5 rounded-full capitalize">
-                            {categories.find(c => c.id === product.category)?.label || product.category}
-                          </span>
-                          {product.seller.verified && (
-                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <Shield className="w-3 h-3 text-primary" />
-                              Verified
-                            </span>
-                          )}
-                        </div>
+                      {/* Like */}
+                      <button
+                        onClick={() => handleLike(product.id)}
+                        className="absolute top-2 right-2 w-7 h-7 bg-card/80 backdrop-blur-sm rounded-[3px] flex items-center justify-center hover:bg-card transition-colors"
+                      >
+                        <Heart className={`w-3.5 h-3.5 ${likedProducts.has(product.id) ? "fill-red-500 text-red-500" : "text-muted-foreground"}`} />
+                      </button>
+                    </div>
 
-                        {/* Title */}
-                        <h3 className="font-semibold text-foreground mb-1 line-clamp-1 group-hover:text-primary transition-colors">
-                          {product.title}
-                        </h3>
-
-                        {/* Description */}
-                        <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-                          {product.description}
+                    {/* Content */}
+                    <div className="p-3 space-y-2">
+                      <div>
+                        <h3 className="text-sm font-medium text-foreground leading-snug line-clamp-1">{product.title}</h3>
+                        <p className="text-[11px] text-muted-foreground mt-0.5 flex items-center gap-1">
+                          {product.seller.name}
+                          {product.seller.verified && <Shield className="w-3 h-3 text-primary" />}
+                          <span className="mx-1">·</span>
+                          {product.location}
                         </p>
+                      </div>
 
-                        {/* Price & Quantity */}
-                        <div className="flex items-baseline gap-2 mb-3">
-                          <span className="text-xl font-bold text-primary font-[family-name:var(--font-aldrich)]">
-                            {formatPrice(product.price)}
-                          </span>
-                          <span className="text-sm text-muted-foreground">/ {product.unit}</span>
-                        </div>
+                      {/* Rating */}
+                      <div className="flex items-center gap-1.5">
+                        <Star className="w-3 h-3 fill-orange-400 text-orange-400" />
+                        <span className="text-xs font-medium text-foreground">{product.seller.rating}</span>
+                        <span className="text-[11px] text-muted-foreground">({product.seller.reviews})</span>
+                      </div>
 
-                        {/* Location & Stats */}
-                        <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
-                          <span className="flex items-center gap-1">
-                            <MapPin className="w-3 h-3" />
-                            {product.location}
-                          </span>
-                          <div className="flex items-center gap-3">
-                            <span className="flex items-center gap-1">
-                              <Eye className="w-3 h-3" />
-                              {product.views}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Heart className="w-3 h-3" />
-                              {product.likes}
-                            </span>
-                          </div>
+                      {/* Price */}
+                      <div className="flex items-center justify-between pt-2 border-t border-border/30">
+                        <div>
+                          <p className="text-[15px] font-semibold text-foreground">₦{formatPrice(product.price)}</p>
+                          <p className="text-[10px] text-primary font-medium">{toV1n3(product.price)} V1N3</p>
                         </div>
-
-                        {/* Seller */}
-                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                              <User className="w-4 h-4 text-primary" />
-                            </div>
-                            <div>
-                              <p className="text-sm font-medium line-clamp-1">{product.seller.name}</p>
-                              <div className="flex items-center gap-1">
-                                <Star className="w-3 h-3 text-orange-400 fill-orange-400" />
-                                <span className="text-xs text-muted-foreground">{product.seller.rating}</span>
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <button
-                            onClick={() => handleAddToCart(product.id)}
-                            className={`p-2 rounded-[4px] transition-colors ${
-                              cartItems.includes(product.id)
-                                ? "bg-primary text-white"
-                                : "bg-secondary hover:bg-primary hover:text-white"
-                            }`}
-                          >
-                            <ShoppingCart className="w-4 h-4" />
-                          </button>
-                        </div>
+                        <Button 
+                          size="sm" 
+                          onClick={() => addToCart(product)}
+                          className="h-7 px-3 rounded-[3px] text-xs bg-orange-500 hover:bg-orange-600 text-white"
+                        >
+                          Add to Cart
+                        </Button>
                       </div>
                     </div>
-                  ))}
-                </div>
-              )}
+                  </div>
+                ))}
+              </div>
 
-              {/* Load More */}
-              {sortedProducts.length > 0 && (
-                <div className="text-center mt-8">
-                  <button className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-foreground rounded-[4px] hover:bg-secondary/80 transition-colors">
-                    Load More Products
-                    <ChevronDown className="w-4 h-4" />
-                  </button>
+              {sortedProducts.length === 0 && (
+                <div className="text-center py-16">
+                  <Package className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
+                  <h3 className="text-lg font-medium mb-1">No products found</h3>
+                  <p className="text-sm text-muted-foreground">Try adjusting your filters</p>
                 </div>
               )}
             </div>
 
-            {/* Shopping Sidebar - Logged In Users */}
-            {currentUser && cartItems.length > 0 && (
-              <aside className="hidden xl:block w-80 shrink-0">
-                <div className="sticky top-36 bg-card border border-border rounded-[4px] p-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold flex items-center gap-2">
+            {/* Shopping Cart Sidebar - Only for authenticated users */}
+            {currentUser && (
+              <aside className={`fixed lg:sticky top-0 lg:top-32 right-0 h-screen lg:h-auto w-80 bg-card border-l lg:border border-border lg:rounded-[4px] transform transition-transform duration-300 z-50 lg:z-auto ${showCart ? "translate-x-0" : "translate-x-full lg:translate-x-0"}`}>
+                <div className="flex flex-col h-full lg:max-h-[calc(100vh-9rem)]">
+                  {/* Cart Header */}
+                  <div className="flex items-center justify-between p-4 border-b border-border">
+                    <div className="flex items-center gap-2">
                       <ShoppingCart className="w-5 h-5 text-primary" />
-                      Cart ({cartItems.length})
-                    </h3>
+                      <span className="font-semibold">Your Cart</span>
+                      {cartCount > 0 && (
+                        <span className="px-2 py-0.5 bg-primary text-primary-foreground text-xs rounded-full">
+                          {cartCount}
+                        </span>
+                      )}
+                    </div>
                     <button
-                      onClick={() => setCartItems([])}
-                      className="text-xs text-muted-foreground hover:text-destructive"
+                      onClick={() => setShowCart(false)}
+                      className="lg:hidden p-1 hover:bg-secondary rounded-[4px]"
                     >
-                      Clear All
+                      <X className="w-5 h-5" />
                     </button>
                   </div>
 
-                  <div className="space-y-3 max-h-80 overflow-y-auto">
-                    {cartItems.map((itemId) => {
-                      const product = mockProducts.find(p => p.id === itemId)
-                      if (!product) return null
-                      return (
-                        <div key={itemId} className="flex items-center gap-3 p-2 bg-secondary/30 rounded-[4px]">
-                          <div className="relative w-12 h-12 rounded-[3px] overflow-hidden shrink-0">
+                  {/* Cart Items */}
+                  <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                    {cartItems.length === 0 ? (
+                      <div className="text-center py-8">
+                        <ShoppingCart className="w-10 h-10 text-muted-foreground/50 mx-auto mb-3" />
+                        <p className="text-sm text-muted-foreground">Your cart is empty</p>
+                        <p className="text-xs text-muted-foreground mt-1">Add products to get started</p>
+                      </div>
+                    ) : (
+                      cartItems.map((item) => (
+                        <div key={item.product.id} className="flex gap-3 p-2 bg-secondary/30 rounded-[4px]">
+                          <div className="relative w-16 h-16 rounded-[3px] overflow-hidden shrink-0">
                             <Image
-                              src={product.images[0]}
-                              alt={product.title}
+                              src={item.product.image}
+                              alt={item.product.title}
                               fill
                               className="object-cover"
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium line-clamp-1">{product.title}</p>
-                            <p className="text-xs text-primary font-semibold">{formatPrice(product.price)}</p>
+                            <h4 className="text-xs font-medium line-clamp-1">{item.product.title}</h4>
+                            <p className="text-[10px] text-muted-foreground">{item.product.unit}</p>
+                            <div className="flex items-center justify-between mt-1.5">
+                              <div className="flex items-center gap-1 bg-secondary rounded-[3px]">
+                                <button
+                                  onClick={() => updateCartQuantity(item.product.id, -1)}
+                                  className="p-1 hover:bg-secondary/80"
+                                >
+                                  <Minus className="w-3 h-3" />
+                                </button>
+                                <span className="text-xs w-6 text-center">{item.quantity}</span>
+                                <button
+                                  onClick={() => updateCartQuantity(item.product.id, 1)}
+                                  className="p-1 hover:bg-secondary/80"
+                                >
+                                  <Plus className="w-3 h-3" />
+                                </button>
+                              </div>
+                              <button
+                                onClick={() => removeFromCart(item.product.id)}
+                                className="p-1 text-muted-foreground hover:text-destructive"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                            <p className="text-xs font-semibold mt-1">₦{formatPrice(item.product.price * item.quantity)}</p>
                           </div>
-                          <button
-                            onClick={() => setCartItems(prev => prev.filter(id => id !== itemId))}
-                            className="p-1 text-muted-foreground hover:text-destructive"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
                         </div>
-                      )
-                    })}
+                      ))
+                    )}
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-border">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-sm text-muted-foreground">Subtotal</span>
-                      <span className="font-bold text-primary">
-                        {formatPrice(cartItems.reduce((sum, id) => {
-                          const product = mockProducts.find(p => p.id === id)
-                          return sum + (product?.price || 0)
-                        }, 0))}
-                      </span>
+                  {/* Cart Footer */}
+                  {cartItems.length > 0 && (
+                    <div className="p-4 border-t border-border space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">Subtotal</span>
+                        <div className="text-right">
+                          <p className="font-semibold">₦{formatPrice(cartTotal)}</p>
+                          <p className="text-[10px] text-primary">{toV1n3(cartTotal)} V1N3</p>
+                        </div>
+                      </div>
+                      <Button className="w-full rounded-[3px] bg-primary hover:bg-primary/90">
+                        Checkout
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                      <p className="text-[10px] text-center text-muted-foreground">
+                        Pay with V1n3 tokens and get 5% discount
+                      </p>
                     </div>
-                    <button className="w-full py-3 bg-primary text-primary-foreground rounded-[4px] font-medium hover:bg-primary/90 transition-colors">
-                      Proceed to Checkout
-                    </button>
-                    <button className="w-full py-2 mt-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-                      Continue Shopping
-                    </button>
-                  </div>
+                  )}
                 </div>
               </aside>
             )}
@@ -722,41 +668,25 @@ export default function MarketplacePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 border-t border-border/50">
-        <div className="container mx-auto px-4">
-          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-orange-500/10 rounded-[4px] p-8 md:p-12 border border-primary/20">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div>
-                <h2 className="text-2xl md:text-3xl font-bold font-[family-name:var(--font-aldrich)] mb-2">
-                  Ready to Sell Your Products?
-                </h2>
-                <p className="text-muted-foreground max-w-xl">
-                  Join thousands of farmers and agro-businesses selling on GreenV1n3 marketplace. 
-                  Reach buyers across Plateau State and beyond.
-                </p>
-              </div>
-              <Link
-                href={currentUser ? "/dashboard/marketplace/sell" : "/register"}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-[4px] font-medium hover:bg-primary/90 transition-colors whitespace-nowrap"
-              >
-                Start Selling
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mobile Cart Floating Button */}
-      {currentUser && cartItems.length > 0 && (
+      {/* Mobile Cart FAB */}
+      {currentUser && cartCount > 0 && (
         <button
           onClick={() => setShowCart(true)}
-          className="xl:hidden fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full shadow-lg hover:bg-primary/90 transition-colors"
+          className="lg:hidden fixed bottom-6 right-6 w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg flex items-center justify-center z-40"
         >
-          <ShoppingCart className="w-5 h-5" />
-          <span className="font-medium">{cartItems.length}</span>
+          <ShoppingCart className="w-6 h-6" />
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-orange-500 text-white text-xs rounded-full flex items-center justify-center">
+            {cartCount}
+          </span>
         </button>
+      )}
+
+      {/* Cart Backdrop for Mobile */}
+      {showCart && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setShowCart(false)}
+        />
       )}
     </div>
   )
