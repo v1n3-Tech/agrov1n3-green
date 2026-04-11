@@ -31,6 +31,7 @@ import {
   Award,
   Home,
   ExternalLink,
+  Image as ImageIcon,
   type LucideIcon,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -163,6 +164,12 @@ const managementNavItems: NavItem[] = [
     title: "Announcements",
     href: "/dashboard/announcements",
     icon: Megaphone,
+    roles: ['admin', 'lgpa', 'scc', 'gcm'],
+  },
+  {
+    title: "Gallery Management",
+    href: "/dashboard/gallery",
+    icon: ImageIcon,
     roles: ['admin', 'lgpa', 'scc', 'gcm'],
   },
   {
