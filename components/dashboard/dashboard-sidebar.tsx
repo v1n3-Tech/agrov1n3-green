@@ -170,7 +170,7 @@ const managementNavItems: NavItem[] = [
     title: "Gallery Management",
     href: "/dashboard/gallery",
     icon: ImageIcon,
-    roles: ['admin', 'lgpa', 'scc', 'gcm'],
+    roles: ['admin', 'lgpa', 'scc', 'gcm', 'agro_media'],
   },
   {
     title: "Security",

@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Profile not found' }, { status: 404 })
     }
 
-    const allowedRoles = ['admin', 'agro_executive', 'gcm', 'lgpa', 'scc']
+    const allowedRoles = ['admin', 'agro_executive', 'gcm', 'lgpa', 'scc', 'agro_media']
     if (!allowedRoles.includes(profile.role)) {
       return NextResponse.json({ error: 'Only admins and team leaders can upload to gallery' }, { status: 403 })
     }
