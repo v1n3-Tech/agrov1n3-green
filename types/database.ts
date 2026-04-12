@@ -8,6 +8,7 @@ export type UserRole =
   | 'scc'
   | 'gcm'
   | 'agro_executive'
+  | 'agro_media'
 
 export type CommunityType =
   | 'crop_farming'
@@ -194,6 +195,7 @@ export const roleDescriptions: Record<UserRole, string> = {
   scc: 'Oversees all activities across the state',
   gcm: 'Manages participants within a specific community',
   agro_executive: 'Trained participant in the agriculture value chain',
+  agro_media: 'Content creator and media specialist for agriculture',
 }
 
 // =============================================
