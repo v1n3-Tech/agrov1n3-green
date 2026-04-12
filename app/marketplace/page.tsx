@@ -479,12 +479,12 @@ export default function MarketplacePage() {
                 </div>
               </div>
 
-              {/* Products - Matching Landing Page Card Design */}
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
+              {/* Products Grid - Sleek Design */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
                 {sortedProducts.map((product) => (
                   <div
                     key={product.id}
-                    className="group bg-card/60 border border-border/30 rounded-[4px] overflow-hidden hover:border-primary/40 transition-all duration-200 hover:-translate-y-0.5"
+                    className="group bg-card/50 backdrop-blur border border-border rounded-[8px] overflow-hidden hover:border-primary/60 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
                   >
                     {/* Image */}
                     <div className="relative aspect-[4/3] overflow-hidden bg-secondary/40">
