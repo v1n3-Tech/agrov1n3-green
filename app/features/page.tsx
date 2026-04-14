@@ -1,5 +1,3 @@
-'use client'
-
 import { Header } from '@/components/landing/header'
 import { Footer } from '@/components/landing/footer'
 import {
@@ -18,7 +16,6 @@ import {
   Leaf,
   MapPin,
 } from 'lucide-react'
-import { getUserProfile } from '@/lib/auth/actions'
 
 const mainFeatures = [
   {
