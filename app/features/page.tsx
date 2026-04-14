@@ -131,12 +131,10 @@ const goals = [
   },
 ]
 
-export default async function FeaturesPage() {
-  const profile = await getUserProfile()
-
+export default function FeaturesPage() {
   return (
     <main className="min-h-screen bg-background">
-      <Header profile={profile} />
+      <Header />
 
       {/* Hero Section */}
       <section className="pt-20 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8">
