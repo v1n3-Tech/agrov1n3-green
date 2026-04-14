@@ -36,6 +36,7 @@ import {
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { UserRole, roleLabels, roleColors } from "@/types/dashboard"
+import { signOut } from "@/lib/auth/actions"
 import {
   Sidebar,
   SidebarContent,
@@ -411,7 +412,10 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive focus:text-destructive cursor-pointer">
+                <DropdownMenuItem 
+                  onClick={() => signOut()}
+                  className="text-destructive focus:text-destructive cursor-pointer"
+                >
                   <LogOut className="mr-2 h-4 w-4" />
                   Log out
                 </DropdownMenuItem>
