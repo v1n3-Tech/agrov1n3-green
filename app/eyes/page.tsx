@@ -7,9 +7,9 @@ export const metadata: Metadata = {
 
 export default function AgroV1n3Magazine() {
   return (
-    <main className="w-full bg-black text-white overflow-hidden">
+    <main className="w-full bg-black text-white">
       {/* Full-Width Hero with Overlay */}
-      <section className="relative w-full h-[120vh] flex items-center justify-center overflow-hidden">
+      <section className="relative w-full min-h-screen flex items-center justify-center" style={{pageBreakAfter: 'always'}}>
         <img
           src="/eyes-hero.jpg"
           alt="AgroV1n3 Initiative - Young Farmers in Nigeria"
@@ -71,7 +71,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Full-Width Image Section */}
-      <section className="relative w-full h-[90vh] flex items-center">
+      <section className="relative w-full min-h-screen flex items-center" style={{pageBreakAfter: 'always'}}>
         <img
           src="/eyes-communities.jpg"
           alt="14 Agriculture Communities of GreenV1n3"
@@ -79,7 +79,7 @@ export default function AgroV1n3Magazine() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent"></div>
         
-        <div className="relative z-10 max-w-2xl mx-auto md:ml-16 px-8">
+        <div className="relative z-10 max-w-2xl mx-auto md:ml-16 px-8 bg-black/60 py-10 px-8 rounded">
           <h3 className="text-6xl md:text-7xl font-bold mb-8 leading-tight">
             Fourteen <span className="text-orange-500">Communities</span>
           </h3>
@@ -141,7 +141,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Impact Section with Image */}
-      <section className="relative w-full h-[100vh] flex items-center">
+      <section className="relative w-full min-h-screen flex items-center" style={{pageBreakAfter: 'always'}}>
         <img
           src="/eyes-impact.jpg"
           alt="Success Stories - Young Agro Entrepreneurs"
@@ -149,7 +149,7 @@ export default function AgroV1n3Magazine() {
         />
         <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/60 to-transparent"></div>
         
-        <div className="relative z-10 max-w-2xl ml-auto mr-16 px-8">
+        <div className="relative z-10 max-w-2xl ml-auto mr-16 px-8 bg-black/60 py-10 px-8 rounded">
           <h3 className="text-6xl md:text-7xl font-bold mb-10 leading-tight">
             Three-Year <span className="text-green-400">Vision</span>
           </h3>
@@ -259,7 +259,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Platform Technology Section */}
-      <section className="relative w-full h-[80vh] flex items-center">
+      <section className="relative w-full min-h-screen flex items-center" style={{pageBreakAfter: 'always'}}>
         <img
           src="/eyes-platform.jpg"
           alt="GreenV1n3 Platform Technology"
@@ -267,7 +267,7 @@ export default function AgroV1n3Magazine() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black to-black/40"></div>
         
-        <div className="relative z-10 max-w-2xl mx-auto md:ml-16 px-8">
+        <div className="relative z-10 max-w-2xl mx-auto md:ml-16 px-8 bg-black/60 py-10 px-8 rounded">
           <h3 className="text-6xl md:text-7xl font-bold mb-8 leading-tight">
             Built on <span className="text-green-400">Trust</span> & <span className="text-orange-500">Transparency</span>
           </h3>
