@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -10,10 +11,12 @@ export default function AgroV1n3Magazine() {
     <main className="w-full bg-black text-white overflow-hidden">
       {/* Full-Width Hero with Overlay */}
       <section className="relative w-full h-[120vh] flex items-center justify-center overflow-hidden">
-        <img
-          src="/eyes-hero.jpg"
+        <Image
+          src="/images/agrov1n3-hero.jpg"
           alt="AgroV1n3 Initiative - Young Farmers in Nigeria"
-          className="w-full h-full object-cover absolute inset-0"
+          fill
+          className="object-cover absolute inset-0"
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
         
@@ -72,10 +75,11 @@ export default function AgroV1n3Magazine() {
 
       {/* Full-Width Image Section */}
       <section className="relative w-full h-[90vh] flex items-center">
-        <img
-          src="/eyes-communities.jpg"
+        <Image
+          src="/images/agro-communities.jpg"
           alt="14 Agriculture Communities of GreenV1n3"
-          className="w-full h-full object-cover absolute inset-0"
+          fill
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent"></div>
         
@@ -142,10 +146,11 @@ export default function AgroV1n3Magazine() {
 
       {/* Impact Section with Image */}
       <section className="relative w-full h-[100vh] flex items-center">
-        <img
-          src="/eyes-impact.jpg"
+        <Image
+          src="/images/agro-impact.jpg"
           alt="Success Stories - Young Agro Entrepreneurs"
-          className="w-full h-full object-cover absolute inset-0"
+          fill
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/60 to-transparent"></div>
         
@@ -260,10 +265,11 @@ export default function AgroV1n3Magazine() {
 
       {/* Platform Technology Section */}
       <section className="relative w-full h-[80vh] flex items-center">
-        <img
-          src="/eyes-platform.jpg"
+        <Image
+          src="/images/greenvin3-platform.jpg"
           alt="GreenV1n3 Platform Technology"
-          className="w-full h-full object-cover absolute inset-0"
+          fill
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black to-black/40"></div>
         
