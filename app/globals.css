@@ -182,3 +182,27 @@ input:focus, select:focus, button:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px oklch(0.65 0.2 145 / 0.3);
 }
+
+/* Print styles for /eyes magazine page */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  section {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  .print-page {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+  .print-avoid-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  .grid > div, .space-y-16 > div, .space-y-8 > div {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}

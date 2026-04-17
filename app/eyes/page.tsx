@@ -7,32 +7,7 @@ export const metadata: Metadata = {
 
 export default function AgroV1n3Magazine() {
   return (
-    <>
-      <style jsx global>{`
-        @media print {
-          * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-          }
-          section {
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
-          }
-          .print-page {
-            page-break-after: always !important;
-            break-after: page !important;
-          }
-          .print-avoid-break {
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
-          }
-          .grid > div, .space-y-16 > div, .space-y-8 > div {
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
-          }
-        }
-      `}</style>
-      <main className="w-full bg-black text-white">
+    <main className="w-full bg-black text-white">
       {/* Full-Width Hero with Overlay */}
       <section className="print-page relative w-full min-h-screen flex items-center justify-center">
         <img
@@ -325,6 +300,5 @@ export default function AgroV1n3Magazine() {
         </div>
       </section>
     </main>
-    </>
   )
 }
