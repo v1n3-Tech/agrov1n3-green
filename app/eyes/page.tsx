@@ -7,9 +7,34 @@ export const metadata: Metadata = {
 
 export default function AgroV1n3Magazine() {
   return (
-    <main className="w-full bg-black text-white">
+    <>
+      <style jsx global>{`
+        @media print {
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          section {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+          }
+          .print-page {
+            page-break-after: always !important;
+            break-after: page !important;
+          }
+          .print-avoid-break {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+          }
+          .grid > div, .space-y-16 > div, .space-y-8 > div {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+          }
+        }
+      `}</style>
+      <main className="w-full bg-black text-white">
       {/* Full-Width Hero with Overlay */}
-      <section className="relative w-full min-h-screen flex items-center justify-center" style={{pageBreakAfter: 'always'}}>
+      <section className="print-page relative w-full min-h-screen flex items-center justify-center">
         <img
           src="/eyes-hero.jpg"
           alt="AgroV1n3 Initiative - Young Farmers in Nigeria"
@@ -47,7 +72,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Magazine Section Divider */}
-      <section className="bg-black py-24 px-8 md:px-16">
+      <section className="print-page bg-black py-24 px-8 md:px-16">
         <div className="max-w-5xl mx-auto border-t border-gray-800 pt-24">
           <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             A <span className="text-green-400">Paradigm Shift</span> in Agricultural Development
@@ -71,7 +96,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Full-Width Image Section */}
-      <section className="relative w-full min-h-screen flex items-center" style={{pageBreakAfter: 'always'}}>
+      <section className="print-page relative w-full min-h-screen flex items-center">
         <img
           src="/eyes-communities.jpg"
           alt="14 Agriculture Communities of GreenV1n3"
@@ -98,7 +123,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Platform Features Grid */}
-      <section className="bg-black py-32 px-8 md:px-16">
+      <section className="print-page bg-black py-32 px-8 md:px-16">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-6xl md:text-7xl font-bold mb-24 leading-tight">
             <span className="text-green-400">Green V1n3 Nigeria</span>: The Multifunctional Platform
@@ -141,7 +166,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Impact Section with Image */}
-      <section className="relative w-full min-h-screen flex items-center" style={{pageBreakAfter: 'always'}}>
+      <section className="print-page relative w-full min-h-screen flex items-center">
         <img
           src="/eyes-impact.jpg"
           alt="Success Stories - Young Agro Entrepreneurs"
@@ -174,7 +199,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Operational Structure */}
-      <section className="bg-black py-32 px-8 md:px-16">
+      <section className="print-page bg-black py-32 px-8 md:px-16">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-6xl md:text-7xl font-bold mb-20 leading-tight">
             Operational <span className="text-orange-500">Architecture</span>
@@ -219,7 +244,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Success Drivers */}
-      <section className="bg-gradient-to-b from-black to-gray-900/20 py-32 px-8 md:px-16">
+      <section className="print-page bg-gradient-to-b from-black to-gray-900/20 py-32 px-8 md:px-16">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-6xl md:text-7xl font-bold mb-20 leading-tight">
             The Path to <span className="text-green-400">Sustainable Success</span>
@@ -259,7 +284,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Platform Technology Section */}
-      <section className="relative w-full min-h-screen flex items-center" style={{pageBreakAfter: 'always'}}>
+      <section className="print-page relative w-full min-h-screen flex items-center">
         <img
           src="/eyes-platform.jpg"
           alt="GreenV1n3 Platform Technology"
@@ -278,7 +303,7 @@ export default function AgroV1n3Magazine() {
       </section>
 
       {/* Closing Vision */}
-      <section className="bg-black py-40 px-8 md:px-16">
+      <section className="print-page bg-black py-40 px-8 md:px-16">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-7xl md:text-8xl font-bold mb-12 leading-tight">
             A New <span className="text-green-400">Agricultural</span> Economy
@@ -300,5 +325,6 @@ export default function AgroV1n3Magazine() {
         </div>
       </section>
     </main>
+    </>
   )
 }
