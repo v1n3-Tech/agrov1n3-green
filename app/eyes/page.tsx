@@ -147,11 +147,11 @@ export default function AgroV1n3Magazine() {
         </div>
       </section>
 
-      {/* PAGE 6: Marketplace */}
+      {/* PAGE 6: Marketplace - Reusing processing image */}
       <section className="magazine-page relative w-[210mm] h-[297mm] mx-auto flex items-end overflow-hidden">
         <img
-          src="/eyes-marketplace.jpg"
-          alt="AgroV1n3 Agricultural Marketplace"
+          src="/eyes-processing.jpg"
+          alt="AgroV1n3 Processing and Marketplace"
           className="w-full h-full object-cover absolute inset-0"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
@@ -202,11 +202,11 @@ export default function AgroV1n3Magazine() {
         </div>
       </section>
 
-      {/* PAGE 8: Training */}
+      {/* PAGE 8: Training - Reusing executive image */}
       <section className="magazine-page relative w-[210mm] h-[297mm] mx-auto flex items-center overflow-hidden">
         <img
-          src="/eyes-training.jpg"
-          alt="AgroV1n3 Training Session"
+          src="/eyes-executive.png"
+          alt="AgroV1n3 Executive Training"
           className="w-full h-full object-cover absolute inset-0"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40"></div>
@@ -255,11 +255,11 @@ export default function AgroV1n3Magazine() {
         </div>
       </section>
 
-      {/* PAGE 10: Investment */}
+      {/* PAGE 10: Investment - Reusing greenhouse image */}
       <section className="magazine-page relative w-[210mm] h-[297mm] mx-auto flex items-center overflow-hidden">
         <img
-          src="/eyes-investment.jpg"
-          alt="AgroV1n3 Investment Opportunities"
+          src="/eyes-greenhouse.png"
+          alt="AgroV1n3 Modern Agricultural Investment"
           className="w-full h-full object-cover absolute inset-0"
         />
         <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/50 to-transparent"></div>
