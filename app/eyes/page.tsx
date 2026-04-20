@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function AgroV1n3PitchDeck() {
   return (
-    <main className="w-full bg-black text-white">
+    <main className="w-full bg-black text-white font-abel">
       {/* SLIDE 1: Cover */}
       <section className="magazine-page relative w-[210mm] h-[297mm] mx-auto flex items-center justify-center overflow-hidden">
         <img
@@ -24,7 +24,7 @@ export default function AgroV1n3PitchDeck() {
             </span>
           </div>
           
-          <h1 className="text-[64pt] font-bold mb-4 leading-none tracking-tight">
+          <h1 className="text-[64pt] font-aldrich font-bold mb-4 leading-none tracking-tight">
             AGRO V1N3
           </h1>
           
@@ -47,7 +47,7 @@ export default function AgroV1n3PitchDeck() {
       {/* SLIDE 2: The Problem */}
       <section className="magazine-page w-[210mm] h-[297mm] mx-auto bg-black px-[15mm] py-[20mm] flex flex-col overflow-hidden">
         <div className="text-[10pt] text-gray-500 mb-4">02</div>
-        <h2 className="text-[36pt] font-bold mb-6 leading-tight">
+        <h2 className="text-[36pt] font-aldrich font-bold mb-6 leading-tight">
           The <span className="text-orange-500">Problem</span>
         </h2>
         <div className="w-24 h-1 bg-orange-500 mb-8"></div>
@@ -95,12 +95,12 @@ export default function AgroV1n3PitchDeck() {
         
         <div className="relative z-10 w-[100mm] ml-[12mm]">
           <div className="text-[10pt] text-gray-500 mb-4">03</div>
-          <h2 className="text-[36pt] font-bold mb-6 leading-tight">
+          <h2 className="text-[36pt] font-aldrich font-bold mb-6 leading-tight">
             The <span className="text-green-400">Solution</span>
           </h2>
           <div className="w-24 h-1 bg-green-500 mb-8"></div>
           
-          <h3 className="text-[24pt] font-bold text-white mb-4">Green V1n3</h3>
+          <h3 className="text-[24pt] font-aldrich font-bold text-white mb-4">Green V1n3</h3>
           
           <p className="text-[12pt] text-gray-200 mb-6 font-light leading-relaxed">
             A web platform designed to make agriculture profitable, connected, and exciting for Nigerian youth.
@@ -123,7 +123,7 @@ export default function AgroV1n3PitchDeck() {
       {/* SLIDE 4: Product Features */}
       <section className="magazine-page w-[210mm] h-[297mm] mx-auto bg-black px-[15mm] py-[15mm] flex flex-col overflow-hidden">
         <div className="text-[10pt] text-gray-500 mb-4">04</div>
-        <h2 className="text-[32pt] font-bold mb-2 leading-tight">
+        <h2 className="text-[32pt] font-aldrich font-bold mb-2 leading-tight">
           Product <span className="text-green-400">Features</span>
         </h2>
         <div className="w-20 h-1 bg-green-500 mb-6"></div>
@@ -149,7 +149,7 @@ export default function AgroV1n3PitchDeck() {
       {/* SLIDE 5: How It Works */}
       <section className="magazine-page w-[210mm] h-[297mm] mx-auto bg-black px-[15mm] py-[20mm] flex flex-col overflow-hidden">
         <div className="text-[10pt] text-gray-500 mb-4">05</div>
-        <h2 className="text-[32pt] font-bold mb-2 leading-tight">
+        <h2 className="text-[32pt] font-aldrich font-bold mb-2 leading-tight">
           How It <span className="text-orange-500">Works</span>
         </h2>
         <div className="w-20 h-1 bg-orange-500 mb-10"></div>
@@ -211,7 +211,7 @@ export default function AgroV1n3PitchDeck() {
       {/* SLIDE 7: Communities */}
       <section className="magazine-page w-[210mm] h-[297mm] mx-auto bg-black px-[15mm] py-[15mm] flex flex-col overflow-hidden">
         <div className="text-[10pt] text-gray-500 mb-4">07</div>
-        <h2 className="text-[32pt] font-bold mb-2 leading-tight">
+        <h2 className="text-[32pt] font-aldrich font-bold mb-2 leading-tight">
           14 <span className="text-orange-500">Communities</span>
         </h2>
         <div className="w-20 h-1 bg-orange-500 mb-6"></div>
@@ -248,7 +248,7 @@ export default function AgroV1n3PitchDeck() {
         
         <div className="relative z-10 w-[95mm] ml-auto mr-[12mm] bg-black/80 p-8 rounded">
           <div className="text-[10pt] text-gray-500 mb-4">08</div>
-          <h2 className="text-[28pt] font-bold mb-6 leading-tight">
+          <h2 className="text-[28pt] font-aldrich font-bold mb-6 leading-tight">
             Current <span className="text-green-400">Status</span>
           </h2>
           
@@ -258,16 +258,16 @@ export default function AgroV1n3PitchDeck() {
               <p className="text-[11pt] text-white">Platform UI built and live at v0-agrov1n3.vercel.app</p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <p className="text-[11pt] text-white">Marketplace interface with product listings</p>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <p className="text-[11pt] text-yellow-400">Marketplace interface designed (not yet functional)</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <p className="text-[11pt] text-white">14 community pages designed</p>
+              <p className="text-[11pt] text-white">Dashboard design ongoing and looking good</p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <p className="text-[11pt] text-white">Investment platform concept ready</p>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <p className="text-[11pt] text-yellow-400">Investment platform concept ready (not yet functional)</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -284,7 +284,7 @@ export default function AgroV1n3PitchDeck() {
       {/* SLIDE 9: Team */}
       <section className="magazine-page w-[210mm] h-[297mm] mx-auto bg-black px-[15mm] py-[20mm] flex flex-col overflow-hidden">
         <div className="text-[10pt] text-gray-500 mb-4">09</div>
-        <h2 className="text-[32pt] font-bold mb-2 leading-tight">
+        <h2 className="text-[32pt] font-aldrich font-bold mb-2 leading-tight">
           The <span className="text-orange-500">Team</span>
         </h2>
         <div className="w-20 h-1 bg-orange-500 mb-10"></div>
@@ -297,7 +297,7 @@ export default function AgroV1n3PitchDeck() {
               className="w-[80mm] h-[100mm] object-cover object-top rounded"
             />
             <div className="flex-1">
-              <h3 className="text-[24pt] font-bold text-white mb-2">Mantim Danzaki</h3>
+              <h3 className="text-[24pt] font-aldrich font-bold text-white mb-2">Mantim Danzaki</h3>
               <p className="text-[12pt] text-green-400 mb-4">Founder & CEO</p>
               <p className="text-[11pt] text-gray-300 leading-relaxed mb-4">
                 400-level Building Technology student at University of Jos. Passionate Agri-Tech builder from Plateau State with a vision to transform Nigerian agriculture through youth empowerment and technology.
@@ -331,7 +331,7 @@ export default function AgroV1n3PitchDeck() {
         
         <div className="relative z-10 w-[100mm] ml-[12mm]">
           <div className="text-[10pt] text-gray-500 mb-4">10</div>
-          <h2 className="text-[36pt] font-bold mb-6 leading-tight">
+          <h2 className="text-[36pt] font-aldrich font-bold mb-6 leading-tight">
             What We <span className="text-green-400">Need</span>
           </h2>
           <div className="w-24 h-1 bg-green-500 mb-8"></div>
@@ -360,7 +360,7 @@ export default function AgroV1n3PitchDeck() {
       {/* SLIDE 11: Vision & Impact */}
       <section className="magazine-page w-[210mm] h-[297mm] mx-auto bg-black px-[15mm] py-[20mm] flex flex-col overflow-hidden">
         <div className="text-[10pt] text-gray-500 mb-4">11</div>
-        <h2 className="text-[32pt] font-bold mb-2 leading-tight">
+        <h2 className="text-[32pt] font-aldrich font-bold mb-2 leading-tight">
           Impact & <span className="text-green-400">Vision</span>
         </h2>
         <div className="w-20 h-1 bg-green-500 mb-8"></div>
@@ -404,14 +404,14 @@ export default function AgroV1n3PitchDeck() {
       {/* SLIDE 12: Contact / Close */}
       <section className="magazine-page relative w-[210mm] h-[297mm] mx-auto flex items-center justify-center overflow-hidden">
         <img
-          src="/eyes-investment.jpg"
-          alt="AgroV1n3 Future"
+          src="/eyes-future-tractor.jpg"
+          alt="AgroV1n3 Future - Modern Agricultural Technology"
           className="w-full h-full object-cover object-center absolute inset-0"
         />
         <div className="absolute inset-0 bg-black/80"></div>
         
         <div className="relative z-10 text-center px-[20mm]">
-          <h2 className="text-[42pt] font-bold mb-6 leading-tight">
+          <h2 className="text-[42pt] font-aldrich font-bold mb-6 leading-tight">
             Let&apos;s Farm the <span className="text-green-400">Future</span> Together
           </h2>
           
