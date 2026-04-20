@@ -115,7 +115,7 @@ export default function AgroV1n3PitchDeck() {
           </div>
           
           <div className="mt-8 p-4 bg-green-500/10 border border-green-500/30 rounded">
-            <p className="text-[10pt] text-green-400">Platform UI: agrov1n3.vercel.app</p>
+            <p className="text-[10pt] text-green-400">Platform UI: v0-agrov1n3.vercel.app</p>
           </div>
         </div>
       </section>
@@ -255,7 +255,7 @@ export default function AgroV1n3PitchDeck() {
           <div className="space-y-4 mb-6">
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <p className="text-[11pt] text-white">Platform UI built and live at agrov1n3.vercel.app</p>
+              <p className="text-[11pt] text-white">Platform UI built and live at v0-agrov1n3.vercel.app</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
@@ -290,13 +290,20 @@ export default function AgroV1n3PitchDeck() {
         <div className="w-20 h-1 bg-orange-500 mb-10"></div>
         
         <div className="flex-1 flex flex-col justify-center">
-          <div className="border border-gray-800 p-8 rounded mb-8">
-            <h3 className="text-[24pt] font-bold text-white mb-2">Danzaki Mantim</h3>
-            <p className="text-[12pt] text-green-400 mb-4">Founder & CEO</p>
-            <p className="text-[11pt] text-gray-300 leading-relaxed mb-4">
-              400-level Building Technology student at University of Jos. Passionate Agri-Tech builder from Plateau State with a vision to transform Nigerian agriculture through youth empowerment and technology.
-            </p>
-            <p className="text-[10pt] text-gray-500">WhatsApp: 09061130264</p>
+          <div className="border border-gray-800 p-8 rounded mb-8 flex gap-8 items-start">
+            <img 
+              src="/mantim-danzaki.jpg" 
+              alt="Mantim Danzaki - Founder" 
+              className="w-[80mm] h-[100mm] object-cover object-top rounded"
+            />
+            <div className="flex-1">
+              <h3 className="text-[24pt] font-bold text-white mb-2">Mantim Danzaki</h3>
+              <p className="text-[12pt] text-green-400 mb-4">Founder & CEO</p>
+              <p className="text-[11pt] text-gray-300 leading-relaxed mb-4">
+                400-level Building Technology student at University of Jos. Passionate Agri-Tech builder from Plateau State with a vision to transform Nigerian agriculture through youth empowerment and technology.
+              </p>
+              <p className="text-[10pt] text-gray-500">WhatsApp: 09061130264</p>
+            </div>
           </div>
           
           <div className="border border-gray-800 p-6 rounded mb-8">
@@ -313,7 +320,7 @@ export default function AgroV1n3PitchDeck() {
         </div>
       </section>
 
-      {/* SLIDE 10: The Ask */}
+      {/* SLIDE 10: What We Need */}
       <section className="magazine-page relative w-[210mm] h-[297mm] mx-auto flex items-center overflow-hidden">
         <img
           src="/eyes-training.jpg"
@@ -325,24 +332,27 @@ export default function AgroV1n3PitchDeck() {
         <div className="relative z-10 w-[100mm] ml-[12mm]">
           <div className="text-[10pt] text-gray-500 mb-4">10</div>
           <h2 className="text-[36pt] font-bold mb-6 leading-tight">
-            The <span className="text-green-400">Ask</span>
+            What We <span className="text-green-400">Need</span>
           </h2>
           <div className="w-24 h-1 bg-green-500 mb-8"></div>
           
-          <div className="bg-black/70 p-6 rounded mb-6">
-            <p className="text-[28pt] font-bold text-green-400 mb-2">$300 – $700</p>
-            <p className="text-[12pt] text-gray-300">Micro-grants & track bounties</p>
-          </div>
-          
-          <div className="space-y-3 text-[11pt] text-gray-300 mb-8">
-            <p>• Complete blockchain/wallet integration</p>
-            <p>• Launch full platform in Plateau State</p>
-            <p>• Scale to 10,000 youth participants</p>
-            <p>• Expand to other Nigerian states</p>
+          <div className="space-y-4 text-[11pt] text-gray-300 mb-8">
+            <div className="bg-black/70 p-4 rounded border-l-4 border-green-500">
+              <p className="font-bold text-white mb-1">Development Partnerships</p>
+              <p className="text-[10pt] text-gray-400">Technical collaboration to complete blockchain/wallet integration</p>
+            </div>
+            <div className="bg-black/70 p-4 rounded border-l-4 border-orange-500">
+              <p className="font-bold text-white mb-1">Technical Mentorship</p>
+              <p className="text-[10pt] text-gray-400">Guidance on Solana integration, scalability, and security</p>
+            </div>
+            <div className="bg-black/70 p-4 rounded border-l-4 border-green-500">
+              <p className="font-bold text-white mb-1">Ecosystem Support</p>
+              <p className="text-[10pt] text-gray-400">Connections to agricultural networks, investors, and partners</p>
+            </div>
           </div>
           
           <div className="p-4 bg-green-500/10 border border-green-500/30 rounded">
-            <p className="text-[10pt] text-green-400">Also seeking: Development partnerships, technical mentorship, and ecosystem support</p>
+            <p className="text-[10pt] text-green-400">Goal: Launch full platform in Plateau State with 10,000+ youth participants</p>
           </div>
         </div>
       </section>
@@ -409,7 +419,7 @@ export default function AgroV1n3PitchDeck() {
           
           <div className="space-y-4 mb-12">
             <p className="text-[14pt] text-gray-300">WhatsApp: <span className="text-white font-medium">09061130264</span></p>
-            <p className="text-[14pt] text-gray-300">Platform: <span className="text-green-400 font-medium">agrov1n3.vercel.app</span></p>
+            <p className="text-[14pt] text-gray-300">Platform: <span className="text-green-400 font-medium">v0-agrov1n3.vercel.app</span></p>
             <p className="text-[14pt] text-gray-300">Location: <span className="text-white font-medium">Jos / Abuja, Nigeria</span></p>
           </div>
           
