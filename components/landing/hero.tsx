@@ -10,6 +10,7 @@ const rotatingWords = ["Innovation", "Technology", "Community", "Prosperity", "R
 export function Hero() {
   const [wordIndex, setWordIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
+  const [isPulsing, setIsPulsing] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,6 +21,15 @@ export function Hero() {
       }, 300)
     }, 3000)
     return () => clearInterval(interval)
+  }, [])
+
+  // Pulse the badge every 5 seconds
+  useEffect(() => {
+    const pulseInterval = setInterval(() => {
+      setIsPulsing(true)
+      setTimeout(() => setIsPulsing(false), 1000)
+    }, 5000)
+    return () => clearInterval(pulseInterval)
   }, [])
 
   return (
@@ -47,7 +57,7 @@ export function Hero() {
           {/* Left Content */}
           <div className="space-y-6 lg:space-y-7">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-[3px]">
+            <div className={`inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-[3px] transition-all duration-500 ${isPulsing ? 'scale-105 bg-primary/20 border-primary/50 shadow-lg shadow-primary/20' : ''}`}>
               <span className="text-[11px] text-muted-foreground font-medium tracking-wider uppercase">Powered by V1n3 on Solana</span>
             </div>
 
